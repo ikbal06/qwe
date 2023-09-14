@@ -2,7 +2,8 @@
 *** Settings ***
 
 Library    OperatingSystem
-Library    ../resources/MainListener.py
+# Variables  variables.py
+Library    resources/kiwi/KiwiListener.py
 
 *** Variables ***
 ${MESSAGE}       Hello, world!

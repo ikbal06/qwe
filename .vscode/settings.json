@@ -1,3 +1,27 @@
 {
-    "cmake.configureOnOpen": false
+    "python.experiments.enabled": false,
+    "python.experiments.optOutFrom": ["All"],    
+    "python.defaultInterpreterPath": "C:\\Python311\\python.exe",
+    "robocorp.language-server.python": "C:\\Python311\\python.exe",
+    "robot.language-server.python": "C:\\Python311\\python.exe",
+    "robot.python.executable": "C:\\Python311\\python.exe",
+    "cmake.configureOnOpen": false,
+    "python.analysis.extraPaths": [
+        "c:/Users/ikbal.kirklar/Desktop/cem/.",
+        "c:/Users/ikbal.kirklar/Desktop/cem/keywords",
+        "c:/Users/ikbal.kirklar/Desktop/cem/libraries",
+        "c:/Users/ikbal.kirklar/Desktop/cem/resources",
+        "c:/Users/ikbal.kirklar/Desktop/cem/variables"
+    ],
+    "robotcode.robot.pythonPath": [
+        ".",
+        "./libraries",
+        "./resources",
+    ],
+    "robot.pythonpath": [
+        "./",
+        "./lib",
+        "./resources",
+        "./keywords"
+    ],
 }
