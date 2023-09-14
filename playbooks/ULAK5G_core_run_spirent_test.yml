@@ -1,0 +1,13 @@
+- hosts: localhost
+  gather_facts: false   
+  tasks:
+    - name: Run test="{{test_id}}"
+      ignore_errors: true
+      ansible.builtin.shell:
+        cmd: >
+          robot
+          --variable TEST_ID:"{{test_id}}" 
+          --variable DEFAULT_TEST_LOGS_PATH:"{{spirent_pcap_files_path}}" 
+          --listener zealand.listener.KiwiTCMS 
+          --outputdir "{{robot_files_path}}" 
+          --report "{{test_id}}".html ../Tests/aaaaa.robot

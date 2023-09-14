@@ -1,0 +1,3 @@
+#Bu dosya, mongodb'de verilen json dosyasinin, ilgili collectiona import edilmesini saglar.
+- name: Mongo import operation "{{mongo_col_name}}"
+  ansible.builtin.shell: mongoimport --mode upsert  --host {{mongodb_ip}}:{{mongo_db_port}} --db "{{mongo_db_name}}" --collection "{{mongo_col_name}}" --file "{{file_name}}"

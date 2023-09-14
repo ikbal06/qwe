@@ -1,0 +1,12 @@
+- hosts: nfs
+  gather_facts: false
+  tasks:
+    - name: Find files
+      ansible.builtin.include_role:
+        name: find_files
+      vars:
+        each_file: "{{item}}"
+      with_items: "{{ log_files }}"
+
+
+

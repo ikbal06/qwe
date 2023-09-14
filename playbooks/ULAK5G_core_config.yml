@@ -1,0 +1,73 @@
+- hosts: nrfs
+  gather_facts: false
+  tasks:
+    - name: cinar nrf config setup
+      ansible.builtin.include_role:
+        name: ULAK5GCore_nrf_setup
+
+- hosts: nssfs
+  gather_facts: false
+  tasks:
+    - name: cinar nssf config setup
+      ansible.builtin.include_role:
+        name: ULAK5GCore_nssf_setup
+
+- hosts: amfs
+  gather_facts: false
+  tasks:
+    - name: cinar amf config setup
+      ansible.builtin.include_role:
+        name: ULAK5GCore_amf_setup
+
+- hosts: smfs
+  gather_facts: false
+  tasks:
+    - name: cinar smf config setup
+      ansible.builtin.include_role:
+        name: ULAK5GCore_smf_setup
+
+- hosts: upfs
+  gather_facts: false
+  tasks:
+    - name: cinar upf config setup
+      ansible.builtin.include_role:
+        name: ULAK5GCore_upf_setup
+
+- hosts: udrs
+  gather_facts: false
+  tasks:
+    - name: cinar udr config setup
+      ansible.builtin.include_role:
+        name: ULAK5GCore_udr_setup
+
+- hosts: udms
+  gather_facts: false
+  tasks:
+    - name: cinar udm config setup
+      ansible.builtin.include_role:
+        name: ULAK5GCore_udm_setup
+
+- hosts: ausfs
+  gather_facts: false
+  tasks:
+    - name: cinar ausf config setup
+      ansible.builtin.include_role:
+        name: ULAK5GCore_ausf_setup
+
+- hosts: pcfs
+  gather_facts: false
+  tasks:
+    - name: cinar pcf config setup
+      ansible.builtin.include_role:
+        name: ULAK5GCore_pcf_setup
+
+- hosts: amfs
+  gather_facts: false
+  tasks:
+    - name: service restart
+      ansible.builtin.include_role:
+        name: service_operations
+      vars:
+        operation: restart
+        service_name: "{{item}}"
+      with_items: "{{service_names}}"

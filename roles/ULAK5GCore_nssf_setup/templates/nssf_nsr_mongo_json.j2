@@ -1,0 +1,24 @@
+{
+    "_id" : "{{ item.nsr_name}}",
+    "amfId" : "1",
+    "behavior" : {
+        "accessType" : "3GPP_ACCESS",
+        "grant" : "ALLOWED",
+        "nsiProfiles" : [ 
+            {
+                "name" :  "{{ item.nsi_name}}",
+                "salience" : 1
+            }
+        ]
+    },
+    "name" : "{{ item.nsr_name}}",
+    "plmnId" : {
+               "mcc": "{{ h_mcc | default("001") }}",
+               "mnc": "{{ h_mnc | default("002") }}"
+    },
+    "salience" : 1,
+    "snssai" : {
+        "sst" : {{ item.sst }}
+    },
+    "tac" :  "{{ item.tac}}"
+}

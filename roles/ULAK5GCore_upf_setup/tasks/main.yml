@@ -1,0 +1,12 @@
+#Bu dosya, udf'in konfigurasyon dosyalarinin template islemleri icin kullanilir.
+#Eger konfigurasyon dosyalarinda degisiklik varsa, udf restart edilir.
+- name: Template upf settings file
+  template: src=upf_cnrupf_conf.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  with_items: "{{ conf_files }}"
+  when: each_config_file.filename == "cnrupf.conf"
+  loop_control:
+       loop_var: each_config_file
+  notify:
+      - stop {{deployment_type|lower}}
+      - start {{deployment_type|lower}}

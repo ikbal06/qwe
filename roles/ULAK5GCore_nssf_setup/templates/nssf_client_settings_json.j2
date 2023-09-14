@@ -1,0 +1,114 @@
+{
+    "_comment": "The unit for time period is milliseconds.",
+    "date": "2022-Aug-19",
+    "author": "M. Sami GURPINAR",
+
+    "General": {
+        "NumberofServingServerThreads": 4,
+        "ClientCount": 4,
+        "ClientTimeout": 3000,
+        "HomePlmnId": {
+        "mcc": "{{ h_mcc | default("001") }}",
+        "mnc": "{{ h_mnc | default("002") }}"
+        }
+    },
+
+    "Security": {
+        "TLSSecure": false,
+        "JWTAuthenticate": true,
+        "MutualAuthenticate": false,
+        "OAuth2": {
+            "PrivateKey": "certificate\/jwt.key",
+            "PublicKey": "certificate\/jwt.pub"
+        },
+        "TLS": {
+            "PublicKey": "certificate\/localhost.crt",
+            "PrivateKey": "certificate\/localhost.key"
+        }
+    },
+
+    "Logging": {
+        "Directory": "\/var\/log\/cinar\/nssf\/",
+        "DisplayLog": true,
+        "FileName": "NSSF",
+        "LogLevel": "DEBUG"
+    },
+
+    "NRF": [
+        {
+            "IPAddress": "{{nrf_ip }}",
+            "ClientCount": 4,
+            "ClientTimeout": 3000,
+            "NfmServicePort": 8001,
+            "DiscServicePort": 8006,
+            "OAuth2ServicePort": 8007,
+            "TAccessTokenPeriod": 10000,
+            "TCheckPeriod": 60000,
+            "TDiscoveryPeriod": 3000,
+            "TRetryPeriod": 3000
+        }
+    ],
+
+    "Database": {
+        "Server": "{{ mongo_db_ip }}",
+        "Port": {{ mongo_db_port }},
+        "DatabaseName": "{{ db_name }}",
+        "UserName": "{{ mongo_db_username }}",
+        "Password": "{{ mongo_db_password }}",
+        "ConnectionRetryPeriod": 60000,
+        "Tables": {
+            "tablename_registeredservice":"cinarregisteredservicecollection"
+        },
+        "ConnectionPoolSize": 4,
+        "ConnectionTimeout": 1000,
+        "ServerSelectionTimeout": 1000,
+        "SocketTimeout": 1000
+    },
+
+    "AdditionalNFServices":[
+        {
+          
+            "ipEndPoints": [
+                {
+                   "ipv4Address": "{{ control_ip }}",
+                    "port": 8104
+                }
+            ],           
+            "nfServiceStatus": "REGISTERED",           
+            "scheme": "http",
+            "serviceInstanceId": "81fdab8a-8605-11ea-bc55-0242ac130003",           
+            "versions": [
+                {
+                    "apiFullVersion": "v1",
+                    "apiVersionInUri": "/metrics"
+                }
+            ]
+        },
+        {
+          
+            "ipEndPoints": [
+                {
+                   "ipv4Address": "{{ control_ip }}",
+                    "port": 8105
+                }
+            ],            
+            "nfServiceStatus": "REGISTERED",
+            "scheme": "http",
+            "serviceInstanceId": "81fdab8a-8605-11ea-bc55-0242ac130003",
+            "versions": [
+                {
+                    "apiFullVersion": "v1",
+                    "apiVersionInUri": "/log/v1"
+                }
+            ]
+        }
+    ],
+
+    "ServiceSettings": {
+        "AlarmServiceName": "nnssf-nsselection",
+        "NumberofIOServiceThreads": 6,
+        "NRFClientService": {
+            "ServicePort": 8200
+        }
+    }
+}

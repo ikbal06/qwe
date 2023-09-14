@@ -1,0 +1,20 @@
+#Bu dosya, json dosyasina verilen key/value pairini silmek icin kullanilir.
+- name: Set json file as variable (delete key/value)
+  include_vars:
+    file: "{{ file }}"
+    name: imported_var
+
+- name: Create empty dict
+  set_fact:
+    new_imported_var: {}
+
+- name: Delete key/value from json file
+  set_fact:
+    new_imported_var: "{{new_imported_var |combine({item.key: item.value})}}"
+  when: item.key not in ["{{key}}"]
+  with_dict: "{{imported_var}}"
+
+- name: Write new content to json file (delete key/value)
+  copy:
+    content: "{{ new_imported_var | to_nice_json }}"
+    dest: "{{ file }}"

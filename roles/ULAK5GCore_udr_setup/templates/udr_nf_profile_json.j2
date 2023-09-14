@@ -1,0 +1,110 @@
+{
+    "allowedNfTypes": [
+        "PCF",
+        "UDM"
+    ],
+    "allowedNssais": [
+        {
+            "sst": 1
+        },
+        {
+            "sst": 2
+        }
+    ],
+    "allowedPlmns": [
+        {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+        {   "mcc" : "{{ r_mcc | default("002") }}", 
+            "mnc" : "{{ r_mnc | default("001") }}"
+        }
+    ],
+    "ipv4Addresses": [
+        "{{ control_ip }}"
+    ],
+    "ipv6Addresses": [
+        "::"
+    ],
+    "nfInstanceId": "207320ea-9cb1-4a88-ad24-830af21405e9",
+    "nfServices": [
+        {
+            "allowedNfTypes": [
+                "PCF",
+                "NEF",
+                "UDM"
+            ],
+            "allowedNssais": [
+                {
+                    "sst": 1
+                },
+                {
+                    "sst": 2
+                }
+            ],
+            "allowedPlmns": [
+                {
+                    "mcc": "{{ h_mcc | default("001") }}",
+                    "mnc": "{{ h_mnc | default("002") }}"
+                },
+                {
+                    "mcc": "002",
+                    "mnc": "001"
+                }
+            ],
+            "ipEndPoints": [
+                {
+                    "ipv4Address": "{{ control_ip }}",
+                    "port": 5400,
+                    "transport": "TCP"
+                }
+            ],
+            "nfServiceStatus": "REGISTERED",
+            "scheme": "http",
+            "serviceInstanceId": "ca771ca0-1ee4-4c40-a29a-36b7d6a34916",
+            "serviceName": "nudr-dr",
+            "versions": [
+                {
+                    "apiFullVersion": "2.0.1.alpha-1",
+                    "apiVersionInUri": "v2"
+                }
+            ]
+        }
+    ],
+    "nfStatus": "REGISTERED",
+    "nfType": "UDR",
+    "perPlmnSnssaiList": [
+        {
+            "plmnId": {
+                "mcc": "{{ h_mcc | default("001") }}",
+                "mnc": "{{ h_mnc | default("002") }}"
+            },
+            "sNssaiList": [
+                {
+                    "sst": 1
+                },
+                {
+                    "sst": 2
+                }
+            ]
+        }
+    ],
+    "plmnList": [
+        {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        }
+    ],
+    "recoveryTime": "{{recoveryTime}}",
+    "sNssais": [
+        {
+            "sst": 1
+        },
+        {
+            "sst": 2
+        },
+        {
+            "sst": 3
+        }
+    ]
+}

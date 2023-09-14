@@ -1,0 +1,6 @@
+- hosts: nfs:!upfs
+  gather_facts: false
+  tasks:
+    - name: Start tcpdump
+      ansible.builtin.include_role:
+        name: start_tcpdump

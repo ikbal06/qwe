@@ -1,0 +1,11 @@
+- hosts: nfs
+  gather_facts: false
+  tasks:
+    - name: Fetch config files
+      ansible.builtin.include_role:
+        name: copy_files
+      vars:
+        source: "{{default_test_log_path}}/{{test_date | default(None)}}/{{TEST_ID | default(None)}}/config_files/{{inventory_hostname}}/{{item.service}}/{{item.filename}}"
+        destination: "{{item.path }}/"
+        with_zip: false
+      with_items: "{{ conf_files }}"

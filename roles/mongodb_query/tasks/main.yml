@@ -1,0 +1,13 @@
+#Bu dosya, mongodb'de verilen database, collection ve filte ile sorgulama yapilabilmesini saglar.
+- name: Query "{{mongo_db_name}}" - "{{mongo_col_name}}" filter="{{ mongo_filter}}"
+  vars:
+      mongodb_parameters:
+         connection_string: mongodb://{{ mongo_db_ip }}:{{mongo_db_port}}/
+         database: "{{mongo_db_name}}"
+         collection: "{{mongo_col_name}}"
+         filter:  "{{  mongo_filter}}"
+  set_fact:
+         query_result_list: "{{  [lookup('mongodb', mongodb_parameters)] if (lookup('mongodb', mongodb_parameters) | type_debug) == 'dict' else lookup('mongodb', mongodb_parameters)}}"
+
+
+

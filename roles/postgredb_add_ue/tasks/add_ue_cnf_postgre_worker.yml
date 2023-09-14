@@ -1,0 +1,12 @@
+
+- name: add ue templating
+  template: src=default_ue_data.j2 dest=default_ue_data.sql
+  diff: yes
+
+- name: copy templating file to container
+  ansible.builtin.shell: docker cp  default_ue_data.sql "{{postgre_container_name}}":/
+
+- name: postgre import operation
+  ansible.builtin.shell: docker exec -it "{{postgre_container_name}}" psql -U "{{ postgre_db_username }}" -d "{{postgre_db_name}}" -a -f default_ue_data.sql
+
+

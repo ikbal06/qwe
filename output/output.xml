@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.11.5 on win32)" generated="20230914 17:33:14.052" rpa="false" schemaversion="4">
+<suite id="s1" name="Cem" source="C:\Users\ikbal.kirklar\Desktop\cem">
+<suite id="s1-s1" name="Tests" source="C:\Users\ikbal.kirklar\Desktop\cem\tests">
+<suite id="s1-s1-s1" name="First" source="C:\Users\ikbal.kirklar\Desktop\cem\tests\first.robot">
+<errors>
+<msg timestamp="20230914 17:33:15.412" level="ERROR">Execution stopped by user.</msg>
+</errors>
+</robot>

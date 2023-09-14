@@ -10,9 +10,9 @@ SPIRENT_USER = 'automated'
 SPIRENT_PASSWORD = 'a1b2c3d4'
 SPIRENT_API_PATH = 'api/'
 
-DEFAULT_ANALIZCI_HOST = "10.10.10.10:3000".split(":")
-DEFAULT_ANALIZCI_IP = DEFAULT_ANALIZCI_HOST[0]
-DEFAULT_ANALIZCI_PORT = DEFAULT_ANALIZCI_HOST[1]
+#DEFAULT_ANALIZCI_HOST = "10.10.10.10:3000".split(":")
+#DEFAULT_ANALIZCI_IP = DEFAULT_ANALIZCI_HOST[0]
+#DEFAULT_ANALIZCI_PORT = DEFAULT_ANALIZCI_HOST[1]
 ANALIZCI_PROTOCOL = 'http'
 ANALIZCI_API_PATH = 'automated/'
 
@@ -38,16 +38,17 @@ DEFAULT_K8S_NAMESPACE = "default"
 
 
 ANSIBLE_PLAYBOOK_PATH = shutil.which("ansible-playbook")
-BASE_PATH = "/opt/cinar/test"
+BASE_PATH = "C:\\Users\\ikbal.kirklar\\Desktop\\cem"
 CONFIG_FILE_PATH = os.path.join(BASE_PATH,"config.json")
-PLAYBOOKS_PATH = os.path.join(BASE_PATH,"playbooks")
-ROLES_PATH = os.path.join(BASE_PATH,"roles")
+PLAYBOOKS_PATH = os.path.join(BASE_PATH,"playbooks") # BASE_PATH//playbooks
+ROLES_PATH = os.path.join(BASE_PATH,"roles") # BASE_PATH//roles
 SSH_COPY_ID_PLAYBOOK_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_ssh_copy_id.yml")
 START_TCPDUMP_PLAYBOOK_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_start_tcpdump.yml")
 print(START_TCPDUMP_PLAYBOOK_PATH)
 GET_VERSION_PLAYBOOK_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_get_nf_version.yml")
 FETCH_PCAP_FILES_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_fetch_pcap_files.yml")
 FETCH_LOG_FILES_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_fetch_log_files.yml")
+# BASE_PATH//roles, BASE_PATH//playbooks//roles
 create_symlink(ROLES_PATH, os.path.join(PLAYBOOKS_PATH, "roles"))
 
 

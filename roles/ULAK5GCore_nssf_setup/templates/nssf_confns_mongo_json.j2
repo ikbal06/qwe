@@ -1,0 +1,15 @@
+{
+    "_id" : "{{ item.confns_name}}",
+    "amfId" : "1",
+    "plmnId" : {
+               "mcc": "{{ h_mcc | default("001") }}",
+               "mnc": "{{ h_mnc | default("002") }}"
+    },
+    "salience" : 1,
+    "snssai" : [ 
+        {
+            "sst" : {{ item.sst }}
+        }
+    ],
+    "tac" : "{{ item.tac}}"
+}

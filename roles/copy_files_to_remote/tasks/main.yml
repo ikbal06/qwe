@@ -1,0 +1,24 @@
+- name: Check "{{source}}" exist or not
+  stat:
+      path: "{{source}}"
+  register: src_status
+  failed_when: not src_status.stat.exists
+  delegate_to: localhost
+
+- name: Check "{{destination}}" exist or not
+  stat:
+    path: "{{destination}}"
+  register: dest_status
+
+- name: Create directory= "{{destination}}"
+  file:
+    path: "{{destination}}"
+    state: directory
+  when: not dest_status.stat.exists
+
+- name: Copy config files to remote
+  synchronize:
+     src: "{{source}}"
+     dest: "{{destination}}"
+     mode: push
+  when: src_status.stat.exists

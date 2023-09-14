@@ -1,0 +1,8 @@
+- name: Get Service Status
+  ansible.builtin.systemd:
+     name: "{{service_name}}"
+  register: service_status
+
+- name: "{{service_name}}  service status check"
+  ansible.builtin.assert: { that: "'{{service_status.status.ActiveState}}' == 'active'" }
+

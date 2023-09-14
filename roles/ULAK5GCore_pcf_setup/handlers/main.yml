@@ -1,0 +1,28 @@
+- name: restart service
+  ansible.builtin.service:
+            name: "{{ each_service }}"
+            state: restarted
+  become: true
+  with_items: "{{ service_names }}"
+  loop_control:
+     loop_var: each_service
+
+- name: stop service
+  ansible.builtin.service:
+            name: "{{ each_service }}"
+            state: stopped
+  become: true
+  with_items: "{{ service_names }}"
+  loop_control:
+     loop_var: each_service
+
+- name: start service
+  ansible.builtin.service:
+            name: "{{ each_service }}"
+            state: started
+  become: true
+  with_items: "{{ service_names }}"
+  loop_control:
+     loop_var: each_service
+
+

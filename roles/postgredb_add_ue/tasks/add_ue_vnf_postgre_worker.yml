@@ -1,0 +1,6 @@
+- template: src=default_ue_data.j2 dest=default_ue_data.sql
+  diff: yes
+
+- name: Mongo import operation
+  ansible.builtin.shell: psql "postgresql://{{postgre_db_username}}:{{postgre_db_password}}@{{ansible_ssh_host}}/cinarudrtest" -f default_ue_data.sql
+  

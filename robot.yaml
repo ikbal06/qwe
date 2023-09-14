@@ -5,23 +5,8 @@
 tasks:
 # At least one task defined, and that must have either command, shell or robotTaskName defined.
 # Artifacts output path must be defined.
-  kullanici testi:
-    # 'robotTaskName': Assumes a task with the same name exists in a .robot file.
-    robotTaskName: Another Test
-
-  # Task names here are used when executing the bots, so renaming these is recommended.
-  Produce Output:
-    robotTaskName: Produce Output
-  Produce Output With Trace:
-    shell: python -m robot -d output -L TRACE --report NONE --logtitle "Producer log" --task "Produce Output" producer.robot
-  Consume Input:
-    robotTaskName: Consume Input
-  Consume Input With Trace:
-    shell: python -m robot -d output -L TRACE --report NONE --logtitle "Consumer log" --task "Consume Input" consumer.robot
-  Report Result:
-    robotTaskName: Report Result
-  Report Result With Trace:
-    shell: python -m robot -d output -L TRACE --report NONE --logtitle "Reporter log" --task "Report Result" reporter.robot
+  hede:
+    shell: python -m robot --report NONE --outputdir output --logtitle "Task log" tests/first.robot
 
 condaConfigFile: conda.yaml
 

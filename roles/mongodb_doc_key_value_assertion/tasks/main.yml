@@ -1,0 +1,11 @@
+- name: Mongo query operation for "{{db_name}}" - "{{col_name}}" filter="{{ filter}}"
+  ansible.builtin.include_role:
+     name: mongodb_query
+  vars:
+          mongo_db_name: "{{db_name}}"
+          mongo_col_name: "{{col_name}}"
+          mongo_filter:  "{{ filter}}"
+
+- name: filter="{{ filter}}" NF status should be REGISTERED
+  ansible.builtin.assert: { that: "'{{ item.nfStatus }}' == 'REGISTERED'" }
+  with_items: "{{ query_result_list}}"

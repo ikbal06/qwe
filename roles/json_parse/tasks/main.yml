@@ -1,0 +1,9 @@
+#Bu dosya, json dosyasina verilen key'in degerini almak icin kullanilir.
+- name: Parse "{{json_key}}" value in settings file and set as variable.
+  block:
+        - ansible.builtin.shell: sed 's/\s*:\s*/:/g' {{ path }}/{{ filename }} > ./parsed_file.json
+        - ansible.builtin.shell: sed -n 's/^[[:space:]]*"{{json_key}}":"\(.*\)",/\1/p' ./parsed_file.json
+          register: parsed_value
+        - set_fact:
+              "{{json_key}}": "{{parsed_value.stdout}}"
+

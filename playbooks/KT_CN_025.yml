@@ -1,0 +1,7 @@
+- name: Add UE
+  ansible.builtin.import_playbook: ULAK5G_core_add_ue.yml
+
+- name: Add UE
+  ansible.builtin.import_playbook: ULAK5G_core_run_spirent_test.yml
+  vars:
+    test_id: KT_CN_025

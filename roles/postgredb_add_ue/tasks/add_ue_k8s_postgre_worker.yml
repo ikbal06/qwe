@@ -1,0 +1,19 @@
+
+- name: add ue templating
+  template: src=default_ue_data.j2 dest=default_ue_data.sql
+  diff: yes
+
+- name: get pod name from namespace
+  ansible.builtin.shell:  kubectl get pods -n "{{k8s_namespace}}"  | grep postgre | awk '{print $1}'
+  register: result
+  failed_when: result.stdout == ""
+
+- name: set pod name
+  set_fact:
+       postgre_pod_name: "{{result.stdout}}"
+  
+- name: copy templating file to pod
+  ansible.builtin.shell:  kubectl cp default_ue_data.sql "{{k8s_namespace}}"/"{{postgre_pod_name}}":/tmp
+
+- name: postgre import operation
+  ansible.builtin.shell: kubectl -n "{{k8s_namespace}}" exec -it "{{postgre_pod_name}}" -- bash -c "PGPASSWORD='password' psql -U postgres -d {{postgre_db_name}} -a -f /tmp/default_ue_data.sql"

@@ -1,0 +1,12 @@
+- name: Mongo restore operation "{{db_name}}"
+  ansible.builtin.shell: "mongorestore --host {{mongo_db_ip}}:{{mongo_db_port}} --db {{db_name}} test_out/files/pcf_dump "
+  delegate_to: mongo
+
+- name: AmfList templating
+  template: src=pcf_profile_mongo_json.j2 dest="{{pcf_profile_col_name}}.json"
+  diff: yes
+  delegate_to: mongo
+
+- name: Mongo import operation
+  ansible.builtin.shell: mongoimport --mode upsert --db "{{db_name}}" --collection "{{pcf_profile_col_name}}" --file "{{pcf_profile_col_name}}.json"
+  delegate_to: mongo

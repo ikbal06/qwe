@@ -1,0 +1,46 @@
+{
+    "nrfSettings": {
+        "nrfNFDiscoveryApiHost": "{{ nrf_ip }}",
+        "nrfNFDiscoveryApiPort": 8006,
+        "nrfNFManagementApiHost": "{{ nrf_ip }}",
+        "nrfNFManagementApiPort": 8001,
+        "nrfNotificationServerHost": "{{ sms_ip }}",
+        "nrfNotificationServerSmsPort": 7003,
+        "nrfOAuth2ApiHost": "{{ nrf_ip }}",
+        "nrfOAuth2ApiPort": 8007,
+	"nrfNotificationServerAmsPort": 7001
+    },
+    "pcfMicroServices": {
+        "pcfMicroservicesSettings": [
+            {
+                "pcfMicroServiceHost": "{{ oms_ip }}",
+                "pcfMicroServiceName": "npcf-operation-maintenance",
+                "pcfMicroServicePort": 7052
+            },
+            {
+                "pcfMicroServiceHost": "{{ pes_ip }}",
+                "pcfMicroServiceName": "npcf-policyengine",
+                "pcfMicroServicePort": 7008
+            },
+	    {
+                "pcfMicroServiceHost": "{{ control_ip }}",
+                "pcfMicroServiceName": "npcf-configuration",
+                "pcfMicroServicePort": 7050
+	    },
+            {
+                "pcfMicroServiceHost": "{{ iws_ip }}",
+                "pcfMicroServiceName": "npcf-interworking",
+                "pcfMicroServicePort": 7020
+            }
+        ]
+    },    
+    "security": {
+        "JWTAuthenticate": true,
+        "MutualAuthenticate": false,
+        "TLS": {
+            "PrivateKey": "certificate/localhost.key",
+            "PublicKey": "certificate/localhost.crt"
+        },
+        "TLSSecure": false
+    }
+}

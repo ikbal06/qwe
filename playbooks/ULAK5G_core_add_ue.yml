@@ -1,0 +1,8 @@
+- hosts: postgredb
+  gather_facts: false
+  become: yes
+  become_flags: 'su -c'
+  tasks:
+    - name: add ue
+      ansible.builtin.include_role:
+        name: postgredb_add_ue

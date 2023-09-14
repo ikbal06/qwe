@@ -17,10 +17,11 @@ class EnvDataOperations:
          self.get_log = os.getenv('get_log', DEFAULT_GET_LOG)
          self.get_version = os.getenv('get_version', DEFAULT_GET_VERSION)
          self.run_test = os.getenv('run_test', DEFAULT_RUN_TEST)
-         self.analizci_ip = os.getenv('analizci_host', DEFAULT_ANALIZCI_HOST).split(':')[0]
-         self.analizci_port = os.getenv('analizci_host', DEFAULT_ANALIZCI_HOST).split(':')[1]
+         #self.analizci_ip = os.getenv('analizci_host', DEFAULT_ANALIZCI_HOST).split(':')[0]
+         #self.analizci_port = os.getenv('analizci_host', DEFAULT_ANALIZCI_HOST).split(':')[1]
          self.ansible_verbose = os.getenv('ansible_verbose', 1)
          self.spirent_ts_name = os.getenv('spirent_ts_name')
+         #self.test_ids=["KT_CN_001"]
          self.test_ids = os.getenv('test_ids').split(',')
          self.output_path = os.getenv('output_path')
          self.username = os.getenv('username')

@@ -1,0 +1,21 @@
+
+{
+	"PCFCSHost": "{{ cs_ip }}",
+	"PCFCSPort": 7500,
+	"LogDirectory": "\/var\/log\/cinar\/pcf\/sms\/",
+	"PCFCSTlsSecure": true,
+	"PCFCSMutualAuthenticate": false,
+	"AFMsgRetryCount": 3,
+	"SMFMsgRetryCount": 3,
+	"PDUSessionFilePoolSize": 4000,
+	"SubscriberSmConfigDataPoolSize": 4000,
+	"SubscriberSmSessionDataPoolSize": 4000,
+	"AppSessionFilePoolSize": 4000,
+	"SettingsSubscriptionTimeout": 5,
+	"CSSubscriptionConnectionRetryTimer": 10,
+	"NumOfConcurrencyThreads" : 8,
+	"PCFSMSAddress": "{{ control_ip }}",
+	"PCFSMSPort": 7002,
+	"EmergencyDnnList": ["dnn.emergency.com"],
+	"SupiListWithCHF": ["imsi-001002001000087"]
+}

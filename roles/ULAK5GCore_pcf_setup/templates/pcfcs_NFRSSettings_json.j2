@@ -1,0 +1,28 @@
+{
+    "database": {
+        "ConnectionPoolSize": 2,
+        "ConnectionRetryPeriod": 1,
+        "ConnectionTimeout": 1,
+        "DatabaseName": "{{ db_name}}",
+        "DatabaseType": "mongodb",
+        "Password": "{{ mongo_db_password }}",
+        "Port": {{ mongo_db_port }},
+        "Server": "{{ mongo_db_ip }}",
+        "Tables": [],
+        "UserName": "{{ mongo_db_username }}"
+    },
+    "logging": {
+        "Directory": "/var/log/cinar/pcf/nfrs/",
+        "LogLevel": "INFO"
+    },
+    "nfrsSettings": {
+        "accessTokenStatus": true,
+        "k8SActive": false,
+        "nfrsNFUpdateNotifyCallbackServerPort": 7080,
+        "nfrsTimers": {
+            "connectionTimeout": 1500,
+            "nfProfileSubscriptionTimerValue": 5,
+            "responseTimeout": 1000
+        }
+    }
+}

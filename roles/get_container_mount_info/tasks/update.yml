@@ -1,0 +1,10 @@
+- name: disabled pool members
+  set_fact:
+    conf_files_changed:  >-
+            {{ conf_files_changed | d([]) + 
+                [ each_file | combine ( {'path': new_path} )] }}                
+  vars:
+    new_path: "{{ mount_src | dirname }}"
+
+
+

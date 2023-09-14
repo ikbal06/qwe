@@ -1,0 +1,65 @@
+
+- name: Template pcf ams config files
+  template: src=pcf_AMSConfig_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "AMSConfig.json" and each_config_file.service == "ams"
+
+- name: Template pcf ams settings files
+  template: src=pcf_AMSSettings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "AMSSettings.json" and each_config_file.service == "ams"
+
+- name: Template pcf sms config files
+  template: src=pcf_SMSConfig_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "SMSConfig.json" and each_config_file.service == "sms"
+
+- name: Template pcf sms settings files
+  template: src=pcf_SMSSettings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "SMSSettings.json" and each_config_file.service == "sms"
+
+- name: Template pcf pes settings files
+  template: src=pcf_PESSettings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "PESSettings.json" and each_config_file.service == "pes"
+
+- name: Template pcf nfrs config files
+  template: src=pcf_NFRSConfig_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "NFRSConfig.json" and each_config_file.service == "nfrs"
+
+- name: Template pcf nfrs settings files
+  template: src=pcf_NFRSSettings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "NFRSSettings.json" and each_config_file.service == "nfrs"
+
+- name: Template pcfcs nfrs settings files
+  template: src=pcfcs_NFRSSettings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "NFRSSettings.json" and each_config_file.service == "cs"
+
+- name: Template pcfcs sms settings files
+  template: src=pcfcs_SMSSettings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "SMSSettings.json" and each_config_file.service == "cs"
+
+- name: Template pcfcs pes settings files
+  template: src=pcfcs_PESSettings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "PESSettings.json" and each_config_file.service == "cs"
+
+- name: Template pcfcs cs settings files
+  template: src=pcfcs_CSSettings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "CSSettings.json" and each_config_file.service == "cs"
+
+- name: Template pcfcs ams settings files
+  template: src=pcfcs_AMSSettings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "AMSSettings.json" and each_config_file.service == "cs"
+
+- name: Template pcfcs commondata settings files
+  template: src=pcfcs_CommonData_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+  diff: yes
+  when: each_config_file.filename == "CommonData.json" and each_config_file.service == "cs"

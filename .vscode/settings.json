@@ -2,10 +2,6 @@
     "python.experiments.enabled": false,
     "python.experiments.optOutFrom": ["All"],    
     "python.defaultInterpreterPath": "C:\\Python311\\python.exe",
-    "robocorp.language-server.python": "C:\\Python311\\python.exe",
-    "robot.language-server.python": "C:\\Python311\\python.exe",
-    "robot.python.executable": "C:\\Python311\\python.exe",
-    "cmake.configureOnOpen": false,
     "python.analysis.extraPaths": [
         "c:/Users/ikbal.kirklar/Desktop/cem/.",
         "c:/Users/ikbal.kirklar/Desktop/cem/keywords",
@@ -13,15 +9,32 @@
         "c:/Users/ikbal.kirklar/Desktop/cem/resources",
         "c:/Users/ikbal.kirklar/Desktop/cem/variables"
     ],
-    "robotcode.robot.pythonPath": [
-        ".",
-        "./libraries",
-        "./resources",
-    ],
+
+    "robot.language-server.python": "C:\\Python311\\python.exe",
+    "robot.python.executable": "C:\\Python311\\python.exe",
     "robot.pythonpath": [
         "./",
         "./lib",
         "./resources",
         "./keywords"
     ],
+    
+    "robocorp.language-server.python": "C:\\Python311\\python.exe",
+    "robocorp.autoSetPythonExtensionInterpreter": false,
+
+    "robotcode.debug.attachPython": true,
+    "robotcode.debug.outputLog": true,
+    "robotcode.debug.groupOutput": true,
+    "robotcode.debug.outputMessages": true,
+    "robotcode.python": "c:\\Python311\\python.exe",
+    "robotcode.robot.pythonPath": [
+        ".",
+        "./libraries",
+        "./resources",
+    ],
+    "robotcode.robot.env": {
+        "test_ids": "KT_CN_001"
+    },
+    "robotcode.robot.outputDir": "./output",
+
 }

@@ -1,0 +1,23 @@
+- hosts: nfs
+  gather_facts: false
+  tasks:
+        - name: Check "{{destination}}" exist or not
+          stat:
+            path: "{{version_file_path}}"
+          register: file_status
+          delegate_to: localhost
+
+        - name: If "{{version_file_path}}" exist, then remove it
+          ansible.builtin.file:
+            path: "{{version_file_path}}"
+            state: absent
+          when: file_status.stat.exists
+          delegate_to: localhost
+
+        - name: Get NF version
+          ansible.builtin.include_role:
+            name: get_package_version
+          vars:
+            package: "{{ item }}"
+          with_items: "{{ package_names }}"
+          

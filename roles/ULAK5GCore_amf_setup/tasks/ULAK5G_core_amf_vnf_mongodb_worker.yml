@@ -1,0 +1,17 @@
+- name: Create "{{db_name}}" with test collection
+  community.mongodb.mongodb_shell:
+    db: "{{db_name}}"
+    login_user: "{{mongo_db_username}}"
+    login_password: "{{mongo_db_password}}"
+    eval: "db.createCollection('test')"
+  delegate_to: mongo
+
+- name: AmfList templating
+  template: src=amf_list_mongo_json.j2 dest="{{amf_profile_col_name}}_{{amf_pointer}}.json"
+  diff: yes
+  delegate_to: mongo
+
+- name: Mongo import operation
+  ansible.builtin.shell: mongoimport --mode upsert  --host {{mongo_db_ip}}:{{mongo_db_port}} --db "{{db_name}}" --collection "{{amf_profile_col_name}}" --file "{{amf_profile_col_name}}_{{amf_pointer}}.json"
+  delegate_to: mongo
+

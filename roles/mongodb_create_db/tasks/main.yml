@@ -1,0 +1,7 @@
+#Bu dosya, mongodb'de verilen databasei olusturmak icin kullanilir.
+- name: Create "{{mongo_db_name}}" with test collection
+  community.mongodb.mongodb_shell:
+    db: "{{mongo_db_name}}"
+    login_user: "{{mongo_db_username}}"
+    login_password: "{{mongo_db_password}}"
+    eval: "db.createCollection('test')"

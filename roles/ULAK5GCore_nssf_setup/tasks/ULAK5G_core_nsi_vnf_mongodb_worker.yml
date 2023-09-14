@@ -1,0 +1,8 @@
+- name: NSSF nsi templating
+  template: src=nssf_nsi_mongo_json.j2 dest="{{item.nsi_name}}.json"
+  diff: yes
+  delegate_to: mongo
+
+- name: Mongo import operation
+  ansible.builtin.shell: mongoimport --mode upsert --db "{{db_name}}" --collection "{{nssf_nsi_profile_col_name}}" --file "{{item.nsi_name}}.json"
+  delegate_to: mongo

@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Fetch config files
+      ansible.builtin.include_role:
+        name: ssh_copy_id

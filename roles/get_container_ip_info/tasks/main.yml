@@ -1,0 +1,11 @@
+- name: run shell command
+  ansible.builtin.command: docker inspect "{{container}}"
+  register: container_info
+  failed_when: container_info is failed
+
+- name: get ip adress if container exist
+  ansible.builtin.command: docker inspect --format '{%raw %}{{ .NetworkSettings.Networks.cnr_control_network.IPAMConfig.IPv4Address}}{% endraw %}' "{{container}}"
+  when: not container_info is failed
+  register: container_ip
+  #failed_when: not container_ip.stdout
+

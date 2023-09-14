@@ -1,0 +1,34 @@
+- name: restart vnf
+  ansible.builtin.service:
+            name: "{{ each_service }}"
+            state: restarted
+  become: true
+  with_items: "{{ service_names }}"
+  loop_control:
+     loop_var: each_service
+
+- name: stop vnf
+  ansible.builtin.service:
+            name: "{{ each_service }}"
+            state: stopped
+  become: true
+  with_items: "{{ service_names }}"
+  loop_control:
+     loop_var: each_service
+
+- name: start vnf
+  ansible.builtin.service:
+            name: "{{ each_service }}"
+            state: started
+  become: true
+  with_items: "{{ service_names }}"
+  loop_control:
+     loop_var: each_service
+
+- name: stop cnf
+  ansible.builtin.command: docker stop "{{container_name}}"
+
+- name: start cnf
+  ansible.builtin.command: docker start "{{container_name}}"
+
+

@@ -1,0 +1,26 @@
+- name: run shell command
+  ansible.builtin.command: docker inspect "{{container_name}}"
+  register: container_info
+  failed_when: container_info is failed
+
+
+- name: get ip adress if container exist                   
+  ansible.builtin.command: docker inspect --format '{%raw %}{{json .Mounts}}{% endraw %}'  "{{container_name}}"
+  when: not container_info is failed
+  register: mount_list
+
+- name: get mount info start..
+  include_tasks:
+    file: search.yml
+  with_items: "{{mount_list.stdout}}"
+  loop_control:
+          loop_var: each_mount
+  
+- name: updated conf files
+  set_fact:
+          conf_files: "{{conf_files_changed}}"
+
+
+ 
+ 
+

@@ -1,0 +1,15 @@
+
+- name: set var
+  include_tasks:
+          file: update.yml
+  vars:
+          current_file: "{{each_file.path}}/{{each_file.filename}}"
+          mount_dest: "{{each_mount.Destination}}"
+          mount_src: "{{each_mount.Source}}"
+  
+  with_items: "{{conf_files}}"
+  loop_control:
+          loop_var: each_file
+  when: current_file == mount_dest
+
+

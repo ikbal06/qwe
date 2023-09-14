@@ -1,0 +1,9 @@
+
+- name: Access password 
+  set_fact:
+    pwd: "{{ lookup('ansible.builtin.env', 'password') }}"
+  failed_when: pwd | length == 0
+
+- name: ssh copy id
+  ansible.builtin.shell: sshpass -p {{pwd}} ssh-copy-id -o StrictHostKeyChecking=no {{ansible_user}}@{{hostvars[item].ansible_host}}
+  with_items: "{{ groups['nfs']}}"

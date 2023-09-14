@@ -1,0 +1,37 @@
+{
+    "settings": {
+    
+        "AMFServicesConfigurations": {
+            "amfPointer": "{{ amf_pointer }}",
+            "timerValues": {
+                "useDefaultValues": "false",
+                "mrtValue": "30",
+                "idtValue": "30",
+                "t3512TimerUnit": "5",
+                "t3512TimerValue": "2"
+            },
+            "nfInstanceId": "{{ uuid }}",
+            "ClientPoolSize": "8",
+            "TQ_THREADCNT_CORE": "0",
+            "TQ_THREADCNT_RAN": "0",
+            "TQ_THREADCNT_SBI": "0",
+            "maxITestLogValue": "100000",
+            "updateUeContextInDbRegularly": "true"
+        },
+        "LogConfigurations": {
+            "DisplayLog": "true",
+            "LogLevel": "DEBUG"
+        },
+        "generalParameters": {
+            "DBSettings": {
+                "dbname": "{{ db_name }}",
+                "dbtype": "mongo",
+                "host": "{{ mongo_db_ip }}",
+                "password": "{{ mongo_db_password }}",
+                "port": {{ mongo_db_port }},
+                "username": "{{ mongo_db_username }}"
+            },
+            "authJwtPublicKey": "true"
+        }
+    }
+}

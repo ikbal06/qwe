@@ -1,0 +1,129 @@
+{
+    "_comment": "The unit for time period is milliseconds.",
+    "date": "2022-Aug-23",
+    "author": "Hakan Batmaz",
+
+    "General": {
+        "NumberofServingServerThreads": 4,
+        "ClientCount": 4,
+        "ClientTimeout": 3000,
+        "HomePlmnId": {
+        "mcc": "{{ h_mcc | default("001") }}",
+        "mnc": "{{ h_mnc | default("002") }}"
+        }
+    },
+
+    "NrfClientManager": {
+        "Host": "hbu-api-test.free.beeceptor.com",
+        "Port": 443,
+        "Retry": 10,
+        "RetryDelay": 10000,
+        "Scheme": "https"
+    },
+
+    "Security": {
+        "TLSSecure": false,
+        "JWTAuthenticate": true,
+        "MutualAuthenticate": false,
+        "OAuth2": {
+            "PrivateKey": "certificate\/jwt.key",
+            "PublicKey": "certificate\/jwt.pub"
+        },
+        "TLS": {
+            "PublicKey": "certificate\/localhost.crt",
+            "PrivateKey": "certificate\/localhost.key"
+        }
+    },
+
+    "Logging": {
+        "Directory": "\/var\/log\/cinar\/nssf\/",
+        "DisplayLog": true,
+        "FileName": "NSSF",
+        "LogLevel": "DEBUG"
+    },
+
+    "Database": {
+        "Server": "{{ mongo_db_ip }}",
+        "Port": {{ mongo_db_port }},
+        "DatabaseName": "{{ db_name }}",
+        "UserName": "{{ mongo_db_username }}",
+        "Password": "{{ mongo_db_password }}",
+        "ConnectionRetryPeriod": 60000,
+        "Tables": {
+            "tablename_rules":"cinarnssrulescollection",
+            "tablename_availability":"cinaramfavailabilitycollection"
+        },
+        "ConnectionPoolSize": 4,
+        "ConnectionTimeout": 1000,
+        "ServerSelectionTimeout": 1000,
+        "SocketTimeout": 1000
+    },
+
+    "AdditionalNFServices": {
+        "metricSettings":
+        {
+           
+            "ipEndPoints": [
+                {
+                    "ipv4Address": "{{ control_ip }}",
+                   
+                    "port": 8104
+                }
+            ],
+            
+            "nfServiceStatus": "REGISTERED",
+            "scheme": "http",
+            "serviceInstanceId": "81fdab8a-8605-11ea-bc55-0242ac130003",
+            "versions": [
+                {
+                    "apiFullVersion": "v1",
+                    "apiVersionInUri": "/metrics"                   
+                }
+            ]
+        },
+        "loggerSettings":{
+          
+            "ipEndPoints": [
+                {
+                    "ipv4Address": "{{ control_ip }}",                 
+                    "port": 8105
+                }
+            ],            
+            "nfServiceStatus": "REGISTERED",
+            "scheme": "http",
+            "serviceInstanceId": "81fdab8a-8605-11ea-bc55-0242ac130003",
+            "versions": [
+                {
+                    "apiFullVersion": "v1",
+                    "apiVersionInUri": "/log/v1"
+                }
+            ]
+        },
+        "healthcheckSettings":{          
+            "ipEndPoints": [
+                {
+                    "ipv4Address": "{{ control_ip }}",
+                    "port": 8106
+                }
+            ],           
+            "nfServiceStatus": "REGISTERED",          
+            "scheme": "http",
+            "serviceInstanceId": "81fdab8a-8605-11ea-bc55-0242ac130003",           
+            "versions": [
+                {
+                    "apiFullVersion": "v1",
+                    "apiVersionInUri": "/healthcheck"
+                }
+            ]
+        }
+    },
+
+    "ServiceSettings": {
+        "AlarmServiceName": "nnssf-nssaiavailability",
+        "NumberofIOServiceThreads": 6,
+        "AvailabilityService": {
+            "ServicePort": 8101,
+            "TSubscriberValidityPeriod": 3600000
+        }
+    }
+}

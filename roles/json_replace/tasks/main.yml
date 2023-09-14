@@ -1,0 +1,9 @@
+#Bu dosya, json dosyasina verilen key'in degerini degistirmek icin kullanilir.
+- name: Replace {{replace_item_regex}}" with "{{replace_item_value}}".
+  block:
+        - ansible.builtin.shell: sed -i 's/\s*:\s*/:/g' "{{ path }}"
+        - ansible.builtin.replace:
+            path: "{{ path }}"
+            regexp: '"{{replace_item_regex}}":"[^"]+"'
+            replace: '"{{replace_item_regex}}":"{{replace_item_value}}"'
+

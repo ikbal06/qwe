@@ -1,7 +1,10 @@
-from SpirentClient import SpirentClient
+from spirent.SpirentClient import SpirentClient
 from globalProperties import *
 from common.Logger import log
 import json
+import sys 
+print("Python Version:", sys.version)
+print("Python Executable Path:", sys.executable)
 import jinja2
 import sys
 

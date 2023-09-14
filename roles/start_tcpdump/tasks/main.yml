@@ -1,0 +1,38 @@
+#Bu dosya, remote makinede tcpdump baslatmak icin kullanilir.
+- name: Check "{{inventory_dir}}/host_vars/{{ inventory_hostname }}.json" exist or not
+  stat:
+      path: "{{inventory_dir}}/host_vars/{{ inventory_hostname }}.json"
+  register: dir_status
+  delegate_to: localhost
+  when: pcap_name is undefined
+
+- name: If "{{inventory_dir}}/host_vars/{{ inventory_hostname }}.json" not exist, create it
+  ansible.builtin.file:
+     path: "{{inventory_dir}}/host_vars/{{ inventory_hostname }}.json"
+     state: touch
+     mode: '0755'
+  when: not dir_status.stat.exists
+  delegate_to: localhost
+  when: pcap_name is undefined
+
+- name: Set fact tcpdump file
+  set_fact:
+       pcap_name: packet_capture_{{ ansible_host }}_{{ inventory_hostname }}_{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}.pcap
+  when: pcap_name is undefined
+
+- name: Write capture file name to "{{inventory_dir}}/host_vars/{{ inventory_hostname }}.json"
+  ansible.builtin.import_role:
+     name: json_add_key_value
+  vars:
+     file: "{{inventory_dir}}/host_vars/{{ inventory_hostname }}.json"
+     key:  cap_filename
+     value: "{{pcap_name}}"
+  delegate_to: localhost
+  when: pcap_name is undefined
+
+- name: Start tcpdump
+  ansible.builtin.shell:
+    cmd: tcpdump -G {{ duration_in_sec| default(120) }} -W 1 -i {{ interface | default("any")}} -s 0 -w {{ pcap_name }} >/dev/null 2>&1 &
+  async: 10
+  poll: 0
+  become: true

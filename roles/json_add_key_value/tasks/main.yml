@@ -1,0 +1,14 @@
+#Bu dosya, json dosyasina verilen key/value pairini eklemek icin kullanilir.
+- name: Set json file as variable (add key/value)
+  include_vars:
+    file: "{{ file }}"
+    name: imported_var
+
+- name: Append key/values to json file
+  set_fact:
+    imported_var: "{{ imported_var | default([]) | combine({ key : value }) }}"
+
+- name: Write new content to json file (add key/value)
+  copy:
+    content: "{{ imported_var | to_nice_json }}"
+    dest: "{{ file }}"

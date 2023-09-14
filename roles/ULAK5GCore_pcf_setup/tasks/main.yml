@@ -1,0 +1,143 @@
+- name: Check mandatory variables are defined
+  assert:
+    that:
+         - container_name is defined
+         - nrf_container_name is defined        
+  when: deployment_type| default("vnf") == "cnf"
+
+- name: copy "{{inventory_dir}}/files/pcf_dump/" to "test_out/files/pcf_dump"
+  copy:
+    src: "{{inventory_dir}}/files/pcf_dump/"
+    dest: "test_out/files/pcf_dump"
+  delegate_to: mongo
+
+- name: Get mongo deployment type
+  set_fact:
+        mongo_deployment_type: "{{hostvars[groups['mongodb'].0].deployment_type}}"
+
+- block:
+    - name: Get  ip address of amf container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{container_name}}"
+    - name: updated control ip address
+      set_fact:
+        control_ip: "{{container_ip.stdout}}"
+    - name: Get  ip address of nrf container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{nrf_container_name}}"
+    - name: updated nrf  ip address
+      set_fact:
+        nrf_ip: "{{container_ip.stdout}}"
+    - name: Get  ip address of sms container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{sms_container_name}}"
+    - name: updated sms  ip address
+      set_fact:
+       sms_ip: "{{container_ip.stdout}}"
+    - name: Get  ip address of pes container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{pes_container_name}}"
+    - name: updated pes  ip address
+      set_fact:
+       pes_ip: "{{container_ip.stdout}}" 
+    - name: Get  ip address of oms container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{oms_container_name}}"
+    - name: updated oms  ip address
+      set_fact:
+       oms_ip: "{{container_ip.stdout}}"  
+    - name: Get  ip address of iws container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{iws_container_name}}"
+    - name: updated iws ip address
+      set_fact:
+       iws_ip: "{{container_ip.stdout}}"  
+    - name: Get  ip address of cs container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{cs_container_name}}"
+    - name: updated cs ip address
+      set_fact:
+       cs_ip: "{{container_ip.stdout}}" 
+    - name: Get  ip address of ams container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{ams_container_name}}"
+    - name: updated ams ip address
+      set_fact:
+       ams_ip: "{{container_ip.stdout}}"         
+    - name: Get config mount of container
+      ansible.builtin.include_role:
+        name: get_container_mount_info    
+  when: deployment_type == "cnf" 
+
+- block:
+    - name: set mongo db ip as variable
+      set_fact:
+        mongo_db_ip: "{{hostvars[groups['mongodb'].0].ansible_host}}"
+    - name: Nssf mongodb nsr operation starting...
+      ansible.builtin.include_tasks:
+        file: ULAK5G_core_pcf_vnf_mongodb_worker.yml
+  when: mongo_deployment_type == "vnf"
+
+- block:
+    - name: Get mongo container name
+      set_fact:
+        mongo_container_name: "{{hostvars[groups['mongodb'].0].container_name}}" 
+    - name: Get  ip address of mongo container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{mongo_container_name}}"
+    - name: updated mongodb ip address
+      set_fact:
+        mongo_db_ip: "{{container_ip.stdout}}" 
+    - name: Pcf mongodb pcfprofile operation starting...
+      ansible.builtin.include_tasks:
+        file: ULAK5G_core_pcf_cnf_mongodb_worker.yml    
+  when: mongo_deployment_type == "cnf" 
+
+- name: PCF config files template manager
+  ansible.builtin.include_tasks:
+     file: cinar_pcf_setup_worker.yml
+  with_items: "{{ conf_files }}"
+  loop_control:
+       loop_var: each_config_file
+
+- block:
+    - name: service stop
+      ansible.builtin.include_role:
+        name: service_operations
+      vars:
+        operation: stop
+        service_name: "{{item}}"
+      with_items: "{{service_names}}"
+    - name: service start
+      ansible.builtin.include_role:
+        name: service_operations
+      vars:
+        operation: start
+        service_name: "{{item}}"
+      with_items: "{{service_names}}"
+  when: deployment_type == "vnf"
+
+- block:
+   - name: stop cnf
+     ansible.builtin.command: docker stop "{{container_name}}"
+   - name: start cnf
+     ansible.builtin.command: docker start "{{container_name}}"
+  when: deployment_type == "cnf"

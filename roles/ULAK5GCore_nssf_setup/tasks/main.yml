@@ -1,0 +1,139 @@
+#Bu dosya, nssf'nin konfigurasyon dosyalarinin template islemleri icin kullanilir.
+#Eger konfigurasyon dosyalarinda degisiklik varsa, nssf restart edilir.
+- name: Check mandatory variables are defined
+  assert:
+    that:
+         - container_name is defined
+         - nrf_container_name is defined
+  when: deployment_type == "cnf"
+
+- name: Get mongo deployment type
+  set_fact:
+        mongo_deployment_type: "{{hostvars[groups['mongodb'].0].deployment_type}}"
+
+- block:
+    - name: Get  ip address of amf container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{container_name}}"
+    - name: updated control ip address
+      set_fact:
+        control_ip: "{{container_ip.stdout}}"
+    - name: Get  ip address of nrf container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{nrf_container_name}}"
+    - name: updated nrf ip address
+      set_fact:
+        nrf_ip: "{{container_ip.stdout}}"    
+    - name: Get config mount  of container
+      ansible.builtin.include_role:
+        name: get_container_mount_info
+  when: deployment_type == "cnf"
+
+- block:
+    - name: Get mongo container name
+      set_fact:
+        mongo_container_name: "{{hostvars[groups['mongodb'].0].container_name}}" 
+    - name: Get  ip address of mongo container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{mongo_container_name}}"
+    - name: updated mongodb ip address
+      set_fact:
+        mongo_db_ip: "{{container_ip.stdout}}" 
+    - name: Nssf mongodb confns operation starting...
+      ansible.builtin.include_tasks:
+        file: ULAK5G_core_confns_cnf_mongodb_worker.yml
+      with_items: "{{confns_list}}"   
+    - name: Nssf mongodb nsr operation starting...
+      ansible.builtin.include_tasks:
+        file: ULAK5G_core_nsr_cnf_mongodb_worker.yml
+      with_items: "{{nsr_list}}"
+    - name: Nssf mongodb nsi operation starting...
+      ansible.builtin.include_tasks:
+        file: ULAK5G_core_nsi_cnf_mongodb_worker.yml
+      with_items: "{{nsi_list}}"        
+  when: mongo_deployment_type == "cnf"  
+
+- block:
+    - name: set mongo db ip as variable
+      set_fact:
+        mongo_db_ip: "{{hostvars[groups['mongodb'].0].ansible_host}}"
+    - name: Nssf mongodb confns operation starting...
+      ansible.builtin.include_tasks:
+        file: ULAK5G_core_confns_vnf_mongodb_worker.yml
+      with_items: "{{confns_list}}"   
+    - name: Nssf mongodb nsr operation starting...
+      ansible.builtin.include_tasks:
+        file: ULAK5G_core_nsr_vnf_mongodb_worker.yml
+      with_items: "{{nsr_list}}"
+    - name: Nssf mongodb nsi operation starting...
+      ansible.builtin.include_tasks:
+        file: ULAK5G_core_nsi_vnf_mongodb_worker.yml
+      with_items: "{{nsi_list}}"
+  when: mongo_deployment_type == "vnf" 
+
+- block:
+  - name: Template nssf settings file
+    template: src=nssf_settings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "settings.json" and each_config_file.service == "nssf"
+    loop_control:
+       loop_var: each_config_file
+
+  - name: Template nssf NFProfile file
+    template: src=nssf_nf_profile_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "NFProfile.json" and each_config_file.service == "nssf"
+    loop_control:
+       loop_var: each_config_file
+
+  - name: Template nssf sel settings file
+    template: src=nssf_sel_settings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "settings.json" and each_config_file.service == "nssf_sel"
+    loop_control:
+       loop_var: each_config_file
+
+  - name: Template nssf conf settings file
+    template: src=nssf_conf_settings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "settings.json" and each_config_file.service == "nssf_conf"
+    loop_control:
+       loop_var: each_config_file
+
+  - name: Template nssf avail settings file
+    template: src=nssf_avail_settings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "settings.json" and each_config_file.service == "nssf_avail"
+    loop_control:
+       loop_var: each_config_file
+
+  - name: Template nssf client settings file
+    template: src=nssf_client_settings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "settings.json" and each_config_file.service == "nssf_client"
+    loop_control:
+       loop_var: each_config_file
+
+  - name: Template nssf client NFProfile file
+    template: src=nssf_client_nfprofile_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "NFProfile.json" and each_config_file.service == "nssf_client"
+    loop_control:
+       loop_var: each_config_file
+
+  notify:
+      - stop {{deployment_type|lower}}
+      - start {{deployment_type|lower}}

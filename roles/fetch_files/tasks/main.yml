@@ -1,0 +1,40 @@
+- name: Check "{{source}}" exist or not
+  stat:
+      path: "{{source}}"
+  register: src_status
+
+- name: Check "{{destination}}" exist or not
+  stat:
+    path: "{{destination}}"
+  register: dest_status
+
+- name: Create directory= "{{destination}}"
+  file:
+    path: "{{destination}}"
+    state: directory
+  when: not dest_status.stat.exists
+  delegate_to: localhost
+
+- name: Compress "{{source}}.gz"
+  community.general.archive:
+    path: "{{source}}"
+    dest: "{{source}}.gz"
+    format: gz
+  when: with_zip == true
+
+- name: Set fact for zipped file
+  set_fact:
+    zipped_source: "{{source}}.gz"
+  when: with_zip == true
+
+- name: Fetch files
+  synchronize: 
+     src: "{{zipped_source if with_zip == true else source}}" 
+     dest: "{{destination}}"
+     mode: pull
+  when: src_status.stat.exists
+
+- name: Remove "{{zipped_source}}"  from remote server
+  ansible.builtin.shell:
+     cmd:  rm -rf "{{zipped_source}}"
+  when: with_zip == true

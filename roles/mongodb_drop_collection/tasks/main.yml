@@ -1,0 +1,8 @@
+- name: remove collection
+  community.mongodb.mongodb_shell:
+        db: "{{db_name}}"
+        login_user: "{{mongo_db_username}}"
+        login_password: "{{mongo_db_password}}"
+        eval: "db.{{mongo_col_name}}.drop()"
+  delegate_to: mongo
+      

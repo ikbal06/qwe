@@ -1,0 +1,27 @@
+#Bu dosya, mongodb'de verilen databasein restore edilmesi icin kullanilir.
+- name: Check "{{dest_directory}}" exist or not
+  stat:
+    path: "{{dest_directory}}"
+  register: dest_dir_status
+
+- name: Create directory= "{{dest_directory}}"
+  file:
+    path: "{{dest_directory}}"
+    state: directory
+  when: not dest_dir_status.stat.exists
+
+- name: Check "{{src_directory}}" exist or not
+  stat:
+    path: "{{src_directory}}"
+  register: src_dir_status
+  delegate_to: localhost
+
+- name: copy "{{src_directory}}" to "{{dest_directory}}"
+  synchronize:
+    src: "{{src_directory}}"
+    dest: "{{dest_directory}}"
+    mode: push
+  when: src_dir_status.stat.exists
+
+- name: Mongo restore operation "{{mongo_db_name}}"
+  ansible.builtin.shell: "mongorestore --host {{ansible_host}}:{{mongo_db_port}} --db {{mongo_db_name}} {{extra_param | default(None)}} {{dest_directory}}"

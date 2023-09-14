@@ -1,0 +1,15 @@
+{
+    "_id" : "{{ item.nsi_name}}",
+    "name" : "{{ item.nsi_name}}",
+    "nrfAccessTokenUri" : "http://{{ nrf_ip}}:8007/oauth2/token",
+    "nrfId" : "http://{{ nrf_ip}}:8006/nnrf-disc/v1",
+    "nrfNfMgtUri" : "http://{{ nrf_ip}}:8001/nnrf-nfm/v1",
+    "nsiId" : "{{ item.nsi_id}}",
+    "targetAmfSets" : [ 
+        {
+            "regionId" : "01",
+            "setFqdn" : "set002.region01.amfset.5gc.mnc002.mcc001.3gppnetwork.org",
+            "setId" : "001"
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+- name: Check mandatory variables are defined
+  assert:
+    that:
+         - container_name is defined         
+  when: deployment_type == "cnf"
+
+- name: Check mandatory variables are defined
+  assert:
+    that:
+         - ue_id is defined        
+         - ue_ip4 is defined  
+         - perm_key is defined   
+
+- name: Get postgre deployment type
+  set_fact:
+       postgre_deployment_type: "{{hostvars[groups['postgredb'].0].deployment_type}}"
+
+- name: Get postgre db name
+  set_fact:
+       postgre_db_name: "{{postgre_db_name}}"
+
+- block:
+    - name: set postgre db container name as variable
+      set_fact:
+        postgre_container_name: "{{hostvars[groups['postgredb'].0].container_name}}"
+    - name: Get  ip address of postgre container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{postgre_container_name}}"
+    - name: ue add operation starting...
+      ansible.builtin.include_tasks:
+        file: add_ue_cnf_postgre_worker.yml 
+  when: postgre_deployment_type == "cnf"  
+
+
+
+- block:
+    - name: ue add operation starting...
+      ansible.builtin.include_tasks:
+        file:  add_ue_vnf_postgre_worker.yml
+  when: postgre_deployment_type == "vnf"
+
+- block:
+    - name: ue add operation starting...
+      ansible.builtin.include_tasks:
+        file:  add_ue_k8s_postgre_worker.yml
+  when: postgre_deployment_type == "k8s"

@@ -1,0 +1,86 @@
+#Bu dosya, udr'in konfigurasyon dosyalarinin template islemleri icin kullanilir.
+#Eger konfigurasyon dosyalarinda degisiklik varsa, udr restart edilir.
+- name: Check mandatory variables are defined
+  assert:
+    that:
+         - container_name is defined
+         - nrf_container_name is defined          
+  when: deployment_type| default("vnf") == "cnf"
+
+- name: Get mongo deployment type
+  set_fact:
+       postgre_deployment_type: "{{hostvars[groups['postgredb'].0].deployment_type}}"
+- block:
+    - name: Get  ip address of ausf container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{container_name}}"
+    - name: updated control ip address
+      set_fact:
+        control_ip: "{{container_ip.stdout}}"
+    - name: Get  ip address of nrf container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{nrf_container_name}}"
+    - name: updated nrf  ip address
+      set_fact:
+        nrf_ip: "{{container_ip.stdout}}"
+    - name: Get config mount of container
+      ansible.builtin.include_role:
+        name: get_container_mount_info
+  when: deployment_type == "cnf"
+
+- block:
+    - name: set postgre db container name as variable
+      set_fact:
+        postgre_container_name: "{{hostvars[groups['postgredb'].0].container_name}}"
+    - name: Get  ip address of postgre container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{postgre_container_name}}"
+    - name: updated postgredb ip address
+      set_fact:
+        postgre_db_ip: "{{container_ip.stdout}}"
+  when: postgre_deployment_type == "cnf"  
+
+- name: set mongo db ip as variable
+  set_fact:
+    postgre_db_ip: "{{hostvars[groups['postgredb'].0].ansible_host}}"
+  when: postgre_deployment_type == "vnf"
+
+
+- name: Get recoveryTime info from NFProfile file
+  ansible.builtin.include_role:
+    name: json_parse
+  vars:
+    path: "{{ each_config_file.path }}"
+    filename: "{{ each_config_file.filename }}"
+    json_key: recoveryTime
+  with_items: "{{ conf_files }}"
+  when: each_config_file.filename == "NFProfile.json"
+  loop_control:
+       loop_var: each_config_file
+
+- block:
+  - name: Template udr settings file
+    template: src=udr_settings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "settings.json"
+    loop_control:
+       loop_var: each_config_file
+
+  - name: Template udr NFProfile file
+    template: src=udr_nf_profile_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "NFProfile.json"
+    loop_control:
+       loop_var: each_config_file
+  notify:
+      - stop {{deployment_type|lower}}
+      - start {{deployment_type|lower}}
+

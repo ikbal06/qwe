@@ -1,0 +1,4 @@
+
+- name: Get version
+  ansible.builtin.import_playbook: ULAK5G_core_get_nf_version.yml
+  when: version == 'enable'

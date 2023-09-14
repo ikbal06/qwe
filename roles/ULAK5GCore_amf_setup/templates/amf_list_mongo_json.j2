@@ -1,0 +1,420 @@
+{
+    "_id" : "{{ amf_pointer }}",
+    "amfKpi" : {
+        "maxNOfRegisteredSubscribers" : 588,
+        "meanNofRegisteredSubscribers" : 0,
+        "nOf5gPagingProcedures" : 1,
+        "nOfEmergencyRegistrationRequestsPerSNSSAI" : {},
+        "nOfInitialRegistrationRequestsPerSNSSAI" : {
+            " " : 51892,
+            "1" : 115961,
+            "2" : 3
+        },
+        "nOfMobilityRegistrationUpdateRequestsPerSNSSAI" : {
+            " " : 2,
+            "1" : 2
+        },
+        "nOfPeriodicRegistrationUpdateRequestsPerSNSSAI" : {
+            " " : 1
+        },
+        "nOfRegRequestsforSMSoverNAS" : 5,
+        "nOfSucc5gPagingProcedures" : 1,
+        "nOfSuccEmergencyRegistrationsPerSNSSAI" : {},
+        "nOfSuccInitialRegistrationsPerSNSSAI" : {
+            " " : 38,
+            "1" : 83805
+        },
+        "nOfSuccMobilityRegistrationUpdatesPerSNSSAI" : {
+            " " : 2,
+            "1" : 2
+        },
+        "nOfSuccPeriodicRegistrationUpdatesPerSNSSAI" : {
+            " " : 1
+        },
+        "nOfSuccRegistrationsAllowedforSMSoverNAS" : 5,
+        "nOfSuccUEConfigUpdate" : 3,
+        "nOfTotalRegistrationRequests" : 167861,
+        "nOfTotalSuccRegistration" : 83848,
+        "nOfUEConfigUpdate" : 7,
+        "registeredSubscribersOfNwSlice" : {}
+    },
+    "emergencyConfigurationData" : {
+        "dnn" : "dnn.emergency.com",
+        "emergencySmfUuid" : "",
+        "snssai" : {
+            "sst" : 1
+        },
+        "supportEmergencyRegForUnauthenticatedSUPIs" : true
+    },
+    "generalParameters" : {
+        "allowPagingAtOverload" : false,
+        "gtpInterfaceAmfInfo" : {
+            "amfName" : "{{ amf_name }}",
+            "ipv4EndpointAddress" : [ 
+                "127.0.0.1"
+            ],
+            "ipv6EndpointAddress" : []
+        },
+        "gtpInterfaceMmeInfo" : {
+            "ipv4EndpointAddress" : [ 
+                "127.0.0.1"
+            ],
+            "ipv6EndpointAddress" : [],
+            "mmeName" : "MME"
+        },
+        "kpiSamplingPeriod" : 3600,
+        "nrfCallbackPort" : "6287",
+        "pagingRetransmissionCount" : 4,
+        "pagingRetransmissionTimerValue" : 6,
+        "prometheusServerPort" : "6224",
+        "sbiCallbackPort" : "6286",
+        "udsfDeployment" : true
+    },
+    "ladnList" : [ 
+        {
+            "ladnDnn" : "dnn.ladn0.com",
+            "ladnServiceArea" : [ 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000001"
+                }, 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000002"
+                }
+            ]
+        }
+    ],
+    "liConfigurations" : {
+        "liAdmfServiceEndPoint" : {
+            "ipv4Address" : "127.0.0.1",
+            "port" : 6294
+        },
+        "liMdfServiceEndPoint" : {
+            "ipv4Address" : "127.0.0.1",
+            "port" : 6295
+        },
+        "liNeServiceEndPoint" : {
+            "ipv4Address" : "127.0.0.1",
+            "port" : 6292
+        }
+    },
+    "nfProfile" : {
+        "allowedNfTypes" : [ 
+            "SMF", 
+            "PCF", 
+            "UDM", 
+            "AUSF", 
+            "NSSF", 
+            "AMF", 
+            "SMSF"
+        ],
+        "allowedNssais" : [ 
+            {
+                "sst" : 1
+            }
+        ],
+        "allowedPlmns" : [ 
+             {"mcc" : "{{ h_mcc | default("001") }}", "mnc" : "{{ h_mnc | default("002") }}"},
+             {"mcc" : "{{ r_mcc | default("002") }}", "mnc" : "{{ r_mnc | default("001") }}"}
+        ],
+        "amfInfo" : {
+            "amfRegionId" : "01",
+            "amfSetId" : "002",
+            "backupInfoAmfFailure" : [],
+            "backupInfoAmfRemoval" : [ 
+                {
+                    "amfId" : "010081",
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        }
+                }
+            ],
+            "guamiList" : [ 
+                {
+                    "amfId" : "010080",
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        }
+                }
+            ],
+            "n2InterfaceAmfInfo" : {
+                "amfName" : "{{ amf_name }}",
+                "ipv4EndpointAddress" : [ 
+                    "{{ public_ip }}"
+                ]
+            },
+            "taiList" : [ 
+                {
+                    "plmnId" : {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "004134"
+                },
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000000"
+                }, 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000001"
+                }, 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000002"
+                }, 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000004"
+                }, 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000005"
+                }, 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000006"
+                }, 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000007"
+                }, 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000008"
+                }, 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tac" : "000009"
+                }
+            ],
+            "taiRangeList" : [ 
+                {
+                    "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                    "tacRangeList" : [ 
+                        {
+                            "end" : "000009",
+                            "start" : "000000"
+                        }
+                    ]
+                }
+            ]
+        },
+        "capacity" : 15,
+        "fqdn" : "",
+        "ipv4Addresses" : [ 
+            "{{ control_ip }}"
+        ],
+        "ipv6Addresses" : [],
+        "load" : 0,
+        "locality" : "geographic location",
+        "nfInstanceId" : "",
+        "nfServices" : [ 
+            {
+                "defaultNotificationSubscriptions" : [ 
+                    {
+                        "callbackUri" : "http://{{ control_ip }}:6286/namf-comm/v1/onN1N2MessageNotify/n1MessageNotify",
+                        "n1MessageClass" : "5GMM",
+                        "notificationType" : "N1_MESSAGES"
+                    }
+                ],
+                "fqdn" : "",
+                "ipEndPoints" : [ 
+                    {
+                        "ipv4Address" : "{{ control_ip }}",
+                        "port" : 6210,
+                        "transport" : "TCP"
+                    }
+                ],
+                "nfServiceStatus" : "REGISTERED",
+                "scheme" : "http",
+                "serviceInstanceId" : "1",
+                "serviceName" : "namf-comm",
+                "versions" : [ 
+                    {
+                        "apiFullVersion" : "1.0.2",
+                        "apiVersionInUri" : "v1"
+                    }
+                ]
+            }, 
+            {
+                "fqdn" : "",
+                "ipEndPoints" : [ 
+                    {
+                        "ipv4Address" : "{{ control_ip }}",
+                        "port" : 6211,
+                        "transport" : "TCP"
+                    }
+                ],
+                "nfServiceStatus" : "REGISTERED",
+                "scheme" : "http",
+                "serviceInstanceId" : "2",
+                "serviceName" : "namf-evts",
+                "versions" : [ 
+                    {
+                        "apiFullVersion" : "1.0.2",
+                        "apiVersionInUri" : "v1"
+                    }
+                ]
+            }, 
+            {
+                "fqdn" : "",
+                "ipEndPoints" : [ 
+                    {
+                        "ipv4Address" : "{{ control_ip }}",
+                        "port" : 6212,
+                        "transport" : "TCP"
+                    }
+                ],
+                "nfServiceStatus" : "REGISTERED",
+                "scheme" : "http",
+                "serviceInstanceId" : "3",
+                "serviceName" : "namf-mt",
+                "versions" : [ 
+                    {
+                        "apiFullVersion" : "1.0.2",
+                        "apiVersionInUri" : "v1"
+                    }
+                ]
+            }, 
+            {
+                "fqdn" : "",
+                "ipEndPoints" : [ 
+                    {
+                        "ipv4Address" : "{{ control_ip }}",
+                        "port" : 6213,
+                        "transport" : "TCP"
+                    }
+                ],
+                "nfServiceStatus" : "REGISTERED",
+                "scheme" : "http",
+                "serviceInstanceId" : "4",
+                "serviceName" : "namf-loc",
+                "versions" : [ 
+                    {
+                        "apiFullVersion" : "1.0.2",
+                        "apiVersionInUri" : "v1"
+                    }
+                ]
+            }
+        ],
+        "nfStatus" : "REGISTERED",
+        "nfType" : "AMF",
+        "perPlmnSnssaiList" : [ 
+            {
+                "plmnId" :  {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        },
+                "sNssaiList" : [ 
+                    {
+                        "sst" : 1
+                    }
+                ]
+            }
+        ],
+        "plmnList" : [ 
+             {
+            "mcc": "{{ h_mcc | default("001") }}",
+            "mnc": "{{ h_mnc | default("002") }}"
+        }
+        ],
+        "priority" : 0,
+        "sNssais" : [ 
+            {
+                "sst" : 1
+            }
+        ]
+    },
+    "nrfServicesConfigurations" : {
+        "accessTokenServiceEndPoint" : {
+            "ipv4Address" : "{{ nrf_ip }}",
+            "port" : 8007
+        },
+        "nfDiscoveryServiceEndPoint" : {
+            "ipv4Address" : "{{ nrf_ip }}",
+            "port" : 8006
+        },
+        "nfManagementServiceEndPoint" : {
+            "ipv4Address" : "{{ nrf_ip }}",
+            "port" : 8001
+        },
+        "scheme" : "http"
+    },
+    "overloadControlParameters" : {
+        "n2OverloadLimit" : 50000,
+        "nasCongestionLimitAfterOverload_DNN" : 100000,
+        "nasCongestionLimitAfterOverload_General" : 100000,
+        "nasCongestionLimitAfterOverload_perSNSSAI" : [ 
+            {
+                "nasCongestionLimitAfterOverload_SNSSAI" : 100000,
+                "snssai" : {
+                    "sst" : 1
+                }
+            }
+        ]
+    },
+    "sctpConfigurations" : {
+        "sctpFlags" : {
+            "o_nonblock" : true,
+            "sctp_nodelay" : true,
+            "sctp_peer_addr_params" : true,
+            "sctp_rtoinfo" : true,
+            "so_reuseaddr" : true,
+            "so_reuseport" : true
+        },
+        "sctpOptions" : {
+            "ngap_port_number" : 38412,
+            "sctp_heartbeat_interval" : 5000,
+            "sctp_max_attempts" : 5,
+            "sctp_max_initial_timeout" : 5000,
+            "sctp_max_num_of_istreams" : 64,
+            "sctp_max_num_of_ostreams" : 8,
+            "sctp_number_of_listeners" : 4,
+            "sctp_poll_timeout" : 3000,
+            "sctp_rto_initial" : 3000,
+            "sctp_rto_max" : 5000,
+            "sctp_rto_min" : 1000,
+            "sctp_time_to_live" : 6000
+        }
+    }
+}

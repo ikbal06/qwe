@@ -1,0 +1,28 @@
+#Bu dosya, mongodb'de verilen json dosyasinin guncellenmesi ve  ilgili collectiona import edilmesini saglar.
+- name: Mongo query operation for "{{db_name}}" - "{{col_name}}" filter="{{ filter}}"
+  ansible.builtin.include_role:
+     name: mongodb_query
+  vars:
+          mongo_db_name: "{{db_name}}"
+          mongo_col_name: "{{col_name}}"
+          mongo_filter:  "{{ filter}}"
+
+- name: Query result is written to file.
+  copy: content="{{ query_result_list }}" dest="{{col_name}}.json"
+
+- name: Modify operation for "{{col_name}}.json"
+  ansible.builtin.include_role:
+     name: json_replace
+  vars:
+          path: "{{col_name}}.json"
+          replace_item_regex: "{{replace_param_key}}"
+          replace_item_value: "{{replace_param_value}}"
+
+- name: Mongo import operation for modified "{{col_name}}.json"
+  ansible.builtin.include_role:
+     name: mongodb_import_array
+  vars:
+          query_params: "{{col_name}}.json"
+          mongo_db_name: "{{db_name}}"
+          mongo_col_name: "{{col_name}}"
+          file_name: "{{col_name}}.json"

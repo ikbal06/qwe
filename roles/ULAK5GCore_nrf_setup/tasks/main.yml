@@ -1,0 +1,81 @@
+#Bu dosya, nrf'nin konfigurasyon dosyalarinin template islemleri icin kullanilir.
+#Eger konfigurasyon dosyalarinda degisiklik varsa, nrf restart edilir.
+- name: Check mandatory variables are defined
+  assert:
+    that:
+         - container_name is defined      
+  when: deployment_type == "cnf"
+
+- name: Get mongo deployment type
+  set_fact:
+        mongo_deployment_type: "{{hostvars[groups['mongodb'].0].deployment_type}}"
+
+- block:
+    - name: Get  ip address of nrf container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{container_name}}"
+    - name: updated control ip address
+      set_fact:
+        control_ip: "{{container_ip.stdout}}"
+    - name: Get  ip address of mongo container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{mongo_container_name}}"
+    - name: updated mongodb ip address
+      set_fact:
+        mongo_db_ip: "{{container_ip.stdout}}"
+    - name: Get config mount of container
+      ansible.builtin.include_role:
+        name: get_container_mount_info
+  when: deployment_type == "cnf"
+
+
+- block:
+    - name: set mongo db ip as variable
+      set_fact:
+        mongo_db_ip: "{{hostvars[groups['mongodb'].0].ansible_host}}"
+    - name: drop collection
+      ansible.builtin.include_role:
+        name: mongodb_drop_collection
+      vars:
+        mongo_col_name: "{{nf_profile_col_name}}"
+      
+  when: mongo_deployment_type == "vnf" 
+
+- block:
+    - name: Get mongo container name
+      set_fact:
+        mongo_container_name: "{{hostvars[groups['mongodb'].0].container_name}}" 
+    - name: Get  ip address of mongo container
+      ansible.builtin.include_role:
+        name: get_container_ip_info
+      vars:
+        container: "{{mongo_container_name}}"
+    - name: updated mongodb ip address
+      set_fact:
+        mongo_db_ip: "{{container_ip.stdout}}"      
+  when: mongo_deployment_type == "cnf" 
+
+- block:
+  - name: Template nrf settings file
+    template: src=nrf_settings_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "settings.json"
+    loop_control:
+       loop_var: each_config_file
+
+  - name: Template nrf NFProfile file
+    template: src=nrf_nf_profile_json.j2 dest="{{each_config_file.path}}/{{each_config_file.filename}}"
+    diff: yes
+    with_items: "{{ conf_files }}"
+    when: each_config_file.filename == "NFProfile.json"
+    loop_control:
+       loop_var: each_config_file
+  notify:
+      - stop {{deployment_type|lower}}
+      - start {{deployment_type|lower}}
+

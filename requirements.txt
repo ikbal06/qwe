@@ -3,3 +3,5 @@ ansible-runner
 pymongo
 robotframework
 requests
+jinja2
+colorama

@@ -1,0 +1,11 @@
+- hosts: nfs:!upfs
+  gather_facts: false
+  tasks:
+    - name: Fetch pcap files
+      ansible.builtin.include_role:
+        name: fetch_files
+      vars:
+        source: "{{pcap_name | default(cap_filename)}}"
+        destination: "{{nf_pcap_files_path}}"
+        with_zip: true
+

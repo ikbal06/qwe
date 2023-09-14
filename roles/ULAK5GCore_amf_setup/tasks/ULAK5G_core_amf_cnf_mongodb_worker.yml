@@ -1,0 +1,14 @@
+
+- name: AmfList templating
+  template: src=amf_list_mongo_json.j2 dest="{{amf_profile_col_name}}_{{amf_pointer}}.json"
+  diff: yes
+  delegate_to: mongo
+
+- name: copy templating file to container
+  ansible.builtin.shell: docker cp  "{{amf_profile_col_name}}_{{amf_pointer}}.json" "{{mongo_container_name}}":/
+  delegate_to: mongo
+
+- name: Mongo import operation
+  ansible.builtin.shell: docker exec -it "{{mongo_container_name}}" mongoimport --mode upsert --db "{{db_name}}" --collection "{{amf_profile_col_name}}" --file "{{amf_profile_col_name}}_{{amf_pointer}}.json"
+  delegate_to: mongo
+

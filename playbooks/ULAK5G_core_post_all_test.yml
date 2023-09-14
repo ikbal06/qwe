@@ -1,0 +1,7 @@
+- name: Fetch logs
+  ansible.builtin.import_playbook: ULAK5G_core_fetch_log_files.yml
+  when: log == 'enable'
+
+
+
+
