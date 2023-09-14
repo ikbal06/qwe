@@ -1,0 +1,5 @@
+ansible
+ansible-runner
+pymongo
+robotframework
+requests
