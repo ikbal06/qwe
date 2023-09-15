@@ -13,6 +13,11 @@
         // "editor.wordWrap": "bounded",
         "editor.wordWrapColumn": 150,
     },
+    "python.formatting.autopep8Args": [
+        "--max-line-length",
+        "120",
+        "--experimental"
+    ],
     "[robot]": {
         // "editor.defaultFormatter": "d-biehl.robotcode",
     },

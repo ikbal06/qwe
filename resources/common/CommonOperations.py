@@ -14,14 +14,13 @@ def read_json_file(file_in):
             parsed_json = json.load(f)
             return parsed_json
     except Exception as e:
-        msg = "Json file parse error={e}"
+        msg = f"Json file parse error={e}"
         log.error(msg)
         sys.exit(msg)
 
 
 def create_symlink(src_in, dst_in):
-    """It is used to create symlink
-     """
+    """It is used to create symlink """
     if os.path.exists(dst_in):
         for root, dirs, files in os.walk(src_in):
             for file in files:
@@ -39,7 +38,7 @@ def check_connection(ip_in, port_in):
     test_socket = socket.socket()
     try:
         test_socket.connect((ip_in, port_in))
-        print("[OK]{}:{} Connection successfull".format(ip_in, port_in))
+        print(f"[OK]{ip_in}:{port_in} Connection successfull")
     except Exception as e:
         msg = f"[NOK]{ip_in}:{port_in} connection failed!!"
         log.error(msg)

@@ -11,12 +11,9 @@ class EnvDataOperations:
         self.h_mcc = os.getenv('h_mcc', DEFAULT_MCC)
         self.h_mnc = os.getenv('h_mnc', DEFAULT_MNC)
         self.test_duration = os.getenv('test_duration', DEFAULT_TD)
-        self.cn_deployment_type = os.getenv(
-            'cn_deployment_type', DEFAULT_CN_DEP_TYPE)
-        self.mongodb_deployment_type = os.getenv(
-            'mongodb_deployment_type', DEFAULT_MONGODB_DEP_TYPE)
-        self.postgre_deployment_type = os.getenv(
-            'postgre_deployment_type', DEFAULT_POSTGRE_DEP_TYPE)
+        self.cn_deployment_type = os.getenv('cn_deployment_type', DEFAULT_CN_DEP_TYPE)
+        self.mongodb_deployment_type = os.getenv('mongodb_deployment_type', DEFAULT_MONGODB_DEP_TYPE)
+        self.postgre_deployment_type = os.getenv('postgre_deployment_type', DEFAULT_POSTGRE_DEP_TYPE)
         self.k8s_namespace = os.getenv('k8s_namespace', DEFAULT_K8S_NAMESPACE)
         self.get_pcap = os.getenv('get_pcap', DEFAULT_GET_PCAP)
         self.get_log = os.getenv('get_log', DEFAULT_GET_LOG)

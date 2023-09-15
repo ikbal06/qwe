@@ -5,10 +5,6 @@ output/**
 results/**
 
 # Python önbellekleri de yoksayılacak
-**/__pycache__
-resources/common/__pycache__/*
-resources/common/__pycache__/*.pyc
-resources/kiwi/__pycache__/*.pyc
-resources/spirent/__pycache__/*.pyc
+**/__pycache__/
 ulaktestutility.log
-output/output.xml
+output/
