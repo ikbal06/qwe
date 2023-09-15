@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.11.0 on win32)" generated="20230915 17:28:44.997" rpa="false" schemaversion="4">
+<suite id="s1" name="Qwe" source="D:\_Projects\_ROBOT\qwe">
+<suite id="s1-s1" name="Tests" source="D:\_Projects\_ROBOT\qwe\tests">
+<suite id="s1-s1-s1" name="First" source="D:\_Projects\_ROBOT\qwe\tests\first.robot">
+<errors>
+<msg timestamp="20230915 17:30:13.740" level="ERROR">Json file parse error={e}</msg>
+<msg timestamp="20230915 17:30:13.752" level="ERROR">Execution stopped by user.</msg>
+</errors>
+</robot>

@@ -33,3 +33,5 @@
 [2023-09-15 17:27:17] [D:\_Projects\_ROBOT\qwe\resources\common\CommonOperations.py:18] ERROR - Json file parse error={e}
 [2023-09-15 17:27:55] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
 [2023-09-15 17:28:45] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 17:28:51] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 17:30:13] [D:\_Projects\_ROBOT\qwe\resources\common\CommonOperations.py:18] ERROR - Json file parse error={e}

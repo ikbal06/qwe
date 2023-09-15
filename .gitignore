@@ -10,3 +10,5 @@ resources/common/__pycache__/*
 resources/common/__pycache__/*.pyc
 resources/kiwi/__pycache__/*.pyc
 resources/spirent/__pycache__/*.pyc
+ulaktestutility.log
+output/output.xml
