@@ -38,7 +38,7 @@ DEFAULT_K8S_NAMESPACE = "default"
 
 
 ANSIBLE_PLAYBOOK_PATH = shutil.which("ansible-playbook")
-BASE_PATH = "C:\\Users\\ikbal.kirklar\\Desktop\\cem"
+BASE_PATH = "D:\\_Projects\\_ROBOT\\qwe\\"
 CONFIG_FILE_PATH = os.path.join(BASE_PATH,"config.json")
 PLAYBOOKS_PATH = os.path.join(BASE_PATH,"playbooks") # BASE_PATH//playbooks
 ROLES_PATH = os.path.join(BASE_PATH,"roles") # BASE_PATH//roles
@@ -49,7 +49,7 @@ GET_VERSION_PLAYBOOK_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_get_nf_ver
 FETCH_PCAP_FILES_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_fetch_pcap_files.yml")
 FETCH_LOG_FILES_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_fetch_log_files.yml")
 # BASE_PATH//roles, BASE_PATH//playbooks//roles
-create_symlink(ROLES_PATH, os.path.join(PLAYBOOKS_PATH, "roles"))
+# create_symlink(ROLES_PATH, os.path.join(PLAYBOOKS_PATH, "roles"))
 
 
 inventory_template = """{

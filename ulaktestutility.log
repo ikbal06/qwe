@@ -1,10 +1,35 @@
-[2023-09-14 17:16:48] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
-[2023-09-14 17:17:31] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
-[2023-09-14 17:20:07] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
-[2023-09-14 17:20:33] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
-[2023-09-14 17:21:01] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
-[2023-09-14 17:21:20] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
-[2023-09-14 17:21:29] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
-[2023-09-14 17:21:57] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
-[2023-09-14 17:23:27] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
-[2023-09-14 17:33:15] [C:\Users\ikbal.kirklar\Desktop\cem\resources\common\Logger.py:22] INFO - Completed configuring logger()!
+>>--> [2023-09-15 16:11:29] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+>>--> [2023-09-15 16:13:54] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 16:20:34] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 16:20:34] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 16:20:53] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 16:21:18] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 16:28:45] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 16:30:05] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 16:54:22] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 16:54:22] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 16:55:02] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 16:55:18] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 16:58:09] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 16:58:49] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 17:00:25] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 17:05:29] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 17:05:41] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 17:11:41] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 17:11:52] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 17:11:58] [D:\_Projects\_ROBOT\qwe\resources\EnvDataOperations.py:59] ERROR - [NOK] Missing n6_ip information. Please give n6_ip as environment variable
+[2023-09-15 17:16:05] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 17:16:13] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 17:16:13] [D:\_Projects\_ROBOT\qwe\resources\EnvDataOperations.py:58] ERROR - [NOK] Missing spirent_ts_name information. Please give spirent_ts_name as environment variable
+[2023-09-15 17:16:13] [D:\_Projects\_ROBOT\qwe\resources\EnvDataOperations.py:58] ERROR - [NOK] Missing output_path information. Please give output_path as environment variable
+[2023-09-15 17:16:13] [D:\_Projects\_ROBOT\qwe\resources\EnvDataOperations.py:58] ERROR - [NOK] Missing password information. Please give password as environment variable
+[2023-09-15 17:16:13] [D:\_Projects\_ROBOT\qwe\resources\EnvDataOperations.py:58] ERROR - [NOK] Missing allinone_ip information. Please give allinone_ip as environment variable
+[2023-09-15 17:16:13] [D:\_Projects\_ROBOT\qwe\resources\EnvDataOperations.py:58] ERROR - [NOK] Missing public_ip information. Please give public_ip as environment variable
+[2023-09-15 17:16:13] [D:\_Projects\_ROBOT\qwe\resources\EnvDataOperations.py:58] ERROR - [NOK] Missing n6_ip information. Please give n6_ip as environment variable
+[2023-09-15 17:19:56] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 17:20:04] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 17:25:02] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 17:25:09] [D:\_Projects\_ROBOT\qwe\resources\MainListener.py:31] INFO - Test suite started:
+[2023-09-15 17:27:17] [D:\_Projects\_ROBOT\qwe\resources\common\CommonOperations.py:18] ERROR - Json file parse error={e}
+[2023-09-15 17:27:55] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!
+[2023-09-15 17:28:45] [D:\_Projects\_ROBOT\qwe\resources\common\Logger.py:36] INFO - Completed configuring logger()!

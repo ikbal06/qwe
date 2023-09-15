@@ -1,0 +1,17 @@
+// Extensions sekmesinde "@recommended" yazıp aradığınızda bu "extensions.json" dosyasında yer alan 
+// ve bu proje için önerilmiş uzantıları yani "recommendations" alanındaki uzantıları görebileceksiniz.
+{
+    "unwantedRecommendations": [],
+    "recommendations": [
+        "ms-vscode-remote.vscode-remote-extensionpack",
+        "MS-vsliveshare.vsliveshare",
+        // Python uzantıları
+        "ms-python.python",
+        "ms-python.autopep8",
+        "ms-python.vscode-pylance",
+        // Robot uzantıları
+        "d-biehl.robotcode",
+        // YAML uzantıları
+        "esbenp.prettier-vscode", // formatlayıcı
+    ],
+}

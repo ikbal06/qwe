@@ -3,24 +3,24 @@
 # https://github.com/robocorp/rcc/blob/master/docs/recipes.md#what-is-in-robotyaml
 
 tasks:
-# At least one task defined, and that must have either command, shell or robotTaskName defined.
-# Artifacts output path must be defined.
+  # At least one task defined, and that must have either command, shell or robotTaskName defined.
+  # Artifacts output path must be defined.
   hede:
     shell: python -m robot --report NONE --outputdir output --logtitle "Task log" tests/first.robot
 
 condaConfigFile: conda.yaml
 
 environmentConfigs:
-  - environment_windows_amd64_freeze.yaml
-  - environment_linux_amd64_freeze.yaml
-  - environment_darwin_amd64_freeze.yaml
+  # - environment_windows_amd64_freeze.yaml
+  # - environment_linux_amd64_freeze.yaml
+  # - environment_darwin_amd64_freeze.yaml
   - conda.yaml
 
 preRunScripts:
   # Example of running an executable script right before running the robot.
   # Different languages and platforms are supported, read more under documentation:
   #  https://github.com/robocorp/rcc/blob/master/docs/recipes.md#what-are-prerunscripts
-  - generate-workitem-file.py output/random-workitem-file.txt
+  # - generate-workitem-file.py output/random-workitem-file.txt
 
 artifactsDir: output
 

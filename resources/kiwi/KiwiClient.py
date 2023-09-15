@@ -288,7 +288,7 @@ class KiwiClient:
         return response 
 
     def get_tags(self, file):
-        if file is "":
+        if file == "":
             raise Exception('Dosya geçerli değil!')
         
         # Dosyayı açıp satırları bir liste içine alıyoruz

@@ -1,13 +1,18 @@
 *** Settings ***
 # C:\Users\ikbal.kirklar\Desktop\cem\roles
-Library    OperatingSystem
-# Variables  variables.py
-Library    resources/kiwi/KiwiListener.py
-Library    resources/MainListener.py
+Library     OperatingSystem
+# Library    DenemeListener
+Library     MainListener
+# Library    KiwiListener
+
 
 *** Variables ***
-${MESSAGE}       Hello, world!
+${MESSAGE}      Hello, Dunya!
+${TEST_IID}     KT_CN_010
+
 
 *** Test Cases ***
-Another Test
-    Should Be Equal    ${MESSAGE}    Hello, world!
+Sample Test
+    [Documentation]    This is a sample test case
+
+    Log    This is a log message
