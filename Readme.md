@@ -1,3 +1,39 @@
+# VS Code Düzenlemesi
+
+# Konteyner İçinde Geliştirmek
+
+- `.devcontainer` dizini içinde VS Code'un bir konteyner yaratıp, kodu içine bağlayarak çalışmamızı sağlayacak dosyalar mevcut.
+- `.devcontainer/Dockerfile` dosyasında geliştirme ortamını oluşturmak için kullandığımı yansıyı ayarlarız.
+- Konteyner ayaklandığında `.devcontainer/devcontainer.json` dosyasında extensions alanında gerekli uzantılar tanımlıdır. İnternetten hepsi otomatik olarak kurulacak.
+- `.robotidy` dosyası ile robot kodlarımı biçimlendirme kurallarını tanımlıyoruz.
+- `requirements.txt` Python paketlerini barındırı ve konteyner ayaklandığında hepsi otomatik kurulur.
+- `robot.yaml` Eğer komut satırında robot'u çalıştırmak istersek ayarlar bu dosyadan gelecektir
+- `version.txt` Test ortamındaki NF paketlerini ve sürüm bilgilerini içerir. Robot test kodları bu dosyayı arar.
+
+# Uzantılar
+
+```json
+// Extensions sekmesinde "@recommended" yazıp aradığınızda bu "extensions.json" dosyasında yer alan
+// ve bu proje için önerilmiş uzantıları yani "recommendations" alanındaki uzantıları görebileceksiniz.
+{
+  "unwantedRecommendations": [],
+  "recommendations": [
+    "ms-vscode-remote.vscode-remote-extensionpack",
+    "MS-vsliveshare.vsliveshare",
+    // Ansible uzantıları
+    "redhat.ansible",
+    // Python uzantıları
+    "ms-python.python",
+    "ms-python.autopep8",
+    "ms-python.vscode-pylance",
+    // Robot uzantıları
+    "d-biehl.robotcode",
+    // YAML uzantıları
+    "esbenp.prettier-vscode" // formatlayıcı
+  ]
+}
+```
+
 # Robot İle Spirent Testleri Koşturmak
 
 ## Bir Robot Testinin Anatomisi

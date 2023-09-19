@@ -14,6 +14,7 @@
   // },
   "customizations": {
     "vscode": {
+      // Uzantılar otomatik olarak konteyner ayaklandığında VS Code tarafında kurulacak
       "extensions": [
         "ms-vscode-remote.vscode-remote-extensionpack",
         "MS-vsliveshare.vsliveshare",
@@ -31,6 +32,7 @@
     }
   },
   "workspaceFolder": "/workspace",
+  // Konteyner ayaklandığında python paketleri otomatik kurulsun
   "postCreateCommand": [
     "bash",
     "./.devcontainer/setup-venv.sh"

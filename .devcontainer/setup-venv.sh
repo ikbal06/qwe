@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# python için bir sanal ortam yaratıyor. Böylece kendi belirlediğimiz
+# python sürümünü, pip ve diğer kütüphaneleri sistem ari kurup kullanabilirz
+
 # .venv adında bir sanal ortam oluştur
 python3 -m venv .venv
 

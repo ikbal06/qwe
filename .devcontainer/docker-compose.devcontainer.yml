@@ -8,9 +8,8 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      # Mounts the project folder to '/workspace'. While this file is in .devcontainer,
-      # mounts are relative to the first file in the list, which is a level up.
-      # - /mnt/d/_Projects/_ROBOT/qwe/:/workspace:cached
+      # .devcontainer Dizinin üstündeki dizin, bizim kodlarımıza da içerir.
+      # Kodlarımızı barındıran bu dizini konteyner içinde workspace dizinine bağlıyoruz.
       - ../:/workspace
 
     # [Optional] Required for ptrace-based debuggers like C++, Go, and Rust
@@ -20,4 +19,4 @@ services:
       - seccomp:unconfined
 
     # Overrides default command so things don't shut down after the process ends.
-    command: /bin/sh -c "while sleep 1000; do :; done"
+    command: /bin/sh -c "while sleep 10000; do :; done"
