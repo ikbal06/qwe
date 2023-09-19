@@ -1,7 +1,41 @@
-ansible
-ansible-runner
-pymongo
-robotframework
-requests
-jinja2
-colorama
+# Robot Çatısı
+# rpaframework==27.0.1 # https://rpaframework.org/releasenotes.html
+robotframework==6.1.1
+robotframework-tidy==4.5.0 # *.robot dosyalarını formatlamak için. https://robotidy.readthedocs.io/
+
+# Http 
+requests==2.31.0
+
+# SSH
+robotframework-sshlibrary
+
+# Ansible
+ansible==8.4.0 # https://www.tutorialspoint.com/how-to-install-and-configure-ansible-on-windows
+ansible-runner==2.3.4 # ansible kodu çalıştırmak için
+
+# Debug
+debugpy==1.8.0 # python debug için gerekli
+
+# DB 
+pymongo==4.5.0
+
+# Diğer
+Jinja2==3.1.2
+colorama==0.4.6
+certifi==2023.7.22
+cffi==1.15.1
+charset-normalizer==3.2.0
+cryptography==41.0.3
+docutils==0.20.1
+idna==3.4
+lockfile==0.12.2
+MarkupSafe==2.1.3
+packaging==23.1
+pexpect==4.8.0
+ptyprocess==0.7.0
+pycparser==2.21
+python-daemon==3.0.1
+PyYAML==6.0.1
+resolvelib==1.0.1
+six==1.16.0
+urllib3==2.0.4

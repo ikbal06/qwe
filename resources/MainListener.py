@@ -34,11 +34,9 @@ class MainListener:
         test_id = BuiltIn().get_variable_value("${TEST_ID}")
         new_suite = suite.suites.create(name=test_id)
         self.env_variables = EnvDataOperations()
-        self.spirent_report_path = BuiltIn().get_variable_value(
-            "${DEFAULT_TEST_LOGS_PATH}")
+        self.spirent_report_path = BuiltIn().get_variable_value("${DEFAULT_TEST_LOGS_PATH}")
         test_param = TestConfigOperations(test_name=test_id).get_test_params()
-        spirent_ts_param = TestConfigOperations(
-            ts_name=self.env_variables.spirent_ts_name).get_spirent_ts_params()
+        spirent_ts_param = TestConfigOperations(ts_name=self.env_variables.spirent_ts_name).get_spirent_ts_params()
 
         if test_param and spirent_ts_param:
             response_status_code = SpirentOperations().test_session_update_mngr(test_param,
@@ -48,20 +46,23 @@ class MainListener:
                                                                                 self.env_variables.h_mcc,
                                                                                 self.env_variables.h_mnc,
                                                                                 self.env_variables.spirent_ts_name)
-            print(response_status_code)
+            log.info(f'Spirent test sonuçları durum kodu: {response_status_code}')
             if response_status_code == 200:
-                print("[OK] Test session update operation SUCCESSFULL!!!")
+                log.info("[OK] Test session update operation SUCCESSFULL!!!")
                 spirent_lib_id = SpirentOperations().get_lib_id_mngr()
                 if spirent_lib_id:
                     self.test_run_id = SpirentOperations().run_test_mngr(spirent_lib_id, test_id)
                     test_start_time = time.time()
                     if self.test_run_id:
-                        print(
-                            f'Spirent test={test_id} test run id={self.test_run_id}')
+                        log.info(f'Spirent test={test_id} test run id={self.test_run_id}')
                         while time.time() < test_start_time + 1800:
                             time.sleep(10)
                             running_test_status = SpirentOperations().get_test_status_mngr(self.test_run_id)
-                            if running_test_status['testStateOrStep'] == "COMPLETE" or running_test_status['testStateOrStep'] == "COMPLETE_ERROR":
+                            is_test_completed = running_test_status['testStateOrStep'] == "COMPLETE"
+                            is_test_completed_with_error = running_test_status['testStateOrStep'] == "COMPLETE_ERROR"
+
+                            # Her iki durumda da döngüyü sonlandırın
+                            if is_test_completed or is_test_completed_with_error:
                                 break
 
                         if running_test_status:
@@ -76,24 +77,22 @@ class MainListener:
                                     "(") + 1:test_desc.find(")")]
                                 tc = new_suite.tests.create(
                                     name=test_step_name, tags=test_id)
-                                print(
-                                    f'Spirent test={test_id} test step={test_step_name} test status={test_status}')
-                                tc.body.create_keyword(name="Should Be Equal As Strings", args=[
-                                                       "PASSED", test_status])
+                                log.info(f'Spirent test={test_id} test step={test_step_name} test status={test_status}')
+                                tc.body.create_keyword(name="Should Be Equal As Strings", args=["PASSED", test_status])
                                 if test_status == "FAILED":
                                     os.environ[test_id] = "FAILED"
                         else:
-                            print(
+                            log.info(
                                 f'Spirent test={test_id} results not received!!')
                     else:
-                        print(f'Spirent test={test_id} not started!!')
+                        log.info(f'Spirent test={test_id} not started!!')
                 else:
-                    print('Spirent user lib id not received!!')
+                    log.info('Spirent user lib id not received!!')
             else:
-                print(
+                log.info(
                     f"[NOK] Spirent test session update failed for {each_test_id}. NO RUN TEST!!!")
         else:
-            print(
+            log.info(
                 f'[NOK]Test parameters or spirent ts parameters are not found for {each_test_id} and {env_data_obj.spirent_ts_name}. Please provide it to globalProperties file')
 
     def end_suite(self, suite, attrs):
@@ -101,7 +100,7 @@ class MainListener:
 
         if self.test_run_id:
             if not os.path.exists(self.spirent_report_path):
-                print(
+                log.info(
                     f'Spirent report path={self.spirent_report_path} not found. Create..')
                 Path(self.spirent_report_path).mkdir(
                     parents=True, exist_ok=True, mode=0o755)
@@ -110,9 +109,9 @@ class MainListener:
                 try:
                     subprocess.call("wget " + eachURL + " -P " +
                                     self.spirent_report_path, shell=True)
-                    print(f'Spirent report={eachURL} received')
+                    log.info(f'Spirent report={eachURL} received')
                 except Exception as e:
-                    print(f'Spirent report={eachURL} not received. Error={e}')
+                    log.info(f'Spirent report={eachURL} not received. Error={e}')
 
             SpirentOperations().delete_test_run_mngr(self.test_run_id)
 

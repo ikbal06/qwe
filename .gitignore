@@ -4,7 +4,12 @@
 output/**
 results/**
 
+output.xml
+log.html
+report.html
+
 # Python önbellekleri de yoksayılacak
 **/__pycache__/
 ulaktestutility.log
 output/
+tests/**/artifacts/

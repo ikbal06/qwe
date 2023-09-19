@@ -24,7 +24,7 @@ logger_formatter = logging.Formatter(
     '[%(asctime)s] [%(pathname)s:%(lineno)d] %(levelname)s - %(message)s', '%Y-%m-%d %H:%M:%S')
 
 # Create the Handler for logging data to a file
-logger_handler = logging.FileHandler(filename='ulaktestutility.log')
+logger_handler = logging.FileHandler(filename='output/ulaktestutility.log')
 # Add the Formatter to the Handler
 logger_handler.setFormatter(logger_formatter)
 logger_handler.setLevel(logging.DEBUG)
