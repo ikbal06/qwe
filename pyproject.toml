@@ -1,0 +1,14 @@
+[build-system]
+requires = ["requests", "jinja2"]
+
+[project]
+name = "my-package"
+version = "0.0.1"
+description = "A short description of my package."
+authors = ["Your Name"]
+
+[tool.setuptools]
+packages = ["my_package"]
+
+[build-backend]
+build-backend = "setuptools.build_meta"

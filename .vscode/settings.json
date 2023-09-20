@@ -5,6 +5,10 @@
         "pub.name": true
     },
     "remote.downloadExtensionsLocally": true,
+    "dev.containers.dockerComposePath": "docker compose",
+    //---------- GIT --------------------------------------
+    "git.ignoreLimitWarning": true,
+    "git.autofetch": true,
     //---------- SETTINGS ---------------------------------
     "editor.formatOnSave": true,
     "[yaml]": {
@@ -31,17 +35,17 @@
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "python.defaultInterpreterPath": "/usr/local/bin/python", //"C:\\Python311\\python.exe",
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python", //"/usr/local/bin/python", //"C:\\Python311\\python.exe",
     "python.analysis.extraPaths": [
-        "c:/Users/ikbal.kirklar/Desktop/cem/.",
-        "c:/Users/ikbal.kirklar/Desktop/cem/keywords",
-        "c:/Users/ikbal.kirklar/Desktop/cem/libraries",
-        "c:/Users/ikbal.kirklar/Desktop/cem/resources",
-        "c:/Users/ikbal.kirklar/Desktop/cem/variables"
+        "./",
+        "./keywords",
+        "./libraries",
+        "./resources",
+        "./variables"
     ],
     // ------------ ROBOT Extension ---------------
-    "robot.language-server.python": "/usr/local/bin/python",
-    "robot.python.executable": "/usr/local/bin/python",
+    "robot.language-server.python": "${workspaceFolder}/.venv/bin/python",
+    "robot.python.executable": "${workspaceFolder}/.venv/bin/python",
     "robot.pythonpath": [
         "./",
         "./lib",
@@ -49,7 +53,7 @@
         "./keywords"
     ],
     // ------------ RoboCorp Extension ---------------
-    "robocorp.language-server.python": "/usr/local/bin/python",
+    "robocorp.language-server.python": "${workspaceFolder}/.venv/bin/python",
     "robocorp.autoSetPythonExtensionInterpreter": false,
     // ------------ RobotCode Extension ---------------
     "robotcode.editor.4SpacesTab": true,
@@ -58,9 +62,9 @@
     "robotcode.robotidy.config": ".robotidy",
     "robotcode.debug.groupOutput": true,
     "robotcode.debug.outputMessages": true,
-    "robotcode.python": "/usr/local/bin/python",
+    "robotcode.python": "/workspace/.venv/bin/python",
     "robotcode.robot.pythonPath": [
-        ".",
+        "./",
         "./libraries",
         "./resources"
     ],
@@ -86,7 +90,4 @@
     "robotcode.languageServer.extraArgs": [
         "--log-level=TRACE"
     ],
-    "git.ignoreLimitWarning": true,
-    "dev.containers.dockerComposePath": "docker compose",
-    "git.autofetch": true
 }
