@@ -3,6 +3,7 @@
 # Çıktı dizininin içeriği tümden yoksayılacak
 output/**
 results/**
+.ssh/
 
 output.xml
 log.html

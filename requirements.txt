@@ -14,7 +14,7 @@ robotframework-sshlibrary
 # >>> cffi, cryptography, pycparser
 
 # Ansible
-ansible==8.4.0 # https://www.tutorialspoint.com/how-to-install-and-configure-ansible-on-windows
+# ansible==8.4.0 # https://www.tutorialspoint.com/how-to-install-and-configure-ansible-on-windows
 ansible-runner==2.3.4 # ansible kodu çalıştırmak için
 # Aşağıdaki paketler "ansible-runner" ile birlikte gelecek
 # >>> ptyprocess, docutils, lockfile, six, pexpect, python-daemon, PyYAML, packaging

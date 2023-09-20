@@ -19,8 +19,8 @@ Run External Process
 Run Ansible Playbook with process
     [Documentation]    Run the Ansible playbook to print "Hello World".
     [Tags]    ansible
-    ${rc} =    Run Process    cat /workspace/tests/ansible/ornek_1/ansible_deneme.yaml
-    Should Be Equal    ${rc}    0
+    ${result} =    Run Process    cat    tests/ansible/ornek_1/ansible_deneme.yaml
+    Should Be Equal As Strings    ${result.rc}    0
 
 Run Ansible Playbook with ansible-runner
     [Documentation]    Run an Ansible playbook using ansible-playbook.

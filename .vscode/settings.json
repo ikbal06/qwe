@@ -35,7 +35,8 @@
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python", //"/usr/local/bin/python", //"C:\\Python311\\python.exe",
+    // "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python", //"/usr/local/bin/python", //"C:\\Python311\\python.exe",
+    "python.defaultInterpreterPath": "/usr/local/bin/python",
     "python.analysis.extraPaths": [
         "./",
         "./keywords",
@@ -45,7 +46,8 @@
     ],
     // ------------ ROBOT Extension ---------------
     "robot.language-server.python": "${workspaceFolder}/.venv/bin/python",
-    "robot.python.executable": "${workspaceFolder}/.venv/bin/python",
+    // "robot.python.executable": "${workspaceFolder}/.venv/bin/python",
+    "robot.python.executable": "/usr/local/bin/python",
     "robot.pythonpath": [
         "./",
         "./lib",
@@ -59,10 +61,10 @@
     "robotcode.editor.4SpacesTab": true,
     "robotcode.debug.attachPython": true,
     "robotcode.debug.outputLog": true,
-    "robotcode.robotidy.config": ".robotidy",
+    "robotcode.robotidy.config": ".robotidy", // kök dizindeki bu dosya içeriğine göre *.robot kodlarını formatlar
     "robotcode.debug.groupOutput": true,
     "robotcode.debug.outputMessages": true,
-    "robotcode.python": "/workspace/.venv/bin/python",
+    "robotcode.python": "/usr/local/bin/python", //"${workspaceFolder}/.venv/bin/python",
     "robotcode.robot.pythonPath": [
         "./",
         "./libraries",
