@@ -1,19 +1,25 @@
 #!/bin/bash
 
-# python için bir sanal ortam yaratıyor. Böylece kendi belirlediğimiz
-# python sürümünü, pip ve diğer kütüphaneleri sistem ari kurup kullanabilirz
+alias ll="ls -al"
 
-# .venv adında bir sanal ortam oluştur
-python3 -m venv .venv
+function create_env() {
+    # python için bir sanal ortam yaratıyor. Böylece kendi belirlediğimiz
+    # python sürümünü, pip ve diğer kütüphaneleri sistem ari kurup kullanabilirz
 
-# sudo chown -R $USER .venv
+    # .venv adında bir sanal ortam oluştur
+    python3 -m venv .venv
 
-# Sanal ortamı etkinleştir
-source .venv/bin/activate
+    # sudo chown -R $USER .venv
 
-# requirements.txt dosyasındaki paketleri yükle
-# Aşağıdaki komut paketleri "/usr/lib/python3/dist-packages" adresine yükler
-pip install -r requirements.txt
+    # Sanal ortamı etkinleştir
+    source .venv/bin/activate
 
-# Aşağıdaki komut paketleri ".venv/lib64/python3.11/site-packages" adresine yükler
-# pip install -t ../.venv/lib64/python3.11/site-packages -r requirements.txt
+    # requirements.txt dosyasındaki paketleri yükle
+    # Aşağıdaki komut paketleri "/usr/lib/python3/dist-packages" adresine yükler
+    pip install -r requirements.txt
+
+    # Aşağıdaki komut paketleri ".venv/lib64/python3.11/site-packages" adresine yükler
+    # pip install -t ../.venv/lib64/python3.11/site-packages -r requirements.txt
+}
+
+# create_env
