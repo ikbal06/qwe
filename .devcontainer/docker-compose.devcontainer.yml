@@ -11,6 +11,7 @@ services:
       # .devcontainer Dizinin üstündeki dizin, bizim kodlarımıza da içerir.
       # Kodlarımızı barındıran bu dizini konteyner içinde workspace dizinine bağlıyoruz.
       - ../:/workspace
+      - ../.ssh:/home/vscode/.ssh
 
     # [Optional] Required for ptrace-based debuggers like C++, Go, and Rust
     cap_add:
