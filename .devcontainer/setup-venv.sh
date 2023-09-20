@@ -2,6 +2,10 @@
 
 alias ll="ls -al"
 
+# her git komutunda SSH doğrulaması için kullanılacak anahtarı bu repo için aşağıdaki dosya yolundan çek
+# git config --add --local core.sshCommand 'ssh -i /workspace/.devcontainer/.ssh/github_id_rsa'
+# git commit -am "git config komutu eklendi" && git push
+
 function create_env() {
     # python için bir sanal ortam yaratıyor. Böylece kendi belirlediğimiz
     # python sürümünü, pip ve diğer kütüphaneleri sistem ari kurup kullanabilirz
