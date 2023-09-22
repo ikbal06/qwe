@@ -18,12 +18,15 @@ function create_env() {
     # Sanal ortamı etkinleştir
     source .venv/bin/activate
 
-    # requirements.txt dosyasındaki paketleri yükle
-    # Aşağıdaki komut paketleri "/usr/lib/python3/dist-packages" adresine yükler
-    pip install -r requirements.txt
-
     # Aşağıdaki komut paketleri ".venv/lib64/python3.11/site-packages" adresine yükler
     # pip install -t ../.venv/lib64/python3.11/site-packages -r requirements.txt
 }
 
+function install_reqs(){
+    # requirements.txt dosyasındaki paketleri yükle
+    # Aşağıdaki komut paketleri "/usr/lib/python3/dist-packages" adresine yükler
+    pip install -r requirements.txt
+}
+
 # create_env
+install_reqs

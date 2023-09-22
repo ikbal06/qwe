@@ -35,7 +35,7 @@
   // Konteyner ayaklandığında python paketleri otomatik kurulsun
   // Use 'postCreateCommand' to run commands after the container is created.
   // "postCreateCommand": "pip3 install --user -r requirements.txt",
-  "postCreateCommand": "./.devcontainer/setup-venv.sh",
+  "postCreateCommand": "/bin/bash ./.devcontainer/setup-venv.sh",
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
   // Use 'forwardPorts' to make a list of ports inside the container available locally.

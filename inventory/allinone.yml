@@ -1,0 +1,9 @@
+---
+- name: Jinja Template Inventory
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: allinone Inventory Template
+      template:
+        src: allinone.j2 # Şablon dosyasının adı ve yolunu belirtin
+        dest: allinone_inventory.yml # Çıktı dosyasının adı ve yolunu belirtin

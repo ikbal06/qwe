@@ -1,0 +1,54 @@
+---
+vars:
+  mongo_db_username: cnrusr
+  mongo_db_password: P5vKG6vE
+  mongo_db_port: 27017
+  postgre_db_username: cnrusr
+  postgre_db_password: P5vKG6vE
+  postgre_db_port: 5432
+  postgre_db_name: newstodb
+  ansible_become: true
+
+hosts:
+  allinone:
+    ansible_host: "192.168.13.71"
+  mongo:
+    ansible_host: "192.168.13.71"
+  postgre:
+    ansible_host: "192.168.13.71"
+
+children:
+  mongodb:
+    hosts:
+      mongo:
+        deployment_type: "cnf"
+        container_name: mongodb
+        k8s_namespace: "default"
+  postgredb:
+    hosts:
+      postgre:
+        deployment_type: "cnf"
+        container_name: pgdb
+        k8s_namespace: "default"
+  nfs:
+    hosts:
+      allinone:
+        deployment_type: "vnf"
+        k8s_namespace: "default"
+    vars:
+      log_files:
+        - path: /var/log/cinar/amf
+        - path: /var/log/cinar/pcf/cs
+        - path: /var/log/cinar/pcf/ams
+        - path: /var/log/cinar/pcf/sms
+        - path: /var/log/cinar/pcf/pes
+        - path: /var/log/cinar/pcf/nfrs
+        - path: /var/log/cinar/ausf
+        - path: /var/log/cinar/udm
+        - path: /var/log/cinar/udr
+        - path: /var/log/cinar/nrf
+        - path: /var/log/cinar/nssf
+        - path: /var/log/cinar/smf
+        - path: /var/log/cinar/upf
+      package_names:
+        - cnr

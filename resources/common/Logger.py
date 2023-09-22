@@ -18,6 +18,32 @@ class MyLogger(logging.Logger):
     def warning(self, msg, *args, **kwargs):
         return super(MyLogger, self).warning(msg, *args, **kwargs)
 
+    def debug(self, msg, *args, **kwargs):
+        if len(args) == 1 and isinstance(args[0], dict):
+            self.custom_debug(msg, args[0])
+        else:
+            return super(MyLogger, self).debug(msg, *args, **kwargs)
+
+    def custom_debug(self, message, info_dict):
+        # ------------------
+        # ----- mesaj ------
+        # ------------------
+        # Property 1: değer
+        # Property 2: değer
+        # ------------------
+        # Mesajın uzunluğunu hesaplayın ve bu uzunluğa uygun şekilde - karakterlerini oluşturun
+        message_length = len(message)
+        dashes = '-' * (message_length + 36)  # 36 karakter, diğer eklemeler ve boşluklar için ayrıldı
+
+        log.info(dashes)
+        log.info(f"--- {message} ---")
+        log.info(dashes)
+
+        for key, value in info_dict.items():
+            log.info(f"{key:<15}: {value}")
+
+        log.info(dashes)
+
 
 # Create a Formatter for formatting the log messages
 logger_formatter = logging.Formatter(

@@ -422,3 +422,11 @@ Requirement already satisfied: pymongo in ./.venv/lib/python3.10/site-packages (
 Requirement already satisfied: robotframework in ./.venv/lib/python3.10/site-packages (from -r requirements.txt (line 4)) (6.1.1)
 ....
 ```
+
+# SPIRENT
+
+# Kütüphane nasıl çalışır?
+
+- Spirent test sunucusu müsait ise
+- Test oturumu güncellenir (`test_session_update_mngr`)
+- Test koşulur (`run_test_mngr`)

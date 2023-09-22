@@ -3,8 +3,8 @@ import socket
 import json
 import sys
 import gzip
-from globalProperties import *
-from common.Logger import log
+from resources.globalProperties import *
+from resources.common.Logger import log
 
 
 def read_json_file(file_in):
@@ -33,7 +33,8 @@ def create_symlink(src_in, dst_in):
 
 
 def check_connection(ip_in, port_in):
-    """It is used to check socket connection is up or down."""
+    """It is used to check socket connection is up or down.
+    If connection is down, program will be exited"""
 
     test_socket = socket.socket()
     try:

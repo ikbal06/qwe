@@ -2,14 +2,15 @@ import json
 import jinja2
 import sys
 import ansible_runner
-from common.Logger import log
-from globalProperties import *
-from common.CommonOperations import *
+from resources.common.Logger import log
+from resources.globalProperties import *
+from resources.common.CommonOperations import *
 
 
 class AnsibleOperations:
 
-    def __init__(self, ansible_verbose, allinone_ip, mongodb_deployment_type, postgre_deployment_type, cn_deployment_type, k8s_namespace, playbook_path, **kwargs):
+    def __init__(self, ansible_verbose, allinone_ip, mongodb_deployment_type, postgre_deployment_type,
+                 cn_deployment_type, k8s_namespace, playbook_path, **kwargs):
 
         self.__dict__.update(kwargs)
         self.ansible_verbose = ansible_verbose

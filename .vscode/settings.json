@@ -77,13 +77,13 @@
         "test_ids": "KT_CN_001,KT_CN_002",
         "TEST_ID": "KT_CN_001",
         "DEFAULT_VERSION_PATH": "version.txt",
-        "spirent_ts_name": "vtsVTO",
-        "username": "username",
-        "password": "password",
-        "allinone_ip": "allinone_ip",
-        "public_ip": "public_ip",
-        "n6_ip": "n6_ip",
-        "output_path": "KT_CN_001_test_output",
+        "spirent_ts_name": "vts-VTO2",
+        "username": "ubuntu",
+        "password": "ulakroot2020",
+        "allinone_ip": "192.168.13.71",
+        "public_ip": "10.10.20.22",
+        "n6_ip": "10.10.22.33",
+        "output_path": "/home/jenkins/test1",
     },
     "robotcode.robot.outputDir": "./output",
     "robotcode.extraArgs": [
@@ -92,4 +92,5 @@
     "robotcode.languageServer.extraArgs": [
         "--log-level=TRACE"
     ],
+    "ansible.python.interpreterPath": "/usr/local/bin/python",
 }

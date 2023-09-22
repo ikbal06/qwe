@@ -1,7 +1,7 @@
 import os
 import sys
-from globalProperties import *
-from common.Logger import log
+from resources.globalProperties import *
+from resources.common.Logger import log
 
 
 class EnvDataOperations:
@@ -23,7 +23,8 @@ class EnvDataOperations:
         # self.analizci_port = os.getenv('analizci_host', DEFAULT_ANALIZCI_HOST).split(':')[1]
         self.ansible_verbose = os.getenv('ansible_verbose', 1)
         self.spirent_ts_name = os.getenv('spirent_ts_name')
-        self.test_ids = os.getenv('test_ids').split(',')
+        self.test_ids = os.getenv('test_ids')
+        # self.test_ids = os.getenv('test_ids').split(',')
         self.output_path = os.getenv('output_path')
         self.username = os.getenv('username')
         self.password = os.getenv('password')

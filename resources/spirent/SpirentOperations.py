@@ -1,8 +1,8 @@
 import sys
 import jinja2
-from spirent.SpirentClient import SpirentClient
-from globalProperties import *
-from common.Logger import log
+from resources.spirent.SpirentClient import SpirentClient
+from resources.globalProperties import *
+from resources.common.Logger import log
 import json
 import sys
 print("Python Version:", sys.version)
@@ -30,7 +30,7 @@ class SpirentOperations(SpirentClient):
         if get_test_server_response:
             all_test_servers = get_test_server_response.json()
             for each_test_server in all_test_servers['testServers']:
-                print(each_test_server['name'])
+                log.debug(each_test_server['name'])
                 if each_test_server['name'] == test_server_name_in:
                     return each_test_server
                 else:
@@ -55,10 +55,9 @@ class SpirentOperations(SpirentClient):
         test_duration is used to specify when test is finished automatically.
          """
         self.sut_mngr(DEFAULT_SUT_NAME, amf_ip_in)
-        lib_id = self.get_lib_id_mngr()
         test_server_id = self.get_test_server_mngr(spirent_ts_name_in)
-        environment = jinja2.Environment()
-        template = environment.from_string(test_Session_template)
+        lib_id = self.get_lib_id_mngr()
+        template = jinja2.Environment().from_string(test_Session_template)
         update_content = template.render(
             lib_id=lib_id,
             mnc_length=len(h_mnc_in),
@@ -75,20 +74,21 @@ class SpirentOperations(SpirentClient):
             n6_ip=upf_ip_in,
             ue_id=h_mcc_in + h_mnc_in + test_params_in['msin'],
             dn_interface_info=spirent_ts_param_in['spirent_dn_interface'],
-            gnb_interface_info=spirent_ts_param_in['spirent_gnb_interface']
+            gnb_interface_info=spirent_ts_param_in['spirent_gnb_interface'])
 
-        )
-        print("Spirent test session update content:{}".format(update_content))
+        log.debug("Spirent test session update content: ", update_content)
         return self.update_test_session_mngr(lib_id, test_params_in['test_id'], update_content)
 
     def check_test_server(self, spirent_ts_name_in):
         """It is used to check spirent test server is ready or not. """
         test_server_state = self.get_test_server_mngr(spirent_ts_name_in)
         if test_server_state['state'] == "READY":
-            print("[OK]Spirent test server is READY")
+            log.debug("[OK]Spirent test server is READY")
+            return True
         else:
             msg = "[NOK]Test server is not READY!!Please check Spirent Test Server!!!"
             log.error(msg)
+            return False
             sys.exit(msg)
 
     def sut_mngr(self, sut_name_in, amf_ip_in):

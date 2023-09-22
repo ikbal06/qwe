@@ -1,0 +1,762 @@
+{
+  "testParameters": [
+    {
+      "test_id": "KT_CN_001",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 10
+    },
+    {
+      "test_id": "KT_CN_002",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 10
+    },
+    {
+      "test_id": "KT_CN_003",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_004",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_005",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_006",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_007",
+      "ue_ip4": "172.30.0.99",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000099",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_008",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_009",
+      "ue_ip4": "172.30.0.120",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000120",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_010",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_011",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_012",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_013",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_015",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_019",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_020",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_021",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_022",
+      "ue_ip4": "172.30.0.105",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000105",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_023",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_024",
+      "ue_ip4": "172.30.0.65",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000065",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_025",
+      "ue_ip4": "172.30.0.66",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000066",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_026",
+      "ue_ip4": "172.30.0.67",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000067",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_027",
+      "ue_ip4": "172.30.0.68",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000068",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_028",
+      "ue_ip4": "172.30.0.69",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000069",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_029",
+      "ue_ip4": "172.30.0.70",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000070",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_030",
+      "ue_ip4": "172.30.0.71",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000071",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_032",
+      "ue_ip4": "172.30.0.72",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000072",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_034",
+      "ue_ip4": "172.30.0.116",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000116",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_037",
+      "ue_ip4": "172.30.0.73",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000073",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_038",
+      "ue_ip4": "172.30.0.74",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000074",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_040",
+      "ue_ip4": "172.30.0.77",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000077",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_041",
+      "ue_ip4": "172.30.0.77",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000077",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_042",
+      "ue_ip4": "172.30.0.77",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000077",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_043",
+      "ue_ip4": "172.30.0.78",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000078",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_044",
+      "ue_ip4": "172.30.0.79",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000079",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_045",
+      "ue_ip4": "172.30.0.80",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000080",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_046",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_047",
+      "ue_ip4": "172.30.0.81",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000081",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_048",
+      "ue_ip4": "172.30.0.82",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000082",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_049",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 10
+    },
+    {
+      "test_id": "KT_CN_050",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_051",
+      "ue_ip4": "172.30.0.83",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_052",
+      "ue_ip4": "172.30.0.84",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_053",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_054",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_055",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_056",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_058",
+      "ue_ip4": "172.30.0.85",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000085",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_059",
+      "ue_ip4": "172.30.0.86",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000086",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_060",
+      "ue_ip4": "172.30.0.87",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000087",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_061",
+      "ue_ip4": "172.30.0.87",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000087",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_062",
+      "ue_ip4": "172.30.0.87",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000087",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_063",
+      "ue_ip4": "172.30.0.87",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000087",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_066",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_068",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_069",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_070",
+      "ue_ip4": "172.30.0.88",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000088",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_071",
+      "ue_ip4": "172.30.0.89",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000089",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_072",
+      "ue_ip4": "172.30.0.90",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000090",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_073",
+      "ue_ip4": "172.30.0.116",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000116",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_074",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_075",
+      "ue_ip4": "172.30.0.92",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000092",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_076",
+      "ue_ip4": "172.30.0.93",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000093",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_077",
+      "ue_ip4": "172.30.0.94",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000094",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_078",
+      "ue_ip4": "172.30.0.95",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000095",
+      "test_duration": 10
+    },
+    {
+      "test_id": "KT_CN_082",
+      "ue_ip4": "172.30.0.96",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000096",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_083",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_084",
+      "ue_ip4": "172.30.0.97",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000097",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_085",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_086",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_087",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_089",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_090",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_091",
+      "ue_ip4": "172.30.0.101",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000101",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_096",
+      "ue_ip4": "172.30.0.99",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000099",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_097",
+      "ue_ip4": "172.30.0100",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000100",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_098",
+      "ue_ip4": "172.30.0.102",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000102",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_099",
+      "ue_ip4": "172.30.0.106",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000106",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_100",
+      "ue_ip4": "172.30.0.109",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000109",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_101",
+      "ue_ip4": "172.30.0.110",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000110",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_102",
+      "ue_ip4": "172.30.0.74",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000074",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_105",
+      "ue_ip4": "172.30.0.114",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "0010000114",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_200",
+      "ue_ip4": "172.30.0.77",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000077",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_201",
+      "ue_ip4": "172.30.0.77",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000077",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_202",
+      "ue_ip4": "172.30.0.77",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000077",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_203",
+      "ue_ip4": "172.30.0.92",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000092",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_204",
+      "ue_ip4": "172.30.0.81",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000081",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_205",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_206",
+      "ue_ip4": "172.30.0.74",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000074",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_207",
+      "ue_ip4": "172.30.0.77",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000077",
+      "test_duration": 20
+    },
+    {
+      "test_id": "KT_CN_209",
+      "ue_ip4": "172.30.0.63",
+      "perm_key": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "op_key": "00000000000000000000000000000000",
+      "msin": "001000063",
+      "test_duration": 20
+    }
+  ],
+  "tsParameters": [
+    {
+      "ts_name": "vTS1",
+      "spirent_gnb_ip": "10.10.20.230",
+      "spirent_dn_ip": "10.10.22.240",
+      "spirent_dn_interface": "eth5",
+      "spirent_gnb_interface": "eth4"
+    },
+    {
+      "ts_name": "vts-VTO2",
+      "spirent_gnb_ip": "10.10.20.230",
+      "spirent_dn_ip": "10.10.22.240",
+      "spirent_dn_interface": "eth2",
+      "spirent_gnb_interface": "eth4"
+    },
+    {
+      "ts_name": "vts-STO2",
+      "spirent_gnb_ip": "10.10.30.230",
+      "spirent_dn_ip": "10.10.32.230",
+      "spirent_dn_interface": "eth3",
+      "spirent_gnb_interface": "eth4"
+    },
+    {
+      "ts_name": "pto1",
+      "spirent_gnb_ip": "10.10.41.20",
+      "spirent_dn_ip": "10.10.47.20",
+      "spirent_dn_interface": "eth3",
+      "spirent_gnb_interface": "eth2"
+    }
+  ]
+}

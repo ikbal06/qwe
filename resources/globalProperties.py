@@ -1,6 +1,6 @@
 import os
 import shutil
-from common.CommonOperations import *
+from resources.common.CommonOperations import *
 
 # Spirent properties
 SPIRENT_IP = '192.168.13.99'
@@ -10,9 +10,9 @@ SPIRENT_USER = 'automated'
 SPIRENT_PASSWORD = 'a1b2c3d4'
 SPIRENT_API_PATH = 'api/'
 
-#DEFAULT_ANALIZCI_HOST = "10.10.10.10:3000".split(":")
-#DEFAULT_ANALIZCI_IP = DEFAULT_ANALIZCI_HOST[0]
-#DEFAULT_ANALIZCI_PORT = DEFAULT_ANALIZCI_HOST[1]
+# DEFAULT_ANALIZCI_HOST = "10.10.10.10:3000".split(":")
+# DEFAULT_ANALIZCI_IP = DEFAULT_ANALIZCI_HOST[0]
+# DEFAULT_ANALIZCI_PORT = DEFAULT_ANALIZCI_HOST[1]
 ANALIZCI_PROTOCOL = 'http'
 ANALIZCI_API_PATH = 'automated/'
 
@@ -36,12 +36,11 @@ DEFAULT_POSTGRE_DEP_TYPE = "cnf"
 DEFAULT_K8S_NAMESPACE = "default"
 
 
-
 ANSIBLE_PLAYBOOK_PATH = shutil.which("ansible-playbook")
-BASE_PATH = "D:\\_Projects\\_ROBOT\\qwe\\"
-CONFIG_FILE_PATH = os.path.join(BASE_PATH,"config.json")
-PLAYBOOKS_PATH = os.path.join(BASE_PATH,"playbooks") # BASE_PATH//playbooks
-ROLES_PATH = os.path.join(BASE_PATH,"roles") # BASE_PATH//roles
+BASE_PATH = "/workspace"
+CONFIG_FILE_PATH = os.path.join(BASE_PATH, "config.json")
+PLAYBOOKS_PATH = os.path.join(BASE_PATH, "playbooks")  # BASE_PATH//playbooks
+ROLES_PATH = os.path.join(BASE_PATH, "roles")  # BASE_PATH//roles
 SSH_COPY_ID_PLAYBOOK_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_ssh_copy_id.yml")
 START_TCPDUMP_PLAYBOOK_PATH = os.path.join(PLAYBOOKS_PATH, "ULAK5G_core_start_tcpdump.yml")
 print(START_TCPDUMP_PLAYBOOK_PATH)
@@ -155,21 +154,19 @@ inventory_template = """{
 }"""
 
 
-
-
 # List of NFs
 NFList = [
-            "NRF",
-            "NEF",
-            "PCF",
-            "NSSF",
-            "AMF",
-            "UDM",
-            "AUSF",
-            "UDR",
-            "SMF"  # add more NFs here
-        ]
-        
+    "NRF",
+    "NEF",
+    "PCF",
+    "NSSF",
+    "AMF",
+    "UDM",
+    "AUSF",
+    "UDR",
+    "SMF"  # add more NFs here
+]
+
 
 # List of NRF services
 nfServices = """[
@@ -420,76 +417,76 @@ test_Session_template = """{
 	}]
 }"""
 
-#Test Names
+# Test Names
 testDescriptions = {
-"KT_CN_001" : "İlk Kayıtlanma/Kimlik Doğrulama",
-"KT_CN_002" : "Periyodik Kayıtlanma",
-"KT_CN_003" : "Hareketlilik Kayıtlanması",
-"KT_CN_004" : "Servis Alanı Kısıtlamaları",
-"KT_CN_005" : "Kullanıcı Ekipmanı İçerik Transferi-Kimlik Doğrulama - 3GPP TS 23.502 V15.6.0 4.2.2.2.2",
-"KT_CN_006" : "AMF Yük Yeniden Dengeleme",
-"KT_CN_007" : "AMF’in Slice Bilgisine Göre Direct Reroute Yöntemi ile Değiştirilmesi",
-"KT_CN_008" : "UE Tarafından Başlatılan Kayıt Silme – 3GPP TS 23.502 V15.6.0 4.2.2.3.2",
-"KT_CN_009" : "Ağ tarafından başlatılan kayıt silme",
-"KT_CN_010" : "PDU Oturumu Kurulumu",
-"KT_CN_011" : "LADN",
-"KT_CN_012" : "Xn Handover UPF Değişimi Olmaksızın-UPF Endmarker",
-"KT_CN_019" : "Süre Tabanlı Tamponlama",
-"KT_CN_020" : "Paket Sayısı Tabanlı Tamponlama",
-"KT_CN_022" : "UE Configuration Update",
-"KT_CN_023" : "AN Release",
-"KT_CN_024" : "AM Policy Association Modification initiated by the AMF",
-"KT_CN_026" : "Procedures for future background data transfer",
-"KT_CN_027" : "Usage Monitoring Control (kullanım izleme yönetimi) - PDU Session Level (Paket veri birimi oturumu seviyesinde) volume based (data hacmi bazlı)",
-"KT_CN_028" : "Usage Monitoring Control (kullanım izleme yönetimi) - Pcc Rule/SDF Level (Servis seviyesinde) volume based (data hacmi bazlı)",
-"KT_CN_029" : "Usage Monitoring Control (kullanım izleme yönetimi) - PDU Session Level (Paket veri birimi oturumu seviyesinde) duration based (zaman bazlı)",
-"KT_CN_032" : "UE’ye ConfiguredNSSAI Bilgisinin İletimi",
-"KT_CN_033" : "Requested NSSAI Limitasyonu",
-"KT_CN_035" : "Farklı NSSAI bilgilerini bir ağ dilimiyle ilişkilendirme",
-"KT_CN_036" : "Farklı Ağ Dilimlerini bir NSSAI ile ilişkilendirme",
-"KT_CN_040" : "Parameter Provisioning",
-"KT_CN_042" : "AF Kısıtlama",
-"KT_CN_043" : "Monitoring Events (Location Reporting)",
-"KT_CN_044" : "Monitoring Events (Loss of Connectivity)",
-"KT_CN_045" : "Monitoring Events (UE Reachability for Data)",
-"KT_CN_049" : "Servis İsteği",
-"KT_CN_050" : "PDU Oturum sonlandırma-Kullanıcı Ekipmanı Tarafından Başlatılan",
-"KT_CN_051" : "PDU Oturum sonlandırma-PCF Tarafından Başlatılan",
-"KT_CN_052" : "AMF ve SMF Bilgilendirme",
-"KT_CN_053" : "Xn Handover- UPF Değişimi olmaksızın",
-"KT_CN_054" : "Xn Handover- I-UPF Eklenmesi",
-"KT_CN_056" : "N2 Handover",
-"KT_CN_058" : "Setting up an AF Session with Required QoS Procedure - AF Session Termination (PDU Session Release triggered)",
-"KT_CN_065" : "Tıkanıklık kontolü General-Acil Durum Servisi",
-"KT_CN_068" : "IMS - AF Session Termination (PDU Session Release triggered )",
-"KT_CN_070" : "AF isteklerinde abonelik bilgisi uygunluğu kontrolü",
-"KT_CN_072" : "IMS - Erişim şebeke bilgisi raporlama (AN_INFO report)",
-"KT_CN_074" : "Yük Dengeleme",
-"KT_CN_079" : "Tıkanıklık kontolü General - 3gpp TS 23.502 V15.6.0",
-"KT_CN_080" : "Tıkanıklık kontolü DNN Tabanlı - 3gpp TS 23.502 V15.6.0",
-"KT_CN_081" : "Tıkanıklık kontolü Slice Tabanlı - 3gpp TS 23.502 V15.6.0",
-"KT_CN_083" : "PDU Session IMS - 3gpp TS 23.502 V15.6.0",
-"KT_CN_087" : "Overload Paging- 3gpp TS 23.502 V15.6.0",
-"KT_CN_107" : "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-N2 Handover",
-"KT_CN_108" : "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-Acil Durum Kayıtlanması",
-"KT_CN_109" : "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-PDU Session Fail",
-"KT_CN_110" : "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-Periyodik Kayıtlanma",
-"KT_CN_111" : "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-N2 Handover fail",
-"KT_CN_112" : "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi",
-"KT_IMS_002" : "Registration over 5G",
-"KT_IMS_004" : "VoNR",
-"KT_IMS_017" : "Video over NR",
-"KT_IMS_203" : "VoNR - SKT",
-"KT_IMS_204" : "Video over NR",
-"KT_IMS_209" : "SMS over 5G ",
-"5G_CN_SystemPerformanceScenario_5_1":"withoutIMS_L2_1200-pdu-data",
-"5G_CN_SystemPerformanceScenario_5_2":"withoutIMS_L2_4800_reg",
-"5G_CN_SystemPerformanceScenario_6":"2400-teknodal-IMS",
-"KT_EPC_001" : "İlk Kayıtlanma/Kimlik Doğrulama",
-"KT_EPC_003" : "Trackig Area Update",
-"KT_EPC_004" : "Emergency Service",
-"KT_EPC_005" : "Handover",
-"KT_EPC_011" : "APN bazlı paket filtreleme",
-"KT_EPC_012" : "Roaming",
-"KT_EPC_021" : "IPv6 ile data trafiği"
+    "KT_CN_001": "İlk Kayıtlanma/Kimlik Doğrulama",
+    "KT_CN_002": "Periyodik Kayıtlanma",
+    "KT_CN_003": "Hareketlilik Kayıtlanması",
+    "KT_CN_004": "Servis Alanı Kısıtlamaları",
+    "KT_CN_005": "Kullanıcı Ekipmanı İçerik Transferi-Kimlik Doğrulama - 3GPP TS 23.502 V15.6.0 4.2.2.2.2",
+    "KT_CN_006": "AMF Yük Yeniden Dengeleme",
+    "KT_CN_007": "AMF’in Slice Bilgisine Göre Direct Reroute Yöntemi ile Değiştirilmesi",
+    "KT_CN_008": "UE Tarafından Başlatılan Kayıt Silme – 3GPP TS 23.502 V15.6.0 4.2.2.3.2",
+    "KT_CN_009": "Ağ tarafından başlatılan kayıt silme",
+    "KT_CN_010": "PDU Oturumu Kurulumu",
+    "KT_CN_011": "LADN",
+    "KT_CN_012": "Xn Handover UPF Değişimi Olmaksızın-UPF Endmarker",
+    "KT_CN_019": "Süre Tabanlı Tamponlama",
+    "KT_CN_020": "Paket Sayısı Tabanlı Tamponlama",
+    "KT_CN_022": "UE Configuration Update",
+    "KT_CN_023": "AN Release",
+    "KT_CN_024": "AM Policy Association Modification initiated by the AMF",
+    "KT_CN_026": "Procedures for future background data transfer",
+    "KT_CN_027": "Usage Monitoring Control (kullanım izleme yönetimi) - PDU Session Level (Paket veri birimi oturumu seviyesinde) volume based (data hacmi bazlı)",
+    "KT_CN_028": "Usage Monitoring Control (kullanım izleme yönetimi) - Pcc Rule/SDF Level (Servis seviyesinde) volume based (data hacmi bazlı)",
+    "KT_CN_029": "Usage Monitoring Control (kullanım izleme yönetimi) - PDU Session Level (Paket veri birimi oturumu seviyesinde) duration based (zaman bazlı)",
+    "KT_CN_032": "UE’ye ConfiguredNSSAI Bilgisinin İletimi",
+    "KT_CN_033": "Requested NSSAI Limitasyonu",
+    "KT_CN_035": "Farklı NSSAI bilgilerini bir ağ dilimiyle ilişkilendirme",
+    "KT_CN_036": "Farklı Ağ Dilimlerini bir NSSAI ile ilişkilendirme",
+    "KT_CN_040": "Parameter Provisioning",
+    "KT_CN_042": "AF Kısıtlama",
+    "KT_CN_043": "Monitoring Events (Location Reporting)",
+    "KT_CN_044": "Monitoring Events (Loss of Connectivity)",
+    "KT_CN_045": "Monitoring Events (UE Reachability for Data)",
+    "KT_CN_049": "Servis İsteği",
+    "KT_CN_050": "PDU Oturum sonlandırma-Kullanıcı Ekipmanı Tarafından Başlatılan",
+    "KT_CN_051": "PDU Oturum sonlandırma-PCF Tarafından Başlatılan",
+    "KT_CN_052": "AMF ve SMF Bilgilendirme",
+    "KT_CN_053": "Xn Handover- UPF Değişimi olmaksızın",
+    "KT_CN_054": "Xn Handover- I-UPF Eklenmesi",
+    "KT_CN_056": "N2 Handover",
+    "KT_CN_058": "Setting up an AF Session with Required QoS Procedure - AF Session Termination (PDU Session Release triggered)",
+    "KT_CN_065": "Tıkanıklık kontolü General-Acil Durum Servisi",
+    "KT_CN_068": "IMS - AF Session Termination (PDU Session Release triggered )",
+    "KT_CN_070": "AF isteklerinde abonelik bilgisi uygunluğu kontrolü",
+    "KT_CN_072": "IMS - Erişim şebeke bilgisi raporlama (AN_INFO report)",
+    "KT_CN_074": "Yük Dengeleme",
+    "KT_CN_079": "Tıkanıklık kontolü General - 3gpp TS 23.502 V15.6.0",
+    "KT_CN_080": "Tıkanıklık kontolü DNN Tabanlı - 3gpp TS 23.502 V15.6.0",
+    "KT_CN_081": "Tıkanıklık kontolü Slice Tabanlı - 3gpp TS 23.502 V15.6.0",
+    "KT_CN_083": "PDU Session IMS - 3gpp TS 23.502 V15.6.0",
+    "KT_CN_087": "Overload Paging- 3gpp TS 23.502 V15.6.0",
+    "KT_CN_107": "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-N2 Handover",
+    "KT_CN_108": "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-Acil Durum Kayıtlanması",
+    "KT_CN_109": "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-PDU Session Fail",
+    "KT_CN_110": "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-Periyodik Kayıtlanma",
+    "KT_CN_111": "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi-N2 Handover fail",
+    "KT_CN_112": "5GCN/IMS Performans Metrikleri ve KPI’ların Gösterimi",
+    "KT_IMS_002": "Registration over 5G",
+    "KT_IMS_004": "VoNR",
+    "KT_IMS_017": "Video over NR",
+    "KT_IMS_203": "VoNR - SKT",
+    "KT_IMS_204": "Video over NR",
+    "KT_IMS_209": "SMS over 5G ",
+    "5G_CN_SystemPerformanceScenario_5_1": "withoutIMS_L2_1200-pdu-data",
+    "5G_CN_SystemPerformanceScenario_5_2": "withoutIMS_L2_4800_reg",
+    "5G_CN_SystemPerformanceScenario_6": "2400-teknodal-IMS",
+    "KT_EPC_001": "İlk Kayıtlanma/Kimlik Doğrulama",
+    "KT_EPC_003": "Trackig Area Update",
+    "KT_EPC_004": "Emergency Service",
+    "KT_EPC_005": "Handover",
+    "KT_EPC_011": "APN bazlı paket filtreleme",
+    "KT_EPC_012": "Roaming",
+    "KT_EPC_021": "IPv6 ile data trafiği"
 }

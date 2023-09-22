@@ -10,3 +10,7 @@ transform = [
    "DiscardEmptySections",
    "NormalizeSeparators"
 ]
+
+# .robotidy.yml
+
+ 
