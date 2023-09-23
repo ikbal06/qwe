@@ -93,4 +93,5 @@
         "--log-level=TRACE"
     ],
     "ansible.python.interpreterPath": "/usr/local/bin/python",
+    "python.formatting.provider": "none",
 }

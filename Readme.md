@@ -425,6 +425,36 @@ Requirement already satisfied: robotframework in ./.venv/lib/python3.10/site-pac
 
 # SPIRENT
 
+## Test Sunucuları
+
+> http://192.168.13.99:8080/api/testServers
+
+İsteğin cevabı aşağıdaki sunucu bilgileri gibi bir dizi döner:
+
+> {'url': 'http://10.10.20.74:8080/api/testServers/1', 'id': 1, 'name': 'vts-VTO2', 'state': 'READY', 'version': '20.6.1.9'}
+
+Spirent Test Center (STC) veya diğer Spirent test ekipmanlarını kontrol etmek ve yönetmek için kullanılan Spirent API'sinde "testServers" nesnesi, test ekipmanlarının bilgilerini ve özelliklerini almak için kullanılır. "testServers" ile neleri çekebileceğinize dair birkaç örnek şunlar olabilir:
+
+1. **Test Ekipmanlarının Listesi:** "testServers" ile mevcut Spirent test ekipmanlarının bir listesini alabilirsiniz. Bu liste, erişilebilir test ekipmanlarının adlarını, IP adreslerini veya diğer kimlik bilgilerini içerebilir.
+
+2. **Test Ekipmanının Durumu:** Her bir test sunucusunun durumu hakkında bilgi alabilirsiniz. Bu durum bilgileri, bir ekipmanın çevrimiçi mi yoksa çevrimdışı mı olduğunu, kullanılabilirliğini ve çalışma durumunu gösterir.
+
+3. **Test Ekipmanı Konfigürasyonu:** "testServers" ile bir test sunucusunun yapılandırması hakkında bilgi alabilirsiniz. Bu, ekipmanın mevcut yapılandırması, test senaryoları ve kullanılan ayarlar gibi detayları içerebilir.
+
+4. **Test Ekipmanı Sürüm Bilgisi:** Bir test sunucusunun kullandığı Spirent yazılımının sürümü ve diğer kimlik bilgileri gibi teknik bilgilere ulaşabilirsiniz.
+
+5. **Bağlantı Bilgileri:** "testServers" ile test ekipmanlarının bağlantı bilgilerini (örneğin, IP adresi, bağlantı portu) alabilirsiniz.
+
+6. **Kullanılabilir Fonksiyonlar:** Her bir test sunucusunun desteklediği işlevler veya yetenekler hakkında bilgi edinebilirsiniz. Bu, hangi test senaryolarının çalıştırılabileceği veya hangi protokollerin desteklendiği gibi bilgileri içerebilir.
+
+"testServers" nesnesi, genellikle Spirent test ekipmanlarının yönetimi ve otomasyonu için kullanılan API çağrıları sırasında test sunucularının tanımlanması ve bu ekipmanlarla etkileşimde bulunulması için kullanılır. Bu sayede kullanıcılar, test ekipmanlarını uzaktan yönetebilir, test senaryolarını oluşturabilir ve sonuçları alabilirler. Bu işlemler, büyük ve karmaşık ağ testlerinin otomasyonunu sağlamak için önemlidir.
+
+## Library ID
+
+Test kütüphaneleri, belirli test senaryolarını veya yapılandırmalarını kaydetmek ve paylaşmak için kullanılır. Kütüphaneler, test senaryolarının yeniden kullanılabilirliğini artırmak ve ağ testleri sırasında aynı yapılandırmayı tekrar tekrar girmek yerine bu senaryoları kolayca yüklemek için kullanışlıdır.
+
+Kullanıcılar, bu API yoluyla belirli bir kütüphanenin kimlik bilgilerini (libraryIds) alabilirler. Bu kimlik bilgileri daha sonra belirli bir test kütüphanesine yönelik diğer API çağrılarında veya işlemlerinde kullanılabilir. Örneğin, belirli bir kütüphane içindeki test senaryolarını listelemek veya bu kütüphaneyi bir test oturumu oluşturmak için bu kimlik bilgileri kullanılabilir.
+
 # Kütüphane nasıl çalışır?
 
 - Spirent test sunucusu müsait ise
