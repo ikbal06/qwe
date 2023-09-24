@@ -27,15 +27,18 @@ class SpirentManager(SpirentClient):
             test_id, lib_id, h_mnc, h_mcc, test_duration, spirent_ts_id, spirent_gnb_ip, perm_key, op_key,
             spirent_dn_ip, upf_ip, msin, spirent_dn_interface, spirent_gnb_interface)
         if update_content:
-            log.debug("Spirent Test About To Be Updated", json.loads(update_content))
-            response = self.update_test_session(lib_id, test_id, json.loads(update_content))
+            spirent_update_data = json.loads(update_content)
+            log.debug("Spirent Test About To Be Updated", spirent_update_data)
+            response = self.update_test_session(lib_id, test_id, spirent_update_data)
+            response_data = response.json()
             if response.status_code != 200:
-                log.error(f'Test session güncellenemedi! Sunucu Cevabı: {response.json()}')
+                log.error(f'Test session güncellenemedi! Sunucu Cevabı: {response_data}')
                 sys.exit(108)
             else:
-                return response
+                log.debug(f"{response_data['url']} Testi güncellendi: {response_data}")
+                return response_data
         else:
-            log.error(f'Test session güncellenemedi')
+            log.error(f'Test session güncelleme verisi geçersiz olduğu için güncellenemedi: {update_content}')
             sys.exit(108)
 
     def _get_spirent_sut_by_name(self, sut_name):
@@ -113,7 +116,7 @@ class SpirentManager(SpirentClient):
 
         template_data = {
             'lib_id': lib_id,
-            'mnc_length': h_mnc,  # len(test_params['h_mnc']),
+            'mnc_length': len(h_mnc),  # len(test_params['h_mnc']),
             'test_id': test_id,  # test_params['test_id'],
             'test_duration': test_duration,  # test_params['test_duration'],
             'amf_info': DEFAULT_SUT_NAME,
@@ -137,12 +140,31 @@ class SpirentManager(SpirentClient):
         data = {'library': spirent_lib_id_in, 'name': test_name}
         log.debug("Test Run is about to run", data)
         response = self.run_test(data)
-        log.debug("Test Run has started", response.json())
-        if response:
-            running_test = response.json()
-            test_id = running_test['id']
-            log.debug(f"Spirent test={test_name} in user={SPIRENT_USER} started successfully. Test run id={test_id}")
-            return running_test['id']
+
+        if not response:
+            log.error("Response from the server couldn't retrieved")
+            sys.exit(444)
+
+        response_data = response.json()
+        if response.status_code != 201:
+            log.debug("Test Initialization Failed", {"girdi": data, "sonuc": response_data})
+            log.error("Test failed to start!")
+            sys.exit(333)
+
+        log.debug(f"Test Run has started [{response.status_code}]", response_data)
+        test_id = response_data['id']
+        log.debug(f"Spirent test={test_name} in user={SPIRENT_USER} started successfully. Test run id={test_id}")
+        return test_id
+
+    def get_test_status(self, test_id):
+        response = self.get_running_test(test_id)
+        if response.status_code != 200:
+            log.warning('Test sonucu çekilemedi!')
+            return None
+
+        log.debug(f'Spirent test run={test_id} running test status received successfully')
+        test_results = response.json()
+        return test_results
 # -----------------------------------------------------
 
     def get_spirent_test_servers(self):

@@ -390,8 +390,8 @@ test_Session_template = """{
 				},
 				"GnbMcc": "{{ h_mcc }}",
 				"GnbMnc": "{{ h_mnc }}",
-        "UeNas5gMmSecretKey" : "0x{{perm_key}}",
-        "UeNas5gMmOpVar": "0x{{op_key}}",	
+                "UeNas5gMmSecretKey" : "0x{{perm_key}}",
+                "UeNas5gMmOpVar": "0x{{op_key}}",	
 				"NetworkHostAddrLocal": {
 					"class": "TestNode",
 					"ethStatsEnabled": false,
@@ -411,7 +411,7 @@ test_Session_template = """{
 					"vlanTagType": 0
 				},
 				"UeNas5gMmSupi": "{{ ue_id }}",
-        "UeNas5gMmMncLength": "{{ mnc_length }}"
+                "UeNas5gMmMncLength": "{{ mnc_length }}"
 			}
 		}]
 	}]

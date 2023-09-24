@@ -9,6 +9,7 @@ from robot.api import logger as robot_logger
 class MyLogger(logging.Logger):
 
     def __init__(self, name, level=logging.NOTSET):
+        self.setLevel(logging.DEBUG)
         return super(MyLogger, self).__init__(name, level)
 
     def info(self, msg, *args, **kwargs):
@@ -59,4 +60,5 @@ logger_handler.setLevel(logging.DEBUG)
 log = logging.getLogger(__name__)
 # Add the Handler to the Logger
 log.addHandler(logger_handler)
+
 log.info('Completed configuring logger()!')

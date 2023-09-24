@@ -423,6 +423,28 @@ Requirement already satisfied: robotframework in ./.venv/lib/python3.10/site-pac
 ....
 ```
 
+## Listener
+
+[Listener Arayüzü](http://robotframework.org/robotframework/2.8.7/RobotFrameworkUserGuide.html#using-listener-interface)
+
+````cpp
+public interface RobotListenerInterface {
+    public static final int ROBOT_LISTENER_API_VERSION = 2;
+    void startSuite(String name, java.util.Map attributes);
+    void endSuite(String name, java.util.Map attributes);
+    void startTest(String name, java.util.Map attributes);
+    void endTest(String name, java.util.Map attributes);
+    void startKeyword(String name, java.util.Map attributes);
+    void endKeyword(String name, java.util.Map attributes);
+    void logMessage(java.util.Map message);
+    void message(java.util.Map message);
+    void outputFile(String path);
+    void logFile(String path);
+    void reportFile(String path);
+    void debugFile(String path);
+    void close();
+}```
+
 # SPIRENT
 
 ## Test Sunucuları
@@ -460,3 +482,4 @@ Kullanıcılar, bu API yoluyla belirli bir kütüphanenin kimlik bilgilerini (li
 - Spirent test sunucusu müsait ise
 - Test oturumu güncellenir (`test_session_update_mngr`)
 - Test koşulur (`run_test_mngr`)
+````
