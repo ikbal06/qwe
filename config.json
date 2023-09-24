@@ -1,4 +1,34 @@
 {
+  "tsParameters": [
+    {
+      "ts_name": "vTS1",
+      "spirent_gnb_ip": "10.10.20.230",
+      "spirent_dn_ip": "10.10.22.240",
+      "spirent_dn_interface": "eth5",
+      "spirent_gnb_interface": "eth4"
+    },
+    {
+      "ts_name": "vts-VTO2",
+      "spirent_gnb_ip": "10.10.20.230",
+      "spirent_dn_ip": "10.10.22.240",
+      "spirent_dn_interface": "eth2",
+      "spirent_gnb_interface": "eth4"
+    },
+    {
+      "ts_name": "vts-STO2",
+      "spirent_gnb_ip": "10.10.30.230",
+      "spirent_dn_ip": "10.10.32.230",
+      "spirent_dn_interface": "eth3",
+      "spirent_gnb_interface": "eth4"
+    },
+    {
+      "ts_name": "pto1",
+      "spirent_gnb_ip": "10.10.41.20",
+      "spirent_dn_ip": "10.10.47.20",
+      "spirent_dn_interface": "eth3",
+      "spirent_gnb_interface": "eth2"
+    }
+  ],
   "testParameters": [
     {
       "test_id": "KT_CN_001",
@@ -727,36 +757,6 @@
       "op_key": "00000000000000000000000000000000",
       "msin": "001000063",
       "test_duration": 20
-    }
-  ],
-  "tsParameters": [
-    {
-      "ts_name": "vTS1",
-      "spirent_gnb_ip": "10.10.20.230",
-      "spirent_dn_ip": "10.10.22.240",
-      "spirent_dn_interface": "eth5",
-      "spirent_gnb_interface": "eth4"
-    },
-    {
-      "ts_name": "vts-VTO2",
-      "spirent_gnb_ip": "10.10.20.230",
-      "spirent_dn_ip": "10.10.22.240",
-      "spirent_dn_interface": "eth2",
-      "spirent_gnb_interface": "eth4"
-    },
-    {
-      "ts_name": "vts-STO2",
-      "spirent_gnb_ip": "10.10.30.230",
-      "spirent_dn_ip": "10.10.32.230",
-      "spirent_dn_interface": "eth3",
-      "spirent_gnb_interface": "eth4"
-    },
-    {
-      "ts_name": "pto1",
-      "spirent_gnb_ip": "10.10.41.20",
-      "spirent_dn_ip": "10.10.47.20",
-      "spirent_dn_interface": "eth3",
-      "spirent_gnb_interface": "eth2"
     }
   ]
 }

@@ -5,8 +5,6 @@ from resources.globalProperties import *
 from resources.common.Logger import log
 import json
 import sys
-print("Python Version:", sys.version)
-print("Python Executable Path:", sys.executable)
 
 
 class SpirentManager(SpirentClient):
@@ -15,8 +13,8 @@ class SpirentManager(SpirentClient):
         super().__init__()
 
     def update_test_server_session_or_exit(
-            self, amf_ip, spirent_ts_name, test_id, lib_id, h_mnc, h_mcc, test_duration, spirent_ts_id, spirent_gnb_ip,
-            perm_key, op_key, spirent_dn_ip, upf_ip, msin, spirent_dn_interface, spirent_gnb_interface):
+            self, test_id, amf_ip, upf_ip, test_duration, spirent_ts_name, spirent_ts_id, spirent_gnb_ip,
+            spirent_dn_ip, spirent_dn_interface, spirent_gnb_interface, h_mnc, h_mcc, perm_key, op_key, msin):
         '''Spirent Test Sunucusu üzerinde bir test oturumu yaratacağız. 
         Bu oturumda kullanılmak üzere bazı bilgileri güncelleyeceğiz.
         Örneği MNC, MCC, AMF IP vs.
@@ -26,11 +24,16 @@ class SpirentManager(SpirentClient):
         # test_server = self.get_test_server_mngr(spirent_ts_name)
         test_server = self.get_test_server_or_exit(spirent_ts_name)
         update_content = self.render_test_session_template(
-            self, test_id, lib_id, h_mnc, h_mcc, test_duration, spirent_ts_id, spirent_gnb_ip, perm_key, op_key,
+            test_id, lib_id, h_mnc, h_mcc, test_duration, spirent_ts_id, spirent_gnb_ip, perm_key, op_key,
             spirent_dn_ip, upf_ip, msin, spirent_dn_interface, spirent_gnb_interface)
         if update_content:
-            log.debug("Spirent test session update content: ", update_content)
-            return self.update_test_session(lib_id, test_id, update_content)
+            log.debug("Spirent Test About To Be Updated", json.loads(update_content))
+            response = self.update_test_session(lib_id, test_id, json.loads(update_content))
+            if response.status_code != 200:
+                log.error(f'Test session güncellenemedi! Sunucu Cevabı: {response.json()}')
+                sys.exit(108)
+            else:
+                return response
         else:
             log.error(f'Test session güncellenemedi')
             sys.exit(108)
@@ -107,6 +110,7 @@ class SpirentManager(SpirentClient):
     def render_test_session_template(
             self, test_id, lib_id, h_mnc, h_mcc, test_duration, spirent_ts_id, spirent_gnb_ip,
             perm_key, op_key, spirent_dn_ip, upf_ip, msin, spirent_dn_interface, spirent_gnb_interface):
+
         template_data = {
             'lib_id': lib_id,
             'mnc_length': h_mnc,  # len(test_params['h_mnc']),
@@ -129,6 +133,16 @@ class SpirentManager(SpirentClient):
         template = environment.from_string(test_Session_template)
         return template.render(**template_data)
 
+    def run_test_on_spirent(self, spirent_lib_id_in, test_name):
+        data = {'library': spirent_lib_id_in, 'name': test_name}
+        log.debug("Test Run is about to run", data)
+        response = self.run_test(data)
+        log.debug("Test Run has started", response.json())
+        if response:
+            running_test = response.json()
+            test_id = running_test['id']
+            log.debug(f"Spirent test={test_name} in user={SPIRENT_USER} started successfully. Test run id={test_id}")
+            return running_test['id']
 # -----------------------------------------------------
 
     def get_spirent_test_servers(self):
@@ -140,6 +154,24 @@ class SpirentManager(SpirentClient):
         return response.json().get('testServers')
 
     def get_spirent_test_server_by_name(self, server_name):
+        """Spirent üzerinden Test Sunucularından server_name ile verilen test sunucusunun bilgisi çekilir.
+
+        Args:
+            server_name (str): Spirent test sunucusunun adı
+
+        Returns:
+            dict: Sunucu ayrıntıları
+
+        ```json
+
+        {
+        'url': 'http://10.10.20.74:8080/api/testServers/1',
+        'id': 1,
+        'name': 'vts-VTO2',
+        'state': 'READY',
+        'version': '20.6.1.9'
+        }
+        """
         for server in self.get_spirent_test_servers():
             if server['name'] == server_name:
                 log.debug(f"Spirent Test Sunucusunun Bilgileri Çekildi",  server)

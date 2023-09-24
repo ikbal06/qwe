@@ -7,9 +7,9 @@ Library    OperatingSystem
 # Library    kiwi.KiwiListener
 # Library    AnsibleLibrary
 # Library    spirent.SpirentOperations
-Library    spirent.SpirentManager
+Library    spirent.SpirentManager    WITH NAME    spirentManager
 Library    common/CommonOperations.py
-Library    TestConfigOperations    test_name=${TEST_ID}    ts_name=${SPIRENT_SERVER_NAME} 
+Library    TestConfigOperations    test_name=${TEST_ID}    ts_name=${SPIRENT_SERVER_NAME}    WITH NAME    testConfig
 Resource    keywords/spirent.robot
 
 
@@ -55,36 +55,35 @@ KT_CN_001
 *** Keywords ***
 Update Test Session    
     [Documentation]    Spirent üzerinde Test Oturum bilgilerini güncelleyeceğiz.
-    [Arguments]    ${_test_name}    ${_h_mnc}    ${_h_mcc}    ${_amf_ip}    ${_upf_ip}    # ${_test_params}    ${_spirent_ts_param}    ${_PUBLIC_IP}    ${_data_network_ip}    ${_h_mcc}    ${_h_mnn}    ${_spirent_ts_name} 
-    # Test Parametrelerinden
-    ${test_params}    Get Test Params
+    [Arguments]    ${_test_name}    ${_h_mnc}    ${_h_mcc}    ${_amf_ip}    ${_upf_ip}
+    # Test Parametrelerinden    
+    ${test_params}    testConfig.Get Test Params By Test Name    ${_test_name}
     ${test_id}=    Set Variable    ${test_params['test_id']}
     ${test_duration}=    Set Variable    ${test_params['test_duration']}
     ${perm_key}=    Set Variable    ${test_params['perm_key']}
     ${op_key}=    Set Variable    ${test_params['op_key']}
     ${msin}=    Set Variable    ${test_params['msin']}
     # Spirent özelliklerinden
-    ${spirent_ts_params}    Get Spirent Ts Params
+    ${spirent_ts_params}    testConfig.Get Spirent Ts Params
     ${spirent_ts_name}=    Set Variable    ${spirent_ts_params['ts_name']}
     ${spirent_gnb_ip}=    Set Variable    ${spirent_ts_params['spirent_gnb_ip']}
     ${spirent_dn_ip}=    Set Variable    ${spirent_ts_params['spirent_dn_ip']}
     ${spirent_dn_interface}=    Set Variable    ${spirent_ts_params['spirent_dn_interface']}
     ${spirent_gnb_interface}=    Set Variable    ${spirent_ts_params['spirent_gnb_interface']}
     # Spirent üstünden ts_name ile Test Sunucunun ID değerini çekiyoruz
-    ${spirentTestServer}=    spirent.SpirentManager.Get Spirent Test Server By Name    server_name=${spirent_ts_name}
+    ${spirentTestServer}=    spirentManager.Get Spirent Test Server By Name    server_name=${spirent_ts_name}
     ${spirent_ts_id}=    Set Variable    ${spirentTestServer['id']}
     # 
-    ${spirent_library_id}=    spirent.SpirentManager.Get Library Id By Spirent User Or Exit
+    ${spirent_library_id}=    spirentManager.Get Library Id By Spirent User Or Exit
     ${lib_id}=    Set Variable    ${spirent_library_id}
-    ${_amf_ip}=    Set Variable    amf_ip
-    ${_h_mnc}=    Set Variable    h_mnc
-    ${_h_mcc}=    Set Variable    h_mcc
-    ${_upf_ip}=    Set Variable    upf_ip
     # 
     ${ue_id}    Catenate    ${_h_mnc}    ${_h_mcc}    ${msin}
     # amf_ip, spirent_ts_name, test_id, lib_id, h_mnc, h_mcc, test_duration, spirent_ts_id, spirent_gnb_ip, perm_key, op_key, spirent_dn_ip, upf_ip, msin, spirent_dn_interface, spirent_gnb_interface
-    # ${data} =    spirent.SpirentManager.Update Test Server Session Or Exit    test_params=${test_params}    spirent_ts_param=${spirent_ts_param}    amf_ip=${PUBLIC_IP}    dn_ip=${N6_IP}    h_mcc=${H_MCC}    h_mnc=${H_MNC}    spirent_ts_name=${SPIRENT_SERVER_NAME} 
-    # ${lib_id}=    spirent.SpirentManager.Get Library Id Or Exit
+    ${data} =    spirentManager.Update Test Server Session Or Exit    ${test_id}    ${_amf_ip}    ${_upf_ip}  
+    ...    ${test_duration}    ${spirent_ts_name}    ${spirent_ts_id}    ${spirent_gnb_ip}    ${spirent_dn_ip}    ${spirent_dn_interface}    ${spirent_gnb_interface}  
+    ...    ${h_mnc}    ${h_mcc}    ${perm_key}    ${op_key}    ${msin}
+    ${lib_id}=    spirentManager.Get Library Id By Spirent User Or Exit
+    ${data} =    spirentManager.Run Test On Spirent    ${lib_id}    ${test_id}
     # spirent.SpirentManager.Run Test Or Exit    spirent_lib_id=${lib_id}    test_name=${_test_name} 
 
 Sonuçları Analizciye RPC ile Gönder

@@ -24,6 +24,7 @@
         "ms-python.python",
         "ms-python.autopep8",
         "ms-python.vscode-pylance",
+        "njpwerner.autodocstring", // python açıklamaları formatlayıcı
         // Robot uzantıları
         "d-biehl.robotcode",
         // YAML uzantıları
