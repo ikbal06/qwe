@@ -69,6 +69,7 @@ Check Status Until Test Is Completed
     WHILE    ${current_time} < ${test_stop_time}
         ${current_time}=    Evaluate    time.time()
         ${test_status}=    spirentManager.Get Test Status    ${running_test_id}
+        # ${test_statuse}=    Set Variable If    "${test_status['testStateOrStep']}" == "COMPLETE"    True    False
         IF    "${test_status['testStateOrStep']}" == "COMPLETE"    BREAK
         IF    "${test_status['testStateOrStep']}" == "COMPLETE_ERROR"    BREAK
         Log    ${test_status['testStateOrStep']}    # x = 1, x = 3

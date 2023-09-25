@@ -1,5 +1,5 @@
 *** Settings ***
-Library    listeners.MyListener
+Library    listeners/MyListener.py
 Resource    keywords/spirent.robot
 
 *** Variables ***
@@ -18,7 +18,7 @@ ${H_MCC}    001
 ${H_MNC}    001
 
 *** Test Cases ***
-KT_CN_001
+Kayıtlanma Testi [KT_CN_001]
     [Documentation]    '''Çalıştırılacak testin adı ve ID değeri "KT_CN_001" olacak.
     ...    Çalışacağı Spirent test sunucusu parametre olarak gelebilir 
     ...    Önce Spirent sunucuları arasından arana spirent sunucusu bulunur (yoksa çıkılır -FAIL-)
@@ -34,4 +34,4 @@ KT_CN_001
     Should Be True    ${result}
     ${running_test_id} =    Run Test
     ${test_status}=    Check Status Until Test Is Completed    ${running_test_id}
-    Should Not Be Empty    ${test_status}
+    Should Be Equal As Strings    "${test_status['testStateOrStep']}"    "COMPLETE"
