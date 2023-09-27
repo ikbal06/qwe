@@ -7,7 +7,6 @@ from common.Logger import log
 from spirent.SpirentManager import SpirentManager
 import re
 
-
 # ------------------------------
 
 _kc = KiwiClient()
@@ -74,7 +73,7 @@ def add_test_case_into_run(spirent_test_result, tr_id):
 
         if len(te) == 0:
             log.error(f"Test Execution could not created")
-            sys.exit(999)
+            sys.exit(109)
 
         te = te[0]
         log.debug(f"> Brand new Test Execution created for {tc_id} ")
@@ -174,13 +173,13 @@ def push_test_results_to_kiwi_master(spirent_test_result):
         return add_comment
 
 
-def send_test_reult_to_kiwi():
+def send_test_reult_to_kiwi(self, name):
     kiwi_plan_id = BuiltIn().get_variable_value('${KIWI_PLAN_ID}')
     spirent_test_id = BuiltIn().get_variable_value('${SPIRENT_TEST_ID}')
     spirent_running_test_id = BuiltIn().get_variable_value('${SPIRENT_RUNNING_TEST_ID}')
     if spirent_running_test_id == 0:
         log.error('kiwi listener içerisinde spirent test id ye ulaşılamadı')
-        sys.exit(999)
+        sys.exit(110)
     log.debug(f"This is the top-level test: {name}")
     processed_test_result = get_test_results_for_kiwi(kiwi_plan_id, spirent_test_id, spirent_running_test_id)
     log.debug('Test result has been sent to the Kiwi')
@@ -188,33 +187,36 @@ def send_test_reult_to_kiwi():
     log.info('Test result has been sent to the Kiwi')
 # ------------------------------
 
+    class KiwiListener:
 
-class KiwiListener:
+        ROBOT_LIBRARY_SCOPE = "GLOBAL"
+        ROBOT_LISTENER_API_VERSION = 3
 
-    ROBOT_LIBRARY_SCOPE = "GLOBAL"
-    ROBOT_LISTENER_API_VERSION = 3
+        def __init__(self):
+            self.ROBOT_LIBRARY_LISTENER = self
+            self.top_suite_name = None
+            self.kiwi_run_id = None
 
-    def __init__(self):
-        self.ROBOT_LIBRARY_LISTENER = self
-        self.top_suite_name = None
-        self.kiwi_run_id = None
+        def start_suite(self, name, attributes):
+            if "DEFAULT_VERSION_PATH" in os.environ:
+                self.version_file = os.environ['DEFAULT_VERSION_PATH']
+                log.debug("self.version_file: ", self.version_file)
 
-    def start_suite(self, name, attributes):
-        if "DEFAULT_VERSION_PATH" in os.environ:
-            self.version_file = os.environ['DEFAULT_VERSION_PATH']
-            log.debug("self.version_file: ", self.version_file)
+            if self.top_suite_name is None:
+                self.top_suite_name = name
+                self.kiwi_run_id = create_test_run_on_kiwi()
 
-        if self.top_suite_name is None:
-            self.top_suite_name = name
-            self.kiwi_run_id = create_test_run_on_kiwi()
+        def end_test(self, name, attributes):
+            log.debug(f"end_test {name} {attributes}")
+            # send_test_result_to_kiwi()
 
-    def end_test(self, name, attributes):
-        log.debug(f"end_test {name} {attributes}")
-        # send_test_result_to_kiwi()
+        def end_suite(self, name, attributes):
+            if name == self.top_suite_name:
+                log.debug(f"This is the top-level test: {name}")
 
-    def end_suite(self, name, attributes):
-        if name == self.top_suite_name:
-            log.debug(f"This is the top-level test: {name}")
+        def close(self):
+            pass
 
-    def close(self):
-        pass
+
+if __name__ == "__main__":
+    pass

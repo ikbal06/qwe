@@ -176,15 +176,15 @@ class SpirentManager(SpirentClient):
 
     def get_test_results_json(self, test_run_id):
         response = self.get_test_results(test_run_id)
-        if response.status_code != 200:  # 400 döndüğünden url ile ilgili
-            log.error(f'Could not retrieve data from Spirent')  # hatayı buradan veriyor
-            sys.exit(999)
+        if response.status_code != 200:
+            log.error(f'Could not retrieve data from Spirent')
+            sys.exit(111)
 
         log.debug(f'Spirent test run={test_run_id} test results received successfully')
 
         test_results = response.json()
         log.debug(f'Spirent test run result is {test_results}')
-        return test_results  # undefined olarka geliyor debugla da içine de girmiyor
+        return test_results
 
     def copy_test_outpus_from_spirent(self, test_run_id):
         log.info('......')

@@ -8,3 +8,6 @@
 - _106_: Spirent kullanıcısının lib_id si bulunamadı
 - _107_: Spirentta lib_id, test adıve testin içeğini güncellenemediyse bu hatayı alırız.
 - _108_: Spirentta test için gerekli bölümler güncellenemedi. Amf_ip, mcc, mnc vb.
+- _109_: Kiwide test run a test case ler eklenirken bir hata çıktıysa bu kod ile karşılaşırız.
+- _110_: Kiwiye testleri gönderirken listenerdan spirent_test_id ye ulaşılamadıysa bu hatayı alırız.
+- _111_: Spirenttan sonuçları alırken bir sorun çıktıysa bu hata kodunu alırız.
