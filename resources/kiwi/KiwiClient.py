@@ -1,7 +1,7 @@
 import http.client
 import ssl
 import json
-import logging
+from common.Logger import log
 import datetime
 
 now = datetime.datetime.now()
@@ -11,7 +11,6 @@ now = datetime.datetime.now()
 # logging.basicConfig(level=logging.DEBUG)
 # logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 # logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-
 
 
 class KiwiClient:
@@ -37,11 +36,12 @@ class KiwiClient:
 
     def __init__(self):
         self.url = "https://kiwi-test.ulakhaberlesme.com.tr/json_rpc/"
-        self.conn = http.client.HTTPSConnection("kiwi-test.ulakhaberlesme.com.tr", context=ssl._create_unverified_context())
+        self.conn = http.client.HTTPSConnection("kiwi-test.ulakhaberlesme.com.tr",
+                                                context=ssl._create_unverified_context())
         self.SessionID = None
-        
+
     def _login(self):
-        
+
         request_body = {
             "jsonrpc": "2.0",
             "method": "Auth.login",
@@ -51,7 +51,7 @@ class KiwiClient:
             },
             "id": "jsonrpc"
         }
-        
+
         headers = {
             'Content-Type': 'application/json'
         }
@@ -64,41 +64,41 @@ class KiwiClient:
 
         if login_response:
             self.SessionID = login_response["result"]
-            print("Logged in: SessionID -", self.SessionID)
+            log.debug("Logged in: SessionID -", self.SessionID)
         else:
-            print("kullanıcı bilgilerini kontrol et")
+            log.debug("kullanıcı bilgilerini kontrol et")
             return None
-        
+
     def _send_request(self, method, params):
         if self.SessionID is None:
             self._login()
-        
+
         request_body = {
             "jsonrpc": "2.0",
             "method": method,
             "params": params,
             "id": "jsonrpc"
         }
-        
+
         headers = {
             'Content-Type': 'application/json',
             'Cookie': "sessionid=" + self.SessionID
         }
-        
+
         request_json = json.dumps(request_body)
         self.conn.request("POST", "/json-rpc/", request_json, headers)
         response = self.conn.getresponse()
         data_json = json.loads(response.read().decode("utf-8"))
         return data_json
-    
+
     def error(response):
         if "error" in response:
-            hata_mesaji = "Hata cevabı alındı: [{}] {}".format(response["code"],response["error"])
-            print(hata_mesaji)
+            hata_mesaji = "Hata cevabı alındı: [{}] {}".format(response["code"], response["error"])
+            log.debug(hata_mesaji)
             return None
-            
+
         return response
-    
+
     '''
     --- Sıfırdan ----------------
     Test Planı yarat
@@ -178,32 +178,32 @@ class KiwiClient:
         # 	]
         # }
         '''
-        
+
         response = self._send_request("TestPlan.filter", [{"id": plan_id}])
-        print("test plan filter: ", response)
+        log.debug("test plan filter: ", response)
 
         if not response:
-            print("testplan_filter failed.")
+            log.debug("testplan_filter failed.")
             return None
-        
+
         return response
-        
-    def getTestCasePlanByID(self, plan_id):
+
+    def get_TestCase_by_plan_id(self, plan_id):
         response = self._send_request("TestCase.filter", [{"plan__id": plan_id}])
         return response
         '''
          if response:
              if "result" in response:
-                 print("getTestCasePlanByID:", response)
+                 log.debug("getTestCasePlanByID:", response)
                  return response
              else:
-                 print("getTestCasePlanByID response does not have 'result' key.")
+                 log.debug("getTestCasePlanByID response does not have 'result' key.")
          else:
-             print("getTestCasePlanByID failed.")
+             log.debug("getTestCasePlanByID failed.")
          return None
         '''
-    
-    def create_testplan(self,product, product_version, name, type):
+
+    def create_testplan(self, product, product_version, name, type):
         test_plan = {
             "product": product,
             "product_version": product_version,
@@ -211,11 +211,11 @@ class KiwiClient:
             "type": type
         }
         response = self._send_request("TestPlan.create", test_plan)
-        print("create test plan: ", response)
+        log.debug("create test plan: ", response)
         if not response:
-            print("cretae test plan failed.")
+            log.debug("cretae test plan failed.")
             return None
-        else: 
+        else:
             self.error(response)
     '''
         #types:  - geri kalan her şey den buraya gelince ekleme yapılabiliyor    
@@ -235,64 +235,78 @@ class KiwiClient:
         # ID Name Classification Description
         # 1	5G CN - Çınar	5G CN	
         # 3	6G	CN	
-        # 2	ÇINAR_5G_CN	5G CN'''	 
-        
+        # 2	ÇINAR_5G_CN	5G CN'''
+
     def TestRun_add_case(self, run_id, case_id):
+        '''
+        bir test koşusuna test senaryosunu ekler. ekleme sonucunda test execution nesnesini içeren http cevabını döner.
+        '''
         payload = [run_id, case_id]
         response = self._send_request("TestRun.add_case", payload)
-        print("TestRun_add_case:", response)
-        if response:
-            print("TestRun_add_case:", response)
-            return response   
-        
+        log.debug("TestRun_add_case:", response)
+
         if not response:
-            print("testplan_filter failed.")
+            log.error("TestRun_add_case sonucu bos geldi:", response)
             return None
-        else:
-            self.error(response) 
-            
+
+        if len(response['result']) == 0:
+            log.warning("Adding test case into test plan failed.")
+            return None
+
+        log.info(f"TestRun_add_case: {response}")
+        return response
 
     def testrun_create(self, plan_id):
-        #test_plans = self.testplan_filter(plan_id)["result"]
-        test_plans = self.testplan_filter(plan_id)
-        tp = test_plans["result"][0]["name"]
-        print("tp: ",tp)
-        if len(tp)>0:
-            plan_name = tp
+        # test_plans = self.testplan_filter(plan_id)["result"]
+        test_plans = self.testplan_filter(plan_id).get('result', [])
+        # TODO : result boş gelebilir kontrol yapılacak
+        if len(test_plans) != 1:
+            log.warning("Test plan could not be found")
+            return None
+
+        tp = test_plans[0]
+        log.debug("Found Test Plan: ", tp)
+        plan_name = tp["name"]
         values = [{
-           "build": 1,    # TODO: otomatik test koşusu için bir build yaratılacak. unspecified(name)	unspecified(version)	5G CN - Çınar(ürün)
-           "manager": 3,  # TODO: otomatik koşular için bir kullanıcı tanımlanacak. test yöneticisi test ortamı için user 3 - b.ikbalkirklar@gmail.com
-           "plan": plan_id,
-           "summary": "{} Tarihinde '{}' Planı için koşu".format(now, plan_name)
+            # TODO: otomatik test koşusu için bir build yaratılacak. unspecified(name)	unspecified(version)	5G CN - Çınar(ürün)
+            "build": 1,
+            "manager": 3,  # TODO: otomatik koşular için bir kullanıcı tanımlanacak. test yöneticisi test ortamı için user 3 - b.ikbalkirklar@gmail.com
+            "plan": plan_id,
+            "summary": "{} Tarihinde '{}' Planı için koşu".format(now, plan_name)
         }]
-        
+
         response = self._send_request("TestRun.create", values)
-        print("run create: ", response)
+        log.debug("run create: ", response)
         return response
-    
+
     def TestExecution_update(self, case_execution_id, run_id, case_id, status_id):
         case_result = [case_execution_id, {
-			"run": run_id,
-			"case": case_id,
-			"status": status_id
-		} ]
-        response = self._send_request("TestExecution.update",case_result)
+            "run": run_id,
+            "case": case_id,
+            "status": status_id
+        }]
+        response = self._send_request("TestExecution.update", case_result)
         return response
-    #status: 
-    #4 geçti, 5 başarısız 
-    
+    # status:
+    # 4 geçti, 5 başarısız
+
     def testrun_add_tag(self, run_id, tag_name):
-        tag_values = [run_id, tag_name] 
+        tag_values = [run_id, tag_name]
         response = self._send_request("TestRun.add_tag", tag_values)
-        print("tag response ", response)
-        return response 
+        log.debug("tag response ", response)
+        return response
 
     def get_tags(self, file):
         if file == "":
             raise Exception('Dosya geçerli değil!')
-        
+
         # Dosyayı açıp satırları bir liste içine alıyoruz
         with open(file) as f:
             tag_list = f.read().splitlines()
             return tag_list
 
+    def TestExecution_add_comment(self, execution_id, comment):
+        # we always create only one comment
+        add_comment = [execution_id, comment]
+        response = self._send_request("TestExecution.add_comment", add_comment)
+        return response

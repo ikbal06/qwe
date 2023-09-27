@@ -6,10 +6,10 @@
   tasks:
     - name: stopped service
       ansible.builtin.service:
-                name: "{{ item }}"
-                state: stopped
+        name: "{{ item }}"
+        state: stopped
       become: true
-      with_items: 
+      with_items:
         - cnramf-coremngr
         - cnramf-sbimngr
         - cnramf-ranmngr
@@ -17,38 +17,35 @@
         - cnramf-limngr
         - cnramf-gtpmngr
         - cnrpcfcs
-        - cnrpcfsms 
-        - cnrpcfams 
-        - cnrpcfnfrs 
-        - cnrpcfpes 
+        - cnrpcfsms
+        - cnrpcfams
+        - cnrpcfnfrs
+        - cnrpcfpes
 
     - name: started service
       ansible.builtin.service:
-                name: "{{ item }}"
-                state: started
+        name: "{{ item }}"
+        state: started
       become: true
-      with_items: 
-       - cnramf
-       - cnrpcfcs
-       - cnrpcfsms 
-       - cnrpcfams 
-       - cnrpcfnfrs 
-       - cnrpcfpes 
-       
-    
+      with_items:
+        - cnramf
+        - cnrpcfcs
+        - cnrpcfsms
+        - cnrpcfams
+        - cnrpcfnfrs
+        - cnrpcfpes
+
     - name: restarted service
       ansible.builtin.service:
-                name: "{{ item }}"
-                state: restarted
+        name: "{{ item }}"
+        state: restarted
       become: true
-      with_items: 
-       - cnrudr
-       - cnrudm
-       - cnrausf
-       - cnrsmsf
-
-
-- name: Add UE
-  ansible.builtin.import_playbook: ULAK5G_core_run_spirent_test.yml
-  vars:
-    test_id: KT_CN_001
+      with_items:
+        - cnrudr
+        - cnrudm
+        - cnrausf
+        - cnrsmsf
+# - name: Add UE
+#   ansible.builtin.import_playbook: ULAK5G_core_run_spirent_test.yml
+#   vars:
+#     test_id: KT_CN_001

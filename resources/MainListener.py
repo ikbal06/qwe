@@ -73,7 +73,7 @@ class MainListener:
                             for each_step in test_results:
                                 test_desc = each_step["description"]
                                 test_status = each_step["status"]
-                                test_step_name = test_desc[test_desc.find("(") + 1:test_desc.find(")")]
+                                test_step_name = test_desc[te_desc.find("(") + 1:test_desc.find(")")]
                                 tc = new_suite.tests.create(
                                     name=test_step_name, tags=test_id)
                                 log.info(f'Spirent test={test_id} test step={test_step_name} test status={test_status}')

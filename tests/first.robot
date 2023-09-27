@@ -6,7 +6,7 @@ Library    OperatingSystem
 # Library    resources.MainListener
 # Library    kiwi.KiwiListener
 # Library    AnsibleLibrary
-Library    spirent.SpirentOperations
+# Library    spirent.SpirentOperations
 Library    spirent.SpirentManager
 Library    common/CommonOperations.py
 Library    TestConfigOperations
@@ -25,7 +25,7 @@ ${SPIRENT_SERVER_NAME}    vts-VTO2
 ${N6_IP}    10.10.22.33
 ${PUBLIC_IP}    10.10.20.22
 ${H_MCC}    001
-${H_MNC}    001
+${H_MNC}    001   
 
 *** Test Cases ***
 Sample Test
@@ -89,8 +89,8 @@ Prepare Spirent 2
     [Documentation]    Spirent'ı testler için koşuya hazırlar
     spirent.SpirentManager.Update Test Session    ${SPIRENT_SERVER_NAME}    ${TEST_ID}    data=data
 
-Run Tests on Spirent
-    [Documentation]    Spirent'ı testler için koşuya hazırlar
+# Run Tests on Spirent
+#    [Documentation]    Spirent'ı testler için koşuya hazırlar
 
 Prepare Spirent
     [Documentation]    Spirent test oturumu güncellenir
