@@ -2,13 +2,13 @@
 
 from common.Logger import log
 import re
-from robot.libraries.BuiltIn import BuiltIn
 from robot.running.context import sys
 from spirent.SpirentManager import SpirentManager
 import os
 from kiwi.KiwiClient import KiwiClient
 from resources.common.Logger import log as logger
-
+from robot.libraries.BuiltIn import BuiltIn
+logger = BuiltIn()
 
 _kc = KiwiClient()
 
@@ -16,6 +16,7 @@ _kc = KiwiClient()
 def get_test_results_for_kiwi(kiwi_plan_id, spirent_test_id, spirent_running_test_id):
     spirentManager = SpirentManager()
     # test_results = spirentManager.get_test_results_mngr(test_run_id_in=running_test_id)
+
     test_results = spirentManager.get_test_results_json(spirent_running_test_id)
     all_test_status = test_results['criteriaStatus']  # 'PASSED'
 
@@ -210,7 +211,7 @@ class MyListener:
 
             self.top_suite_name = name
 
-            logger.debug(f"This is the top-level test: {name}")
+            logger.log_to_console(f"This is the top-level test: {name}")
         # Test süitine başlandığında yapılacak işlemler burada tanımlanır
         # TEST PLAN'ı için TEST RUN oluştur
         # Her end_test içinde Test Plan içindeki TEST CASE'lerden denk düşeni bu Test RUN'a sonucuyla ekle
@@ -218,24 +219,32 @@ class MyListener:
 
     def start_test(self, name, attributes):
         # Teste başlandığında yapılacak işlemler burada tanımlanır
-        pass
+        logger.log_to_console(f'start_test -----> {name}')
 
     def end_test(self, name, attributes):
         """"Test sonunda aşağıdaki işler yapılır:
         - Spirent test sonuçları çekilir
         - Kiwiye test sonuçları basılır"""
+        logger.log_to_console(f'end_test -----> {name}')
+
         kiwi_plan_id = BuiltIn().get_variable_value('${KIWI_PLAN_ID}')
         spirent_test_id = BuiltIn().get_variable_value('${SPIRENT_TEST_ID}')
         spirent_running_test_id = BuiltIn().get_variable_value('${SPIRENT_RUNNING_TEST_ID}')
         if spirent_running_test_id == 0:
             log.error('kiwi listener içerisinde spirent test id ye ulaşılamadı')
             sys.exit(999)
-
+        logger.debug(f"This is the top-level test: {name}")
         processed_test_result = get_test_results_for_kiwi(kiwi_plan_id, spirent_test_id, spirent_running_test_id)
-        push_test_results_to_kiwi(self._tr_id, processed_test_result)
-        log.info('Test result has been sent to the Kiwi')
+        # push_test_results_to_kiwi(self._tr_id, processed_test_result)
+        # log.log_to_console('Test result has been sent to the Kiwi')
 
-    def end_suite(self, name, attributes):
-        log.info('-----> This is a debug message.')
-        # Test süiti tamamlandığında yapılacak işlemler burada tanımlanır
-        pass
+    def end_suite(self, name, attributes, processed_test_result):
+        logger.log_to_console(f'end_suite -----> {name}')
+
+        logger.log_to_console(f'end_suite -- attributes -----> {attributes}')
+
+        # if name == self.top_suite_name:
+
+        # Bu bir en üst seviyedeki test ise, işlemlerinizi burada yapabilirsiniz.
+        push_test_results_to_kiwi(self._tr_id, processed_test_result)
+        log.log_to_console('Test result has been sent to the Kiwi')

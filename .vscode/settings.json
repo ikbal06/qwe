@@ -19,6 +19,7 @@
         // "editor.wordWrap": "bounded",
         "editor.wordWrapColumn": 150,
     },
+    "python.testing.autoTestDiscoverOnSaveEnabled":true,
     "python.formatting.autopep8Args": [
         "--max-line-length",
         "120",
@@ -42,6 +43,7 @@
         "./keywords",
         "./libraries",
         "./resources",
+        "./tests",
         "./variables"
     ],
     // ------------ ROBOT Extension ---------------
@@ -87,11 +89,26 @@
     },
     "robotcode.robot.outputDir": "./output",
     "robotcode.extraArgs": [
-        "--log-level=TRACE"
+        "--log-level=TRACE",
+        
+    ],
+    "robotcode.robot.args": [
+    //   "--listener=kiwi.KiwiListener"
     ],
     "robotcode.languageServer.extraArgs": [
         "--log-level=TRACE"
     ],
     "ansible.python.interpreterPath": "/usr/local/bin/python",
     "python.formatting.provider": "none",
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./tests",
+        "-p",
+        "*_test.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true,
+    
+    
 }

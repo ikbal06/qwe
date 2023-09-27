@@ -3,14 +3,15 @@
 # Keywords metotlarının yerel değişkenleri: degisken_adi
 
 *** Settings ***
-Library    listeners/MyListener.py
+# Library    listeners/MyListener.py
 Resource    keywords/spirent.robot
 Library    String
+Library    kiwi.KiwiListener
 
 *** Variables ***
 # KIWI 
 ${KIWI_TEST_ID}    168
-${KIWI_PLAN_ID}    7 
+${KIWI_PLAN_ID}    7
 # SPIRENT
 ${SPIRENT_TEST_ID}    KT_CN_001
 ${SPIRENT_RUNNING_TEST_ID}    
@@ -45,8 +46,7 @@ Kayıtlanma Testi [KT_CN_001]
     ${SPIRENT_RUNNING_TEST_ID}=    Run Test    ${SPIRENT_TEST_ID}
     ${test_status}=    Check Status Until Test Is Completed    ${SPIRENT_RUNNING_TEST_ID}
     Should Be Equal As Strings    "${test_status['testStateOrStep']}"    "COMPLETE"
-    # Test Result Files Spirent    ${RUNNING_TEST_ID}
-    # Test Results    ${SPIRENT_RUNNING_TEST_ID}
+    # Copy Test Result Files From Spirent    ${SPIRENT_RUNNING_TEST_ID}
 
 
 
@@ -55,7 +55,6 @@ Prepare Setup
     [Documentation]    Ansible ile test ortamını hazırlayacağız
     # Set Environment Variable    RUNNING_TEST_ID    ${RUNNING_TEST_ID}
     # Set Environment Variable    ${SPIRENT_TEST_ID}    PASSED
-    Set Global Variable    ${KIWI_PLAN_ID}
     Set Global Variable    ${KIWI_PLAN_ID}
     Set Global Variable    ${SPIRENT_TEST_ID}
     Set Global Variable    ${SPIRENT_SERVER_NAME}

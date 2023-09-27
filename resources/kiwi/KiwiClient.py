@@ -1,7 +1,7 @@
 import http.client
 import ssl
 import json
-from common.Logger import log
+from resources.common.Logger import log
 import datetime
 
 now = datetime.datetime.now()
@@ -141,7 +141,7 @@ class KiwiClient:
      -----------------------------
     '''
 
-    def testplan_filter(self, plan_id):
+    def TestPlan_filter(self, plan_id):
         '''
         # planın ayrıntılarını dön
         # >>> istek:
@@ -180,7 +180,7 @@ class KiwiClient:
         '''
 
         response = self._send_request("TestPlan.filter", [{"id": plan_id}])
-        log.debug("test plan filter: ", response)
+        log.debug(f"test plan filter: {response}")
 
         if not response:
             log.debug("testplan_filter failed.")
@@ -203,7 +203,7 @@ class KiwiClient:
          return None
         '''
 
-    def create_testplan(self, product, product_version, name, type):
+    def TestPlan_create(self, product, product_version, name, type):
         test_plan = {
             "product": product,
             "product_version": product_version,
@@ -211,9 +211,9 @@ class KiwiClient:
             "type": type
         }
         response = self._send_request("TestPlan.create", test_plan)
-        log.debug("create test plan: ", response)
+        log.debug(f"create test plan response: {response}")
         if not response:
-            log.debug("cretae test plan failed.")
+            log.warning("cretae test plan failed.")
             return None
         else:
             self.error(response)
@@ -237,16 +237,40 @@ class KiwiClient:
         # 3	6G	CN	
         # 2	ÇINAR_5G_CN	5G CN'''
 
+    def TestRun_create(self, plan_id):
+        # test_plans = self.testplan_filter(plan_id)["result"]
+        log.warning(f"Test plan will be found for : {plan_id}")
+        test_plans = self.TestPlan_filter(plan_id).get('result', [])
+        # TODO : result boş gelebilir kontrol yapılacak
+        if len(test_plans) != 1:
+            log.warning("Test plan could not be found")
+            return None
+
+        tp = test_plans[0]
+        log.debug(f"Found Test Plan: {tp}")
+        plan_name = tp["name"]
+        values = [{
+            # TODO: otomatik test koşusu için bir build yaratılacak. unspecified(name)	unspecified(version)	5G CN - Çınar(ürün)
+            "build": 1,
+            "manager": 3,  # TODO: otomatik koşular için bir kullanıcı tanımlanacak. test yöneticisi test ortamı için user 3 - b.ikbalkirklar@gmail.com
+            "plan": plan_id,
+            "summary": f"{now} Tarihinde '{plan_name}' Planı için koşu"
+        }]
+
+        response = self._send_request("TestRun.create", values)
+        log.debug(f'Test Run create response: {response}')
+        return response
+
     def TestRun_add_case(self, run_id, case_id):
         '''
         bir test koşusuna test senaryosunu ekler. ekleme sonucunda test execution nesnesini içeren http cevabını döner.
         '''
         payload = [run_id, case_id]
         response = self._send_request("TestRun.add_case", payload)
-        log.debug("TestRun_add_case:", response)
+        log.debug(f"TestRun_add_case: {response}")
 
         if not response:
-            log.error("TestRun_add_case sonucu bos geldi:", response)
+            log.error(f"TestRun_add_case sonucu bos geldi: {response}")
             return None
 
         if len(response['result']) == 0:
@@ -254,29 +278,6 @@ class KiwiClient:
             return None
 
         log.info(f"TestRun_add_case: {response}")
-        return response
-
-    def testrun_create(self, plan_id):
-        # test_plans = self.testplan_filter(plan_id)["result"]
-        test_plans = self.testplan_filter(plan_id).get('result', [])
-        # TODO : result boş gelebilir kontrol yapılacak
-        if len(test_plans) != 1:
-            log.warning("Test plan could not be found")
-            return None
-
-        tp = test_plans[0]
-        log.debug("Found Test Plan: ", tp)
-        plan_name = tp["name"]
-        values = [{
-            # TODO: otomatik test koşusu için bir build yaratılacak. unspecified(name)	unspecified(version)	5G CN - Çınar(ürün)
-            "build": 1,
-            "manager": 3,  # TODO: otomatik koşular için bir kullanıcı tanımlanacak. test yöneticisi test ortamı için user 3 - b.ikbalkirklar@gmail.com
-            "plan": plan_id,
-            "summary": "{} Tarihinde '{}' Planı için koşu".format(now, plan_name)
-        }]
-
-        response = self._send_request("TestRun.create", values)
-        log.debug("run create: ", response)
         return response
 
     def TestExecution_update(self, case_execution_id, run_id, case_id, status_id):
@@ -290,10 +291,10 @@ class KiwiClient:
     # status:
     # 4 geçti, 5 başarısız
 
-    def testrun_add_tag(self, run_id, tag_name):
+    def TestRun_add_tag(self, run_id, tag_name):
         tag_values = [run_id, tag_name]
         response = self._send_request("TestRun.add_tag", tag_values)
-        log.debug("tag response ", response)
+        log.debug(f"tag response : {response}")
         return response
 
     def get_tags(self, file):

@@ -6,8 +6,9 @@ Library    Process
 ${MESSAGE}    Hello, Dunya!
 
 *** Test Cases ***
-Bir Test
+İkinici Test
     [Documentation]    This is a sample test case
+    [Tags]    listener    iki 
     Log    This is a log message
 
 *** Keywords ***

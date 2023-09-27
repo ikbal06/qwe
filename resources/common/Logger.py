@@ -21,11 +21,11 @@ class MyLogger(logging.Logger):
 
     def debug(self, msg, *args, **kwargs):
         if len(args) == 1 and isinstance(args[0], dict):
-            self.custom_debug(msg, args[0])
+            self._custom_debug(msg, args[0])
         else:
             return super(MyLogger, self).debug(msg, *args, **kwargs)
 
-    def custom_debug(self, message, info_dict):
+    def _custom_debug(self, message, info_dict):
         # ------------------
         # ----- mesaj ------
         # ------------------
@@ -57,7 +57,7 @@ logger_handler.setFormatter(logger_formatter)
 logger_handler.setLevel(logging.DEBUG)
 
 
-log = logging.getLogger(__name__)
+log = logging.getLogger(__name__+'.MyLogger')
 log.setLevel(logging.DEBUG)
 # Add the Handler to the Logger
 log.addHandler(logger_handler)
