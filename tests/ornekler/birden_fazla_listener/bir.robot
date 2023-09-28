@@ -1,6 +1,6 @@
 *** Settings ***
 Library    Process
-Library    resources/kiwi/KiwiListener.py
+# Library    ListenerKiwi.py
 
 *** Variables ***
 ${MESSAGE}    Hello, Dunya!

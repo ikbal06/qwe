@@ -54,8 +54,13 @@ def create_test_run_on_kiwi():
 
 def add_versions_as_tags(tr_id):
     file_path = 'version.txt'
-    # TODO: Eğer dosya yoksa hata fırlat
+    # TODO: Eğer dosya yoksa hata fırlat.masın da warning göndersin etiket olarka test adı?
     tags = _kc.get_tags(file_path) or []
+
+    if tags == []:
+        log.info('tag için uygun dosya bulunamadı')
+        _kc.TestRun_add_tag(tr_id, 'tagyok')
+
     for t in tags:
         _kc.TestRun_add_tag(tr_id, t)
 
@@ -96,21 +101,10 @@ def push_test_results_to_kiwi(tr_id, spirent_test_result):
     Spirent Test Sonuçlarında Test Planının içindeki Test Senaryoları (Test Case) varsa,
     bu test senaryosu için Test Execution yaratılarak (3) testin sonucu Test Execution içinde güncellenecek (4).
     """
-    # Test planı için bir test koşusu yaratıyoruz
-    # plan_id = 1  # kiwi-testten bak bi ona göre düznele. bir de sışarıdan alacak şekilde olmlaı ya da en azından robot dosyasından
-
-    # 1
-    # tr_id = create_test_run_on_kiwi()
-
-    # 2
     # Test koşusuna ortamdaki NF'leri sürümleriyle birlikte etiket olarak giriyoruz
     add_versions_as_tags(tr_id)
 
-    # run için illa oradaki testleri mi koşmalıyız. eğer verilen test id yoksa oluşturulmalı(test case)
-    # test planına eklenmeli ona göre yeni koşu oluşturmalıyız
-    # ya da verilen plana göre içindeki test caselere bakılacak o test case varsa sadece o koşulaack
     # Test planındaki Test Senaryolarını -> Test koşusuna ekliyoruz
-    # 3
     add_test_case_into_run(spirent_test_result, tr_id)
 
 
@@ -187,36 +181,33 @@ def send_test_reult_to_kiwi(self, name):
     log.info('Test result has been sent to the Kiwi')
 # ------------------------------
 
-    class KiwiListener:
 
-        ROBOT_LIBRARY_SCOPE = "GLOBAL"
-        ROBOT_LISTENER_API_VERSION = 3
+class KiwiListener:
 
-        def __init__(self):
-            self.ROBOT_LIBRARY_LISTENER = self
-            self.top_suite_name = None
-            self.kiwi_run_id = None
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+    ROBOT_LISTENER_API_VERSION = 3
 
-        def start_suite(self, name, attributes):
-            if "DEFAULT_VERSION_PATH" in os.environ:
-                self.version_file = os.environ['DEFAULT_VERSION_PATH']
-                log.debug("self.version_file: ", self.version_file)
+    def __init__(self):
+        self.ROBOT_LIBRARY_LISTENER = self
+        self.top_suite_name = None
+        self.kiwi_run_id = None
 
-            if self.top_suite_name is None:
-                self.top_suite_name = name
-                self.kiwi_run_id = create_test_run_on_kiwi()
+    def start_suite(self, name, attributes):
+        if "DEFAULT_VERSION_PATH" in os.environ:
+            self.version_file = os.environ['DEFAULT_VERSION_PATH']
+            log.debug("self.version_file: ", self.version_file)
 
-        def end_test(self, name, attributes):
-            log.debug(f"end_test {name} {attributes}")
-            # send_test_result_to_kiwi()
+        if self.top_suite_name is None:
+            self.top_suite_name = name
+            self.kiwi_run_id = create_test_run_on_kiwi()
 
-        def end_suite(self, name, attributes):
-            if name == self.top_suite_name:
-                log.debug(f"This is the top-level test: {name}")
+    def end_test(self, name, attributes):
+        log.debug(f"end_test {name} {attributes}")
+        # send_test_result_to_kiwi()
 
-        def close(self):
-            pass
+    def end_suite(self, name, attributes):
+        if name == self.top_suite_name:
+            log.debug(f"This is the top-level test: {name}")
 
-
-if __name__ == "__main__":
-    pass
+    def close(self):
+        pass

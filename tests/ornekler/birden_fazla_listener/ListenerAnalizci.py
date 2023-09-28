@@ -3,7 +3,7 @@ from robot.libraries.BuiltIn import BuiltIn
 logger = BuiltIn()
 
 
-class AnalizciListener:
+class ListenerAnalizci:
 
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
     ROBOT_LISTENER_API_VERSION = 3

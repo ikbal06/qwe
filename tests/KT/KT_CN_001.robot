@@ -6,7 +6,6 @@
 # Library    listeners/MyListener.py
 Resource    keywords/spirent.robot
 Library    String
-Library    kiwi.KiwiListener
 
 *** Variables ***
 # KIWI 

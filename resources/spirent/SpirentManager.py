@@ -188,7 +188,9 @@ class SpirentManager(SpirentClient):
 
     def copy_test_outpus_from_spirent(self, test_run_id):
         log.info('......')
-
+        # self.spirent_report_path = BuiltIn().get_variable_value("${DEFAULT_TEST_LOGS_PATH}")
+        # tr_spirent_pcap_path = os.path.join(env_data_obj.output_path, each_test_id, "spirent_pcap_files")
+        # self.spirent_report_path=tr_spirent_pcap_path
         # if test_run_id:
         #     if not os.path.exists(self.spirent_report_path):
         #         log.info(
