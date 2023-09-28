@@ -3,7 +3,7 @@ This file contains basic http operations for GET, POST, DELETE methods
 """
 
 import requests
-from resources.common.Logger import log
+from common.Logger import log
 
 from urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)

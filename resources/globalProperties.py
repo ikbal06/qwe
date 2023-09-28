@@ -1,6 +1,6 @@
 import os
 import shutil
-from resources.common.CommonOperations import *
+from common.CommonOperations import *
 
 # Spirent properties
 SPIRENT_IP = '192.168.13.99'

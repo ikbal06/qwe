@@ -3,13 +3,13 @@ import sys
 import json
 import time
 from datetime import datetime
-from resources.globalProperties import *
-from resources.spirent.SpirentOperations import *
-from resources.analizci.AnalizciClient import *
-from resources.EnvDataOperations import *
-from resources.common.CommonOperations import *
-from resources.ansible.AnsibleOperations import *
-from resources.TestConfigOperations import *
+from globalProperties import *
+from spirent.SpirentOperations import *
+from analizci.AnalizciClient import *
+from EnvDataOperations import *
+from common.CommonOperations import *
+from ansible.AnsibleOperations import *
+from TestConfigOperations import *
 
 
 def main():

@@ -1,4 +1,4 @@
-# from resources.common.Logger import log
+# from common.Logger import log
 from robot.libraries.BuiltIn import BuiltIn
 logger = BuiltIn()
 

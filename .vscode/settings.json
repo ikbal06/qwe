@@ -87,6 +87,7 @@
   },
   "robotcode.robot.env": {
     "test_ids": "KT_CN_001,KT_CN_002",
+    "KIWI_PLAN_ID": "7",
     "TEST_ID": "KT_CN_001",
     "DEFAULT_VERSION_PATH": "version.txt",
     "spirent_ts_name": "vts-VTO2",

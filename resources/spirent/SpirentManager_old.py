@@ -3,9 +3,9 @@ import jinja2
 from robot.libraries.BuiltIn import BuiltIn
 from EnvDataOperations import EnvDataOperations
 from TestConfigOperations import TestConfigOperations
-from resources.spirent.SpirentClient import SpirentClient
-from resources.globalProperties import *
-from resources.common.Logger import log
+from spirent.SpirentClient import SpirentClient
+from globalProperties import *
+from common.Logger import log
 import json
 import sys
 print("Python Version:", sys.version)

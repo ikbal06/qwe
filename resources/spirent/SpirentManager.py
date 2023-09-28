@@ -1,8 +1,8 @@
 import sys
 import jinja2
-from resources.spirent.SpirentClient import SpirentClient
-from resources.globalProperties import *
-from resources.common.Logger import log
+from spirent.SpirentClient import SpirentClient
+from globalProperties import *
+from common.Logger import log
 import json
 import sys
 
@@ -142,7 +142,7 @@ class SpirentManager(SpirentClient):
         return test_id
 
     def get_test_status(self, test_id):
-        response = self.get_running_test(test_id)  # buraya girmiypr
+        response = self.get_running_test(test_id)
         if response.status_code != 200:
             log.warning('Test sonucu çekilemedi!')
             return None
@@ -224,12 +224,13 @@ class SpirentManager(SpirentClient):
         'version': '20.6.1.9'
         }
         """
-        response = self.get_spirent_test_servers()
+        servers = self.get_spirent_test_servers()
+        log.debug(f'Test Sunucuları için Spirent cevabı: {servers}')
 
-        all_test_servers = response.json().get('testServers', [])
-        for test_server in all_test_servers:
-            if test_server.get('name') == test_server_name:
-                return test_server
+        for s in servers:
+            log.debug(f'Test Sunucusu: {s}')
+            if s.get('name') == test_server_name:
+                return s
 
         log.error(f"Test server with name '{test_server_name}' not found.")
         sys.exit(103)

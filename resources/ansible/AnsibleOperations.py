@@ -2,9 +2,9 @@ import json
 import jinja2
 import sys
 import ansible_runner
-from resources.common.Logger import log
-from resources.globalProperties import *
-from resources.common.CommonOperations import *
+from common.Logger import log
+from globalProperties import *
+from common.CommonOperations import *
 
 
 class AnsibleOperations:

@@ -6,7 +6,7 @@ from robot.running.context import sys
 from spirent.SpirentManager import SpirentManager
 import os
 from kiwi.KiwiClient import KiwiClient
-from resources.common.Logger import log as logger
+from common.Logger import log as logger
 from robot.libraries.BuiltIn import BuiltIn
 logger = BuiltIn()
 

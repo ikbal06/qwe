@@ -1,9 +1,9 @@
-from resources.globalProperties import *
-from resources.common.HttpClient import HttpClient
+from globalProperties import *
+from common.HttpClient import HttpClient
 import json
 from urllib.parse import urlparse, urlunparse
 import jinja2
-from resources.common.CommonOperations import *
+from common.CommonOperations import *
 
 
 class AnalizciClient(HttpClient):

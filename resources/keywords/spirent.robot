@@ -1,8 +1,14 @@
 *** Variables ***
 ${SPIRENT_TEST_ID}    
 ${SPIRENT_SERVER_NAME}
-${RUNNING_TEST_ID}
-# ${SPIRENT_RUNNING_TEST_ID}
+# Spirent ilgili testi koşturduğunda bir ID değeri üretir. Bu değer ile test sonuçlarını Spirent üstünde çekeriz.
+${SPIRENT_RUNNING_TEST_ID}
+# Testin koşturulacağı ve çekirdek şebekenin kurulu olduğu sunucu adresi
+${ALLINONE_IP}
+# Bu değişken AMF'in IP'si olup PUBLIC_IP olarak da geçer
+${AMF_IP}
+# Bu değişken UPF'in N6 bacağı internete çıktığı için N6_IP olarak da geçer
+${UPF_IP}
 
 *** Settings ***
 Library    Process
@@ -12,33 +18,48 @@ Library    spirent.SpirentManager    WITH NAME    spirentManager
 Library    TestConfigOperations    test_name=${SPIRENT_TEST_ID}    ts_name=${SPIRENT_SERVER_NAME}    WITH NAME    testConfig
 
 *** Keywords ***
+Global Setup
+    [Documentation]    Tüm spirent tes    tleri için en üst seviye setup
+    ${spirent_server_name}=    Get Environment Variable    spirent_ts_name
+    ${allinone_ip}=    Get Environment Variable    allinone_ip
+    ${amf_ip}=    Get Environment Variable    public_ip
+    ${upf_ip}=    Get Environment Variable    n6_ip
+    Set Global Variable    ${SPIRENT_SERVER_NAME}    ${spirent_server_name}
+    Set Global Variable    ${SPIRENT_RUNNING_TEST_ID}
+    Set Global Variable    ${ALLINONE_IP}
+    Set Global Variable    ${AMF_IP}    ${amf_ip}
+    Set Global Variable    ${UPF_IP}    ${upf_ip}
+
 Is Spirent Ready
     [Documentation]    Spirent lisanslarından boşta olanı var mı?
     [Arguments]    ${_spirent_server_name}
-    ${testServer}=    spirentManager.Get Test Server Or Exit    server_name=${_spirent_server_name}
+    ${testServer}=    spirentManager.Get Test Server Or Exit    ${_spirent_server_name}
     ${state}=    Set Variable If    '${testServer["state"]}' == 'READY'    True    False
-    Log To Console    \nSpirent state is: ${state}\n    console=yes
+    Log To Console    \n${_spirent_server_name} Named Spirent Test Server's state is: ${state}\n    console=yes
     Return From Keyword    ${state}
 
 Update Test Session    
     [Documentation]    Spirent üzerinde Test Oturum bilgilerini güncelleyeceğiz.
-    [Arguments]    ${_test_name}    ${_h_mnc}    ${_h_mcc}    ${_amf_ip}    ${_upf_ip}
+    [Arguments]    ${_spirent_server_name}    ${_test_name}    ${_h_mnc}    ${_h_mcc}    ${_amf_ip}    ${_upf_ip}
     # Test Parametrelerinden    
-    ${test_params}    testConfig.Get Test Params By Test Name    ${_test_name}
+    ${test_params}=    testConfig.Get Test Params By Test Name    ${_test_name}
+    Log To Console    ${test_params}
     ${test_id}=    Set Variable    ${test_params['test_id']}
     ${test_duration}=    Set Variable    ${test_params['test_duration']}
     ${perm_key}=    Set Variable    ${test_params['perm_key']}
     ${op_key}=    Set Variable    ${test_params['op_key']}
     ${msin}=    Set Variable    ${test_params['msin']}
     # Spirent özelliklerinden
-    ${spirent_ts_params}    testConfig.Get Spirent Ts Params
+    # ${spirent_ts_params}=    testConfig.Get Spirent Ts Params
+    ${spirent_ts_params}=    testConfig.Get Spirent Ts Params By Test Name    ${_spirent_server_name}
+    Log To Console    ${spirent_ts_params}
     ${spirent_ts_name}=    Set Variable    ${spirent_ts_params['ts_name']}
     ${spirent_gnb_ip}=    Set Variable    ${spirent_ts_params['spirent_gnb_ip']}
     ${spirent_dn_ip}=    Set Variable    ${spirent_ts_params['spirent_dn_ip']}
     ${spirent_dn_interface}=    Set Variable    ${spirent_ts_params['spirent_dn_interface']}
     ${spirent_gnb_interface}=    Set Variable    ${spirent_ts_params['spirent_gnb_interface']}
     # Spirent üstünden ts_name ile Test Sunucunun ID değerini çekiyoruz
-    ${spirentTestServer}=    spirentManager.Get Test Server Or Exit    server_name=${spirent_ts_name}
+    ${spirentTestServer}=    spirentManager.Get Test Server Or Exit    ${spirent_ts_name}
     ${spirent_ts_id}=    Set Variable    ${spirentTestServer['id']}
     # 
     ${spirent_library_id}=    spirentManager.Get Library Id By Spirent User Or Exit
@@ -59,10 +80,10 @@ Run Test
     [Documentation]    Spirent üzerinde testin koşulmasını başlat
     [Arguments]    ${_test_id}    
     ${lib_id}=    spirentManager.Get Library Id By Spirent User Or Exit
-    ${spirent_running_test_id}=    spirentManager.Run Test On Spirent    ${lib_id}    ${_test_id}
-    ${log_message}=    Catenate    SEPARATOR=    Koşan Test ID:    ${spirent_running_test_id}
-    Log    ${log_message}
-    Return From Keyword    ${spirent_running_test_id}
+    ${spirent_running_test_id}=    spirentManager.Run Test On Spirent    ${lib_id}    ${_test_id}    
+    Set Global Variable    ${SPIRENT_RUNNING_TEST_ID}    ${spirent_running_test_id}
+    Log To Console    Koşan Test ID:    ${spirent_running_test_id}    console=yes
+    Return From Keyword    ${SPIRENT_RUNNING_TEST_ID}
 
 Check Status Until Test Is Completed
     [Documentation]    Spirent üzerinde koşulan testin tamamlanıncaya kadar beklenmesi gerekir. 
@@ -102,10 +123,4 @@ Copy Test Result Files From Spirent
     # Log    Extracted Text: ${extracted_text}
     # Return From Keyword    ${extracted_text}
 
-
-
-
-
-    
-
-
+    # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml

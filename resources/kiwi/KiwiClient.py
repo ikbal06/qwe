@@ -1,7 +1,7 @@
 import http.client
 import ssl
 import json
-from resources.common.Logger import log
+from common.Logger import log
 import datetime
 
 now = datetime.datetime.now()
@@ -296,15 +296,6 @@ class KiwiClient:
         response = self._send_request("TestRun.add_tag", tag_values)
         log.debug(f"tag response : {response}")
         return response
-
-    def get_tags(self, file):
-        if file == "":
-            raise Exception('Dosya geçerli değil!')
-
-        # Dosyayı açıp satırları bir liste içine alıyoruz
-        with open(file) as f:
-            tag_list = f.read().splitlines()
-            return tag_list
 
     def TestExecution_add_comment(self, execution_id, comment):
         # we always create only one comment
