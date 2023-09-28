@@ -5,7 +5,6 @@
 *** Settings ***
 Resource    keywords/spirent.robot
 Library    String
-Library    kiwi.KiwiListener
 
 *** Variables ***
 # KIWI 

@@ -95,21 +95,6 @@ class SpirentManager(SpirentClient):
         log.debug(f'Spirent user={spirent_user} library id ({lib_id}) received successfully')
         return lib_id
 
-    def get_test_server_or_exit(self, test_server_name):
-        get_test_server_response = self.get_test_servers()
-
-        if get_test_server_response.status_code != 200:
-            log.error(f"Failed to retrieve test servers. Status code: {get_test_server_response.status_code}")
-            sys.exit(102)
-        else:
-            all_test_servers = get_test_server_response.json().get('testServers', [])
-            for test_server in all_test_servers:
-                if test_server.get('name') == test_server_name:
-                    return test_server
-
-        log.error(f"Test server with name '{test_server_name}' not found.")
-        sys.exit(103)
-
     def render_test_session_template(
             self, test_id, lib_id, h_mnc, h_mcc, test_duration, spirent_ts_id, spirent_gnb_ip,
             perm_key, op_key, spirent_dn_ip, upf_ip, msin, spirent_dn_interface, spirent_gnb_interface):
@@ -210,3 +195,41 @@ class SpirentManager(SpirentClient):
 
     def delete_test_run_mngr(self, test_run_id):
         return self.delete_test_run(test_run_id)
+
+    def get_spirent_test_servers(self):
+        """Spirent test sunucuları dizisi döner."""
+        response = self.get_test_servers()
+        if response.status_code != 200:
+            log.error(f"Failed to retrieve test servers. Status code: {response.status_code}")
+            sys.exit(102)
+
+        return response.json().get('testServers')
+
+    def get_test_server_or_exit(self, test_server_name):
+        """Spirent üzerinden Test Sunucularından server_name ile verilen test sunucusunun bilgisi çekilir.
+
+        Args:
+            server_name (str): Spirent test sunucusunun adı
+
+        Returns:
+            dict: Sunucu ayrıntıları
+
+        ```json
+
+        {
+        'url': 'http://10.10.20.74:8080/api/testServers/1',
+        'id': 1,
+        'name': 'vts-VTO2',
+        'state': 'READY',
+        'version': '20.6.1.9'
+        }
+        """
+        response = self.get_spirent_test_servers()
+
+        all_test_servers = response.json().get('testServers', [])
+        for test_server in all_test_servers:
+            if test_server.get('name') == test_server_name:
+                return test_server
+
+        log.error(f"Test server with name '{test_server_name}' not found.")
+        sys.exit(103)

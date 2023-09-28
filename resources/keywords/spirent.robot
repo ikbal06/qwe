@@ -10,13 +10,12 @@ Library    OperatingSystem
 Library    common/CommonOperations.py
 Library    spirent.SpirentManager    WITH NAME    spirentManager
 Library    TestConfigOperations    test_name=${SPIRENT_TEST_ID}    ts_name=${SPIRENT_SERVER_NAME}    WITH NAME    testConfig
-Library    kiwi.KiwiListener
 
 *** Keywords ***
 Is Spirent Ready
     [Documentation]    Spirent lisanslarından boşta olanı var mı?
     [Arguments]    ${_spirent_server_name}
-    ${testServer}=    spirentManager.Get Spirent Test Server By Name    server_name=${_spirent_server_name}
+    ${testServer}=    spirentManager.Get Test Server Or Exit    server_name=${_spirent_server_name}
     ${state}=    Set Variable If    '${testServer["state"]}' == 'READY'    True    False
     Log To Console    \nSpirent state is: ${state}\n    console=yes
     Return From Keyword    ${state}
@@ -39,7 +38,7 @@ Update Test Session
     ${spirent_dn_interface}=    Set Variable    ${spirent_ts_params['spirent_dn_interface']}
     ${spirent_gnb_interface}=    Set Variable    ${spirent_ts_params['spirent_gnb_interface']}
     # Spirent üstünden ts_name ile Test Sunucunun ID değerini çekiyoruz
-    ${spirentTestServer}=    spirentManager.Get Spirent Test Server By Name    server_name=${spirent_ts_name}
+    ${spirentTestServer}=    spirentManager.Get Test Server Or Exit    server_name=${spirent_ts_name}
     ${spirent_ts_id}=    Set Variable    ${spirentTestServer['id']}
     # 
     ${spirent_library_id}=    spirentManager.Get Library Id By Spirent User Or Exit
