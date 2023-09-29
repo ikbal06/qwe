@@ -18,9 +18,17 @@ ${H_MNC}    001
 *** Settings ***
 # Library    listeners/MyListener.py
 Resource    keywords/spirent.robot  
+Library    capturer/pcapCapturer.py
 Library    String 
+Test Setup    Before Test
+Test Teardown    After Test
+
 
 *** Test Cases ***
+
+BOŞ Kayıtlanma Testi [KT_CN_001]
+    Log    Boş boş koş
+
 Kayıtlanma Testi [KT_CN_001]
     [Documentation]    Çalıştırılacak testin adı ve ID değeri "KT_CN_001" olacak.
     ...    Çalışacağı Spirent test sunucusu parametre olarak gelebilir 
@@ -43,4 +51,10 @@ Prepare Setup
     [Documentation]    Ansible ile test ortamını hazırlayacağız
     Global Setup
     Set Global Variable    ${SPIRENT_TEST_ID}    KT_CN_001
+    Start TCP Dump
     # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
+
+Before Test
+    Log    hede
+After Test 
+    Log    hede

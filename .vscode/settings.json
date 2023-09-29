@@ -21,7 +21,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare",
     // "editor.wordWrap": "bounded",
     "editor.wordWrapColumn": 150,
   },
