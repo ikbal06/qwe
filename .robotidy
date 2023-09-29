@@ -7,10 +7,6 @@ configure = [
 ]
 spacecount = 4
 transform = [
-   "DiscardEmptySections",
-   "NormalizeSeparators"
+    "DiscardEmptySections",
+    "NormalizeSeparators"
 ]
-
-# .robotidy.yml
-
- 

@@ -171,27 +171,27 @@ class SpirentManager(SpirentClient):
         log.debug(f'Spirent test run result is {test_results}')
         return test_results
 
-    def copy_test_outpus_from_spirent(self, test_run_id):
-        log.info('......')
-        # self.spirent_report_path = BuiltIn().get_variable_value("${DEFAULT_TEST_LOGS_PATH}")
-        # tr_spirent_pcap_path = os.path.join(env_data_obj.output_path, each_test_id, "spirent_pcap_files")
-        # self.spirent_report_path=tr_spirent_pcap_path
-        # if test_run_id:
-        #     if not os.path.exists(self.spirent_report_path):
-        #         log.info(
-        #             f'Spirent report path={self.spirent_report_path} not found. Create..')
-        #         Path(self.spirent_report_path).mkdir(
-        #             parents=True, exist_ok=True, mode=0o755)
+    # def copy_test_outpus_from_spirent(self, test_run_id):
+    #     log.info('......')
+    #     self.spirent_report_path = BuiltIn().get_variable_value("${DEFAULT_TEST_LOGS_PATH}")
+    #     tr_spirent_pcap_path = os.path.join(env_data_obj.output_path, each_test_id, "spirent_pcap_files")
+    #     self.spirent_report_path=tr_spirent_pcap_path
+    #     if test_run_id:
+    #         if not os.path.exists(self.spirent_report_path):
+    #             log.info(
+    #                 f'Spirent report path={self.spirent_report_path} not found. Create..')
+    #             Path(self.spirent_report_path).mkdir(
+    #                 parents=True, exist_ok=True, mode=0o755)
 
-        #     for eachURL in self.spirent_report_urls:
-        #         try:
-        #             subprocess.call("wget " + eachURL + " -P " +
-        #                             self.spirent_report_path, shell=True)
-        #             log.info(f'Spirent report={eachURL} received')
-        #         except Exception as e:
-        #             log.info(f'Spirent report={eachURL} not received. Error={e}')
+    #         for eachURL in self.spirent_report_urls:
+    #             try:
+    #                 subprocess.call("wget " + eachURL + " -P " +
+    #                                 self.spirent_report_path, shell=True)
+    #                 log.info(f'Spirent report={eachURL} received')
+    #             except Exception as e:
+    #                 log.info(f'Spirent report={eachURL} not received. Error={e}')
 
-        #     SpirentOperations().delete_test_run_mngr(self.test_run_id)
+        # SpirentOperations().delete_test_run_mngr(self.test_run_id)
 
     def delete_test_run_mngr(self, test_run_id):
         return self.delete_test_run(test_run_id)

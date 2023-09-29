@@ -204,6 +204,7 @@ class KiwiListener():
         self.ROBOT_LIBRARY_LISTENER = self
         self.top_suite_name = None
         self.kiwi_run_id = None
+        self.testId = ""
 
     def start_suite(self, name, attributes):
         # Bir koşuda birden fazla test suit'in koşması istenirse her suite_start
@@ -228,8 +229,7 @@ class KiwiListener():
         kiwi_plan_id = os.getenv('KIWI_PLAN_ID')
         # kiwi_plan_id = BuiltIn().get_variable_value('${KIWI_PLAN_ID}')
         spirent_running_test_id = BuiltIn().get_variable_value('${SPIRENT_RUNNING_TEST_ID}')
-        send_test_result_to_kiwi(kiwi_plan_id, self.kiwi_run_id, spirent_test_id,
-                                 spirent_running_test_id)  # başarılı oldu
+        send_test_result_to_kiwi(kiwi_plan_id, self.kiwi_run_id, spirent_test_id, spirent_running_test_id)
 
     def end_suite(self, name, attributes):
         if name == self.top_suite_name:  # içine girince hatayı buradan verdi

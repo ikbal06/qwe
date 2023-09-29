@@ -20,8 +20,6 @@ ${H_MNC}    001
 Resource    keywords/spirent.robot  
 Library    String 
 
-
-
 *** Test Cases ***
 Kayıtlanma Testi [KT_CN_001]
     [Documentation]    Çalıştırılacak testin adı ve ID değeri "KT_CN_001" olacak.
@@ -38,9 +36,7 @@ Kayıtlanma Testi [KT_CN_001]
     ${SPIRENT_RUNNING_TEST_ID}=    Run Test    ${SPIRENT_TEST_ID}
     ${test_status}=    Check Status Until Test Is Completed    ${SPIRENT_RUNNING_TEST_ID}
     Should Be Equal As Strings    "${test_status['testStateOrStep']}"    "COMPLETE"
-    # Copy Test Result Files From Spirent    ${SPIRENT_RUNNING_TEST_ID}
-
-
+    Copy Test Result Files From Spirent    ${SPIRENT_RUNNING_TEST_ID}
 
 *** Keywords ***
 Prepare Setup

@@ -167,7 +167,6 @@ NFList = [
     "SMF"  # add more NFs here
 ]
 
-
 # List of NRF services
 nfServices = """[
             {

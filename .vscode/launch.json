@@ -13,7 +13,7 @@
       "cwd": "${workspaceRoot}",
       "env": {
         "KIWI_LOG_LEVEL": "DEBUG",
-        "KIWI_PLAN_ID": "7",        
+        "KIWI_PLAN_ID": "7",
         // "test_ids": "KT_CN_001,KT_CN_002",
         // "TEST_ID": "KT_CN_001",
         "DEFAULT_VERSION_PATH": "version.txt",
@@ -21,7 +21,8 @@
         "username": "ubuntu",
         "password": "ulakroot2020",
         "allinone_ip": "192.168.13.71",
-        "public_ip": "10.10.20.22",
+        // "public_ip": "10.10.20.22",
+        "public_ip": "192.168.13.71",
         "n6_ip": "10.10.22.33",
         "output_path": "/home/jenkins/test1"
       },
@@ -93,7 +94,18 @@
       "presentation": {
         "hidden": true
       },
-      "attachPython": false,
+      "env": {
+        "output_path": "/home/vscode/test1"
+      },
+      "args": [
+        "--listener",
+        "analizci.AnalizciListener"
+        // "--listener",
+        // "kiwi.KiwiListener",
+        // "--variable",
+        // "DEFAULT_TEST_LOGS_PATH="
+      ],
+      "attachPython": true,
       "pythonConfiguration": "RobotCode: Python"
     },
     {
@@ -103,7 +115,7 @@
       "presentation": {
         "hidden": true
       },
-      "justMyCode": true
+      "justMyCode": false
     }
   ]
 }

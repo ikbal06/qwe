@@ -34,8 +34,9 @@ Is Spirent Ready
     [Documentation]    Spirent lisanslarından boşta olanı var mı?
     [Arguments]    ${_spirent_server_name}
     ${testServer}=    spirentManager.Get Test Server Or Exit    ${_spirent_server_name}
+    Log To Console    message=\n$Spirent Test Servers: ${testServer}\n
     ${state}=    Set Variable If    '${testServer["state"]}' == 'READY'    True    False
-    Log To Console    \n${_spirent_server_name} Named Spirent Test Server's state is: ${state}\n    console=yes
+    Log To Console    message=\n${_spirent_server_name} Named Spirent Test Server's state is: ${state}\n
     Return From Keyword    ${state}
 
 Update Test Session    
@@ -111,7 +112,7 @@ Check Status Until Test Is Completed
 Copy Test Result Files From Spirent
     [Documentation]    Spirent tarafında üretilmiş dosyaları hedef sunucuya yükler
     [Arguments]    ${_spirent_running_test_id}
-    ${copy_result}=    spirentManager.Copy Test Outpus From Spirent    ${_spirent_running_test_id}
+    # ${copy_result}=    spirentManager.Copy Test Outpus From Spirent    ${_spirent_running_test_id}
     Log    Çalıştım
 
 #    [Arguments]    ${description}

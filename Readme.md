@@ -10,7 +10,9 @@
 - `robot.yaml` Eğer komut satırında robot'u çalıştırmak istersek ayarlar bu dosyadan gelecektir
 - `version.txt` Test ortamındaki NF paketlerini ve sürüm bilgilerini içerir. Robot test kodları bu dosyayı arar.
 
-# Uzantılar
+# VS Code Ayarları
+
+## Uzantılar
 
 ```json
 // Extensions sekmesinde "@recommended" yazıp aradığınızda bu "extensions.json" dosyasında yer alan
@@ -32,6 +34,115 @@
     "esbenp.prettier-vscode" // formatlayıcı
   ]
 }
+```
+
+## .vscode/launch.json
+
+Aşağıdaki ayar `*.robot` dosyalarında testi başlatmak için bastığınızda RobotCode uzantısı aşağıdaki ayarı kullanır.
+
+Bu çalıştırma ayarında `"attachPython": false,` geldiği için python kütüphane dosyasında breakpoint noktasında duramayız. Bu değeri true yaptığımızda istediğimiz hata ayıklama imkanına kavuşuruz.
+
+![Alt text](./.vscode/readme_images/robot-run-debug.png)
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+    "name": "RobotCode: Default",
+    "type": "robotcode",
+    "request": "launch",
+    "purpose": "default",
+    "presentation": {
+        "hidden": true
+    },
+    // "args": [
+    //     "--listener",
+    //     "benimlistener"
+    // ],
+    "attachPython": true,
+    "pythonConfiguration": "RobotCode: Python"
+    }
+```
+
+Yukarıdaki ayar `launch.json` içinde yoksa attachPython değerini burada `false` ile pasifize ediliyorsa
+
+## .vscode/settings.json
+
+### robotcode.languageServer.extraArgs
+
+```json
+  "robotcode.languageServer.extraArgs": [
+    "--log",
+    "--log-level",
+    "TRACE",
+  ],
+```
+
+![robotcode.languageServer.extraArgs](.vscode/readme_images/robotcode_languageServer_extraargs.png)
+
+```json
+  "robotcode.extraArgs": [
+    "--log",
+    "--log-level=TRACE",
+    "--log-calls"
+  ],
+```
+
+![robotcode.extraArgs_log_level](.vscode/readme_images/robotcode.extraArgs_log_level.png)
+
+Log Level ALL hatalı isimlendirme olur. Çıktılarda bu hatayı görebilirsiniz:
+
+![Alt text](.vscode/readme_images/log_level_all_output.png)
+
+### "robotcode.robotidy.config"
+
+```json
+  // kök dizindeki bu dosya içeriğine göre *.robot kodlarını formatlar
+  "robotcode.robotidy.config": ".robotidy",
+```
+
+```
+configure = [
+    "MergeAndOrderSections: order = settings,variables,testcases,keywords,comments",
+    "OrderSettings: keyword_before = arguments,documentation,tags,timeout",
+    "OrderSettingsSection: new_lines_between_groups = 0",
+    "AlignSettingsSection: min_width = 18",
+    "AlignVariablesSection: min_width = 18"
+]
+spacecount = 4
+transform = [
+   "DiscardEmptySections",
+   "NormalizeSeparators"
+]
+```
+
+### "robotcode.robot.args"
+
+Robot komut satırından çalıştırılırken `robot --listener OrnekListener.py --include TEST` gibi bir komutla koşturulur. Eğer `listener` sabit olarak verilecekse aşağıdaki gibi ayarlara eklenebilir.
+
+```json
+  /*
+   Aşağıda özet kırparak verdiğim komutun "--listener kiwi.KiwiListener" argumanını oluşturur
+   ... /usr/local/bin/python /home/vscode/.vscode-server/extensions/d-biehl.robotcode-0.58.0/bundled/tool/robotcode
+   --default-path . ... -- -d ./output -P ./ ...
+   --listener kiwi.KiwiListener ...
+   */
+  "robotcode.robot.args": [
+    "--listener",
+    "kiwi.KiwiListener"
+  ],
+```
+
+Ya da `launch.json` içinde `"name": "RobotCode: Default",` isimli ayarlara arguman olarak verilebilir:
+
+```json
+    ....
+      "args": [
+        "--listener",
+        "benimlistener"
+      ],
+    ...
 ```
 
 # Robot İle Spirent Testleri Koşturmak
@@ -214,6 +325,16 @@ RPA (Robotic Process Automation) Framework, **iş süreçlerini otomatikleştirm
 Ancak bazı senaryolarda, Robot Framework ile RPA Framework bir arada kullanılabilir. Örneğin, bir iş sürecini otomatikleştirmek için RPA Framework kullanırken, test senaryolarınızı Robot Framework ile yazarak otomasyonları entegre edebilirsiniz. Bu, iş süreçlerinizi ve uygulamalarınızı birlikte otomatikleştirmenize olanak tanır.
 
 # Robot Test Örnekleri
+
+## Günlükler (Log)
+
+### Set Log Level
+
+Robot testlerinin `Debug Console` üstünde çıktı seviyesini belirlemek için `Set Log Level` anahtar kelimesini kullanabilirsiniz.
+
+![Alt text](.vscode/readme_images/set_log_level1.png)
+
+![Alt text](.vscode/readme_images/set_log_level2.png)
 
 ## Ansible
 
@@ -427,7 +548,7 @@ Requirement already satisfied: robotframework in ./.venv/lib/python3.10/site-pac
 
 [Listener Arayüzü](http://robotframework.org/robotframework/2.8.7/RobotFrameworkUserGuide.html#using-listener-interface)
 
-````cpp
+```cpp
 public interface RobotListenerInterface {
     public static final int ROBOT_LISTENER_API_VERSION = 2;
     void startSuite(String name, java.util.Map attributes);
@@ -443,7 +564,8 @@ public interface RobotListenerInterface {
     void reportFile(String path);
     void debugFile(String path);
     void close();
-}```
+}
+```
 
 # SPIRENT
 
@@ -482,4 +604,7 @@ Kullanıcılar, bu API yoluyla belirli bir kütüphanenin kimlik bilgilerini (li
 - Spirent test sunucusu müsait ise
 - Test oturumu güncellenir (`test_session_update_mngr`)
 - Test koşulur (`run_test_mngr`)
-````
+
+```
+
+```
