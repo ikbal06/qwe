@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import json
 import jinja2
 import sys
@@ -27,6 +27,9 @@ class AnsibleManager:
         self.__dict__.update(self.extra_vars)
         self.create_dynamic_inventory()
         log.debug(f"AnsibleManager: {self}")
+
+        test_date = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
+        self.pcap_name = f"{self.allinone_ip}_{test_date}.pcap"
 
     # def __init__(self, playbook_path, **kwargs):
 
@@ -95,26 +98,22 @@ class AnsibleManager:
 
     def start_packet_capture(self):
         self.playbook_path = START_TCPDUMP_PLAYBOOK_PATH
-        test_date = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
-        allinone_ip = env_data_obj.allinone_ip
-        pcap_name = f"{allinone_ip}_{test_date}.pcap"
-        dict_pcap_name = {"pcap_name": pcap_name}
+        dict_pcap_name = {"pcap_name": self.pcap_name}
         self.__dict__.update(dict_pcap_name)
         self.extra_vars.update(dict_pcap_name)
         log.debug("[OK] Pcap capture start!!!")
-        self.run_playbook()
+        return self.run_playbook()
 
     def fetch_pcap_files(self, _test_id):
         self.playbook_path = FETCH_PCAP_FILES_PATH
         print("[OK] Pcap fetch start!!!")
-        test_date = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
-        allinone_ip = env_data_obj.allinone_ip
-        pcap_name = f"{allinone_ip}_{test_date}.pcap"
-        dict_pcap_name = {"pcap_name": pcap_name}
-        self.__dict__.update(dict_pcap_name)
-        self.extra_vars.update(dict_pcap_name)
-        tr_nf_pcap_path = os.path.join(env_data_obj.output_path, _test_id, "nf_pcap_files")
-        self.__dict__.update({"nf_pcap_files_path": tr_nf_pcap_path})
+        dict_extra = {
+            "nf_pcap_files_path": os.path.join(env_data_obj.output_path, _test_id, "nf_pcap_files"),
+            "pcap_name": f"{self.pcap_name}.pcap",
+            "remote_tmp": "/tmp/ornek"
+        }
+        self.__dict__.update(dict_extra)
+        self.extra_vars.update(dict_extra)
         self.run_playbook()
 
 # --------------------------------------------------------

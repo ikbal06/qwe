@@ -109,7 +109,7 @@
         "allinone_ip": "192.168.13.71",
         "public_ip": "10.10.20.22",
         "n6_ip": "10.10.22.33",
-        "output_path": "~/test_cikti"
+        "output_path": "/tmp/test_outputs"
       },
       "args": [
         // "--listener",

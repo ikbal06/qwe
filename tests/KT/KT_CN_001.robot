@@ -21,7 +21,7 @@ Resource    keywords/spirent.robot
 # Library    capturer/pcapCapturer.py
 Library    ansible.AnsibleManager
 Library    String 
-Test Setup    Before Test
+# Test Setup    Before Test
 Test Teardown    After Test
 
 
@@ -46,6 +46,11 @@ Kayıtlanma Testi [KT_CN_001]
     ${test_status}=    Check Status Until Test Is Completed    ${spirent_running_test_id}
     Should Be Equal As Strings    "${test_status['testStateOrStep']}"    "COMPLETE"
     Copy Test Result Files From Spirent    ${spirent_running_test_id}
+
+hede 
+    Start Packet Capture
+    Fetch Pcap Files    ${SPIRENT_TEST_ID}
+    Log    hede
 
 *** Keywords ***
 Prepare Setup
