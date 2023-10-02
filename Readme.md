@@ -567,6 +567,72 @@ public interface RobotListenerInterface {
 }
 ```
 
+## Python Birim Testleri
+
+https://github.com/cgoldberg/python-unittest-tutorial
+
+`EnvDataOperations.env_data_validator` işlevi içinde ortam değişkenlerinden veriler çekilemezse istisna fırlattığı için `{workspaceFolder}/.env` dosyasında bu anahtarları tayin ediyoruz.
+
+![Birim testlerin bulunabilmesi için .env dosyası oluşturuyoruz](.vscode/readme_images/env_file.png)
+
+Böylece `EnvDataOperations.py` dosyasından fırlatılacak istisna yüzünden View->Testing sekmesinden erişeceğimiz `Testing Explorer View` tüm python testlerini görüntüleyebilecek şekilde Python çıktılarını göreceğiz:
+
+![.env dosyasıyla unittest discovery çıktısı Output->Python sekmesinde](.vscode/readme_images/python_output_for_unittest_discovery.png)
+
+![.env dosyasıyla unittestleri testing sekmesinde listelenmiş görüyoruz](.vscode/readme_images/testing_explorer_view.png)
+
+Aksi halde aşağıdaki hata yüzünden testleri görüntüleyemeyeceğiz:
+
+![.env dosyası olmadığı için birim testler discover edilemez çünkü env_data_validator istisna fırlatır. Bunu Output>Python sekmesinde görüyoruz](.vscode/readme_images/env_olmadan_python_output.png)
+
+![.env dosyası olmadığı zaman Testing üstünde hatayı ve listelenmeyen testleri görüyoruz](.vscode/readme_images/env_olmadan_testing_explorer.png)
+
+### **init**.py
+
+`__init__.py` dosyası kendisini içeren dizinleri Python'un modül olarak değerlendirmesini sağlar. Ayrıca bu dosya, bir modüle yüklenecek ilk dosyadır, dolayısıyla onu, bir modül her yüklendiğinde çalıştırmak istediğiniz kodu yürütmek veya dışa aktarılacak alt modülleri belirtmek için kullanabilirsiniz.
+
+Python iki tür paketi tanımlar: **normal paketler** (regular package) ve **ad alanı paketleri** (namespace package).
+
+_Normal paketler_ Python 3.2 ve önceki sürümlerde mevcut olan geleneksel paketlerdir. Normal bir paket genellikle `__init__.py` dosyasını içeren bir dizin olarak uygulanır. Normal bir paket içe aktarıldığında, bu` __init__.py` dosyası örtülü olarak yürütülür ve tanımladığı nesneler, paketin ad alanındaki adlara bağlanır. ` __init__.py` dosyası, diğer herhangi bir modülün içerebileceği Python kodunu içerebilir ve Python, içe aktarıldığında modüle bazı ek özellikler ekleyecektir.
+
+- Bir paket API benzeri bir şekilde sık sık içe aktarılacak bir şeyi tanımlıyorsa bunu yapmak genellikle kullanışlıdır.
+- `__init__.py` ile diğer kullanıcıların, işlevlerinizin paket hiyerarşinizdeki tam yerini bilmesine gerek kalmayacaktır.
+
+**`__init__.py`** dosyası genellikle boştur, ancak paketin seçilen bölümlerini daha uygun bir adla dışa aktarmak, kolaylık sağlayan işlevler vb. için kullanılabilir. Aşağıdaki `paket_dizini` içinde çeşitli python dosyası ve işlevleri var. Bu işlevleri bir paket olacak şekilde dışarıya sunmak için `__init__.py` dosyası oluşturup hem dışarıya açmak isteyeceğimiz işlev, tür gibi özellikleri seçiyor hem de yeniden daha anlamlı isimlendirmelerle dışarıya sunuyoruz:
+
+```python
+paket_dizini/
+  __init__.py
+  dosya1.py
+  dosya2.py
+    ...
+  dosyaN.py
+```
+
+Dosyasından dışarıya sunulacakları seçip ve yeniden isimlendirebiliriz
+
+```python
+# __init__.py
+from .dosya1 import *
+from .dosya2 import *
+...
+from .dosyaN import *
+```
+
+Bu `paket_dizini` içindeki dosyalar çeşitli işlev, tür içerebilir aşağıdaki gibi:
+
+```python
+# dosya1.py
+def add():
+    pass
+```
+
+Artık bu paketi kullanacaklar `add()` metodu gibi `__init__.py`'den dışarı sunulanlara aşağıdaki gibi erişebilir:
+
+```python
+ from your_package import add
+```
+
 # SPIRENT
 
 ## Test Sunucuları
