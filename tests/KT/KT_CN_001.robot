@@ -19,6 +19,7 @@ ${H_MNC}    001
 # Library    listeners/MyListener.py
 Resource    keywords/spirent.robot  
 # Library    capturer/pcapCapturer.py
+Library    ansible.AnsibleManager
 Library    String 
 Test Setup    Before Test
 Test Teardown    After Test
@@ -36,7 +37,7 @@ Kayıtlanma Testi [KT_CN_001]
     ...    Test Oturum Bilgisi Spirent üzerinde güncellenir
     ...    Spirent kullanıcı adı ve koşulacak testin ID bilgisi Spirent üstünde güncellenir
     [Tags]    ansible    BT CN 001
-    [Setup]    Prepare Setup
+    # [Setup]    Prepare Setup
     ${isSpirentReady}=    Is Spirent Ready    ${SPIRENT_SERVER_NAME}
     Should Be True    ${isSpirentReady} 
     ${result}=    Update Test Session    _spirent_server_name=${SPIRENT_SERVER_NAME}    _test_name=${SPIRENT_TEST_ID}    _h_mnc=${H_MNC}    _h_mcc=${H_MCC}    _amf_ip=${AMF_IP}    _upf_ip=${UPF_IP}
@@ -50,10 +51,15 @@ Kayıtlanma Testi [KT_CN_001]
 Prepare Setup
     [Documentation]    Ansible ile test ortamını hazırlayacağız
     Log To Console    \n<<<-------------- Prepare Setup ---------------->>>
-    # Start TCP Dump
-    # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
+
 
 Before Test
+    [Documentation]    Start TCP Dump
+    # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
+    Copy Ssh Id To Servers
+    Get Installed Packages And Versions
+    Start Packet Capture
     Log    hede
 After Test 
+    Fetch Pcap Files    ${SPIRENT_TEST_ID}
     Log    hede

@@ -3,7 +3,6 @@ import socket
 import json
 import sys
 import gzip
-from resources.globalProperties import *
 from resources.common.Logger import log
 
 

@@ -17,13 +17,16 @@
   "git.autofetch": true,
   //---------- SETTINGS ---------------------------------
   "editor.formatOnSave": true,
+  // "[json]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[python]": {
-    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare",
+    "editor.defaultFormatter": "ms-python.autopep8",
     // "editor.wordWrap": "bounded",
-    "editor.wordWrapColumn": 150,
+    "editor.wordWrapColumn": 150
   },
   "python.testing.autoTestDiscoverOnSaveEnabled": true,
   "python.formatting.autopep8Args": [
@@ -38,9 +41,6 @@
     "editor.wordBasedSuggestions": false,
     "editor.semanticHighlighting.enabled": true,
     "editor.inlayHints.enabled": "offUnlessPressed"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   // "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python", //"/usr/local/bin/python", //"C:\\Python311\\python.exe",
   "python.defaultInterpreterPath": "/usr/local/bin/python",
@@ -57,10 +57,9 @@
   "python.testing.pytestEnabled": false,
   "python.testing.unittestEnabled": true,
   "python.testing.unittestArgs": [
-    "--pythonpath=/workspace/:/workspace/resources:/workspace/resources/kiwi",
     "-v",
     "-s",
-    "./pytest",
+    "./unit_tests",
     "-p",
     "*_test.py"
   ],
@@ -68,12 +67,7 @@
   "robot.language-server.python": "${workspaceFolder}/.venv/bin/python",
   // "robot.python.executable": "${workspaceFolder}/.venv/bin/python",
   "robot.python.executable": "/usr/local/bin/python",
-  "robot.pythonpath": [
-    "./",
-    "./lib",
-    "./resources",
-    "./keywords"
-  ],
+  "robot.pythonpath": ["./", "./lib", "./resources", "./keywords"],
   // ------------ RoboCorp Extension ---------------
   "robocorp.language-server.python": "${workspaceFolder}/.venv/bin/python",
   "robocorp.autoSetPythonExtensionInterpreter": false,
@@ -87,10 +81,7 @@
   "robotcode.debug.groupOutput": true,
   "robotcode.debug.outputMessages": true,
   "robotcode.python": "/usr/local/bin/python", //"${workspaceFolder}/.venv/bin/python",
-  "robotcode.robot.pythonPath": [
-    "./",
-    "./resources"
-  ],
+  "robotcode.robot.pythonPath": ["./", "./resources"],
   "robotcode.robot.variables": {
     "TEST_ID": "KT_CN_001",
     "DEFAULT_TEST_LOGS_PATH": ""
@@ -109,11 +100,7 @@
     "output_path": "/home/jenkins/test1"
   },
   "robotcode.robot.outputDir": "./output",
-  "robotcode.extraArgs": [
-    "--log",
-    "--log-level=TRACE",
-    "--log-calls"
-  ],
+  "robotcode.extraArgs": ["--log", "--log-level=INFO", "--log-calls"],
   /*
    Aşağıda kırparak verdiğim komutun "--listener kiwi.KiwiListener" argumanını oluşturur 
    ancak bunu launch.json içinde "args": [] içinde de verebiliriz.
@@ -125,11 +112,7 @@
     // "--listener",
     // "kiwi.KiwiListener"
   ],
-  "robotcode.languageServer.extraArgs": [
-    "--log",
-    "--log-level",
-    "TRACE",
-  ],
+  "robotcode.languageServer.extraArgs": ["--log", "--log-level", "INFO"],
   // ------------ Ansible Extension ---------------
   "ansible.python.interpreterPath": "/usr/local/bin/python"
 }

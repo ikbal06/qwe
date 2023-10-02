@@ -109,13 +109,13 @@
         "allinone_ip": "192.168.13.71",
         "public_ip": "10.10.20.22",
         "n6_ip": "10.10.22.33",
-        "output_path": "/home/jenkins/test1"
+        "output_path": "~/test_cikti"
       },
       "args": [
         // "--listener",
         // "analizci.AnalizciListener"
         "--listener",
-        "resources.kiwi.KiwiListener",
+        "/workspace/resources/kiwi/KiwiListener.py"
         // "--variable",
         // "DEFAULT_TEST_LOGS_PATH="
       ],
@@ -145,5 +145,5 @@
       },
       "justMyCode": false
     }
-  ],
+  ]
 }
