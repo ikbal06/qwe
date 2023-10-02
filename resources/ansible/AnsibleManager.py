@@ -98,7 +98,9 @@ class AnsibleManager:
         test_date = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
         allinone_ip = env_data_obj.allinone_ip
         pcap_name = f"{allinone_ip}_{test_date}.pcap"
-        self.__dict__.update({"pcap_name": pcap_name})
+        dict_pcap_name = {"pcap_name": pcap_name}
+        self.__dict__.update(dict_pcap_name)
+        self.extra_vars.update(dict_pcap_name)
         log.debug("[OK] Pcap capture start!!!")
         self.run_playbook()
 
@@ -108,7 +110,9 @@ class AnsibleManager:
         test_date = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
         allinone_ip = env_data_obj.allinone_ip
         pcap_name = f"{allinone_ip}_{test_date}.pcap"
-        self.__dict__.update({"pcap_name": pcap_name})
+        dict_pcap_name = {"pcap_name": pcap_name}
+        self.__dict__.update(dict_pcap_name)
+        self.extra_vars.update(dict_pcap_name)
         tr_nf_pcap_path = os.path.join(env_data_obj.output_path, _test_id, "nf_pcap_files")
         self.__dict__.update({"nf_pcap_files_path": tr_nf_pcap_path})
         self.run_playbook()

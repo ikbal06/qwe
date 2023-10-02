@@ -1,37 +1,40 @@
 - block:
     - name: Get "{{ package }}" version if cn deployment type = vnf
       ansible.builtin.shell:
-           cmd: dpkg-query -W -f='${Package}=${Version}\n' "{{ package }}*" 2>/dev/null
+        cmd: dpkg-query -W -f='${Package}=${Version}\n' "{{ package }}*" 2>/dev/null
       register: package_version_vnf
       failed_when: "'FAIL' in package_version_vnf.stderr"
 
-  
-    - name: Write version to file 
-      ansible.builtin.lineinfile:
-           line: "{{ package_version_vnf.stdout }}"
-           insertafter: EOF
-           dest: "{{version_file_path}}"
-           create: true
-      delegate_to: localhost     
-  when: deployment_type == "vnf" 
+    #     - name: who am i
+    #       ansible.builtin.shell:
+    #         cmd: whoami
 
+    #     - name: Debug version_file_path
+    #       ansible.builtin.debug:
+    #         var: version_file_path
+
+    - name: Write version to file
+      ansible.builtin.lineinfile:
+        line: "{{ package_version_vnf.stdout }}"
+        insertafter: EOF
+        dest: "{{version_file_path}}"
+        create: true
+      delegate_to: localhost
+  when: deployment_type == "vnf"
 
 - block:
     - name: Get "{{ package }}" version if cn deployment type = k8s
       ansible.builtin.shell:
-           cmd: kubectl get deployments -n "{{k8s_namespace}}" -o wide | awk '{print $7}'
+        cmd: kubectl get deployments -n "{{k8s_namespace}}" -o wide | awk '{print $7}'
       register: package_version_k8s
       failed_when: "'FAIL' in package_version_k8s.stderr"
-    
 
-    - name: Write version to file 
+    - name: Write version to file
       ansible.builtin.lineinfile:
-           line: "{{ package_version_k8s.stdout }}"
-           insertafter: EOF
-           dest: "{{version_file_path}}"
-           create: true
+        line: "{{ package_version_k8s.stdout }}"
+        insertafter: EOF
+        dest: "{{version_file_path}}"
+        create: true
       delegate_to: localhost
 
   when: deployment_type == "k8s"
-  
-
