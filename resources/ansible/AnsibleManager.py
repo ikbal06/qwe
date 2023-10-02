@@ -9,10 +9,10 @@ from common.Logger import log
 from globalProperties import *
 from common.CommonOperations import *
 
-
 env_data_obj = EnvDataOperations()
 
 class AnsibleManager:
+    env_data_obj = EnvDataOperations()
 
     def __init__(self, ansible_verbose, allinone_ip, mongodb_deployment_type, postgre_deployment_type,
                  cn_deployment_type, k8s_namespace, playbook_path, **kwargs):

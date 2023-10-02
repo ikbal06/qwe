@@ -89,11 +89,11 @@
   "robotcode.python": "/usr/local/bin/python", //"${workspaceFolder}/.venv/bin/python",
   "robotcode.robot.pythonPath": [
     "./",
-    "./libraries",
     "./resources"
   ],
   "robotcode.robot.variables": {
-    "TEST_ID": "KT_CN_001"
+    "TEST_ID": "KT_CN_001",
+    "DEFAULT_TEST_LOGS_PATH": ""
   },
   "robotcode.robot.env": {
     "test_ids": "KT_CN_001,KT_CN_002",

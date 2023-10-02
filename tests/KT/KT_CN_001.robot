@@ -18,7 +18,7 @@ ${H_MNC}    001
 *** Settings ***
 # Library    listeners/MyListener.py
 Resource    keywords/spirent.robot  
-Library    capturer/pcapCapturer.py
+# Library    capturer/pcapCapturer.py
 Library    String 
 Test Setup    Before Test
 Test Teardown    After Test
@@ -41,17 +41,16 @@ Kayıtlanma Testi [KT_CN_001]
     Should Be True    ${isSpirentReady} 
     ${result}=    Update Test Session    _spirent_server_name=${SPIRENT_SERVER_NAME}    _test_name=${SPIRENT_TEST_ID}    _h_mnc=${H_MNC}    _h_mcc=${H_MCC}    _amf_ip=${AMF_IP}    _upf_ip=${UPF_IP}
     Should Be True    ${result}
-    ${SPIRENT_RUNNING_TEST_ID}=    Run Test    ${SPIRENT_TEST_ID}
-    ${test_status}=    Check Status Until Test Is Completed    ${SPIRENT_RUNNING_TEST_ID}
+    ${spirent_running_test_id}=    Run Test    ${SPIRENT_TEST_ID}
+    ${test_status}=    Check Status Until Test Is Completed    ${spirent_running_test_id}
     Should Be Equal As Strings    "${test_status['testStateOrStep']}"    "COMPLETE"
-    Copy Test Result Files From Spirent    ${SPIRENT_RUNNING_TEST_ID}
+    Copy Test Result Files From Spirent    ${spirent_running_test_id}
 
 *** Keywords ***
 Prepare Setup
     [Documentation]    Ansible ile test ortamını hazırlayacağız
-    Global Setup
-    Set Global Variable    ${SPIRENT_TEST_ID}    KT_CN_001
-    Start TCP Dump
+    Log To Console    \n<<<-------------- Prepare Setup ---------------->>>
+    # Start TCP Dump
     # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
 
 Before Test

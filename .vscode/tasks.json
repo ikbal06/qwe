@@ -4,9 +4,14 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Print Workspace Folder",
+            "label": "PrintWorkspaceFolder",
             "type": "shell",
             "command": "echo workspaceFolder: $workspaceFolder"
+        },
+        {
+            "label": "clearShell",
+            "type": "shell",
+            "command": "clear && clear"
         },
         {
             "label": "Print VS Code Variables",

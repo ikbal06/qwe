@@ -94,17 +94,28 @@
       "type": "robotcode",
       "request": "launch",
       "purpose": "default",
+      "preLaunchTask": "clearShell",
       "presentation": {
         "hidden": true
       },
       "env": {
-        "output_path": "/home/vscode/test1"
+        "test_ids": "KT_CN_001,KT_CN_002",
+        "KIWI_PLAN_ID": "7",
+        "TEST_ID": "KT_CN_001",
+        "DEFAULT_VERSION_PATH": "version.txt",
+        "spirent_ts_name": "vts-VTO2",
+        "username": "ubuntu",
+        "password": "ulakroot2020",
+        "allinone_ip": "192.168.13.71",
+        "public_ip": "10.10.20.22",
+        "n6_ip": "10.10.22.33",
+        "output_path": "/home/jenkins/test1"
       },
       "args": [
         // "--listener",
         // "analizci.AnalizciListener"
-        // "--listener",
-        // "kiwi.KiwiListener",
+        "--listener",
+        "resources.kiwi.KiwiListener",
         // "--variable",
         // "DEFAULT_TEST_LOGS_PATH="
       ],
@@ -134,5 +145,5 @@
       },
       "justMyCode": false
     }
-  ]
+  ],
 }

@@ -630,7 +630,9 @@ def add():
 Artık bu paketi kullanacaklar `add()` metodu gibi `__init__.py`'den dışarı sunulanlara aşağıdaki gibi erişebilir:
 
 ```python
- from your_package import add
+ from paket_dizini import add
+
+ add()
 ```
 
 # SPIRENT
