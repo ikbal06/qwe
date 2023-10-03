@@ -60,7 +60,7 @@ Prepare Setup
 
 Before Test
     [Documentation]    Start TCP Dump
-    # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
+    ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
     Copy Ssh Id To Servers
     Get Installed Packages And Versions
     Start Packet Capture

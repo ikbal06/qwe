@@ -5,6 +5,7 @@ import sys
 import ansible_runner
 import os
 from robot.api.deco import keyword, not_keyword
+from resources.TestConfigOperations import TestConfigOperations
 from resources.EnvDataOperations import EnvDataOperations
 from resources.common.Logger import log
 from resources.globalProperties import *
@@ -34,21 +35,6 @@ class AnsibleManager:
         self.__dict__.update(dict_pcap_name)
         self.extra_vars.update(dict_pcap_name)
 
-    # def __init__(self, playbook_path, **kwargs):
-
-    #     self.__dict__.update(kwargs)
-    #     self.playbook_path = playbook_path
-    #     self.extra_vars = kwargs
-
-    #     self.ansible_verbose = env_data_obj.ansible_verbose
-    #     self.allinone_ip = env_data_obj.allinone_ip
-    #     self.mongodb_deployment_type = env_data_obj.mongodb_deployment_type
-    #     self.postgre_deployment_type = env_data_obj.postgre_deployment_type
-    #     self.cn_deployment_type = env_data_obj.cn_deployment_type
-    #     self.k8s_namespace = env_data_obj.k8s_namespace
-    #     self.create_dynamic_inventory()
-    #     log.debug(self.extra_vars)
-
     def create_dynamic_inventory(self):
         """It is used to create ansible inventory file dynamically.
          There is a template (jinja) which is named inventory_template in the ./Resources/globalProperties.py
@@ -67,7 +53,7 @@ class AnsibleManager:
         log.debug(update_content)
         hosts = json.loads(update_content)
         self.inventory = {'all': hosts}
-
+        
     def run_playbook(self):
         """It is used to run ansible playbooks that is created in the ./playbooks
            Ansible_runner python library is used to run ansible playbooks programmaticaly.
@@ -85,6 +71,27 @@ class AnsibleManager:
             sys.exit(msg)
 
         return result
+
+    def run_test_playbook(self,test_id):
+        print("[OK] Spirent test={} run operation start!!!".format(test_id))
+        TEST_PLAYBOOK_PATH = os.path.join(PLAYBOOKS_PATH, test_id + '.yml')
+        self.playbook_path = TEST_PLAYBOOK_PATH
+        tr_spirent_pcap_path = os.path.join(env_data_obj.output_path, test_id, "spirent_pcap_files")
+        tr_robot_report_path = os.path.join(env_data_obj.output_path, test_id, "robot_report_files")
+        test_param = TestConfigOperations().get_test_params_by_test_name(test_id)
+        dictim = {
+            "h_mcc": env_data_obj.h_mcc,
+            "h_mnc": env_data_obj.h_mnc,
+            "ue_id": env_data_obj.h_mcc + env_data_obj.h_mnc + test_param['msin'],
+            "perm_key": test_param['perm_key'],
+            "ue_ip4": test_param['ue_ip4'],
+            "test_duration": env_data_obj.test_duration,
+            "spirent_pcap_files_path": tr_spirent_pcap_path,
+            "robot_files_path": tr_robot_report_path
+        }
+        self.__dict__.update(dictim)
+        self.extra_vars.update(dictim)
+        return self.run_playbook()
 
     def copy_ssh_id_to_servers(self):
         self.playbook_path = SSH_COPY_ID_PLAYBOOK_PATH
@@ -114,3 +121,4 @@ class AnsibleManager:
         self.extra_vars.update(dict_extra)
         log.debug("[OK] Pcap fetch start!!!")
         self.run_playbook()
+
