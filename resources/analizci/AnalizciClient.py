@@ -1,9 +1,9 @@
-from globalProperties import *
-from common.HttpClient import HttpClient
+from resources.globalProperties import *
+from resources.common.HttpClient import HttpClient
 import json
 from urllib.parse import urlparse, urlunparse
 import jinja2
-from common.CommonOperations import *
+from resources.common.CommonOperations import *
 
 
 class AnalizciClient(HttpClient):
@@ -17,8 +17,7 @@ class AnalizciClient(HttpClient):
         )
 
         self.__dict__.update(kwargs)
-        unzip_file(self.pcap_name_wgz, self.pcap_name_wogz)
-        self.create_alias_config()
+        # self.create_alias_config()
 
     def create_alias_config(self):
         """It is used to create analizci test run data  dynamically.
@@ -59,7 +58,7 @@ class AnalizciClient(HttpClient):
     def upload_pcap(self):
 
         # Specify the file to upload
-        pcap_file = [('file', open(self.pcap_name_wogz, 'rb'))]
+        pcap_file = [('file', open(self.pcap_name, 'rb'))]
         # Send POST request to upload the file
         response = self.post(path='upload', data={"filename": "merged"}, files=pcap_file)
         json_response = response.json()
@@ -73,7 +72,7 @@ class AnalizciClient(HttpClient):
         json_data_forRun = dict()
         json_data_forRun.update({'pcapName': merged_pcap})
         json_data_forRun.update({'testIds': [self.test_id]})
-        json_data_forRun.update({'uploadedAliases': self.created_alias_config})
+        # json_data_forRun.update({'uploadedAliases': self.created_alias_config})
 
         json_reponse = self.post(data=json_data_forRun)
         print(json_reponse.json())

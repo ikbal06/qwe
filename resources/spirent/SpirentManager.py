@@ -1,10 +1,10 @@
 import sys
 import jinja2
-from spirent.SpirentClient import SpirentClient
-from globalProperties import *
-from common.Logger import log
 import json
 import sys
+from resources.spirent.SpirentClient import SpirentClient
+from resources.globalProperties import *
+from resources.common.Logger import log
 
 
 class SpirentManager(SpirentClient):

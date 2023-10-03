@@ -1,11 +1,12 @@
 import os
 from pathlib import Path
 import subprocess
-from robot.libraries.BuiltIn import BuiltIn
-from common.Logger import log
-from spirent.SpirentManager import SpirentManager
-from globalProperties import *
 from urllib.parse import urlparse
+from robot.libraries.BuiltIn import BuiltIn
+from resources.common.Logger import log
+from resources.spirent.SpirentManager import SpirentManager
+from resources.globalProperties import *
+from resources.analizci import AnalizciClient
 
 _sp = SpirentManager()
 
@@ -72,7 +73,6 @@ class AnalizciListener():
     def __init__(self):
         self.ROBOT_LIBRARY_LISTENER = self
         self.top_suite_name = None
-        self.kiwi_run_id = None
 
     def start_suite(self, name, attributes):
         # Bir koşuda birden fazla test suit'in koşması istenirse her suite_start
@@ -86,6 +86,21 @@ class AnalizciListener():
             # TODO: Analizci çalışsın
             # robot dosyasının içinde varsa bu şekilde
             files = save_test_result_files()
+            # pcap_path = os.environ.get('output_path')
+            pcap_path = BuiltIn().get_variable_value("${output_path}")
+            selectected_test_id = BuiltIn().get_variable_value("${TEST_ID}")
+            for pcapFile in os.listdir(pcap_path):
+                if pcapFile.endswith(".pcap"):
+                    analizci_config_obj = AnalizciClient("172.19.0.114",
+                                                         "30333",
+                                                         pcap_name=pcap_path+pcapFile,
+                                                         test_id=selectected_test_id
+                                                         )
+                    merged_pcapname = analizci_config_obj.upload_pcap()
+                    if merged_pcapname:
+                        analizci_config_obj.run_analyze(merged_pcapname)
+                    else:
+                        print("[NOK] Analizci run test fail!!!!")
 
     def close(self):
         pass

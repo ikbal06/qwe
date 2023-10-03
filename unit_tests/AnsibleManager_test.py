@@ -27,8 +27,14 @@ class TestAnsibleManager(unittest.TestCase):
         print("Sonuç >>> ", sonuc)
 
     def test_5_run_test_playbook(self):
+        # Given
+        test_name = "KT_CN_001"
+        # When
         ansible = AnsibleManager()
-        sonuc = ansible.run_test_playbook("KT_CN_001")
+        ansible.start_packet_capture()
+        ansible.run_test_playbook(test_name)
+        sonuc = ansible.fetch_pcap_files(test_name)
+        # Then
         print("Sonuç >>> ", sonuc)
 
 

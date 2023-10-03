@@ -1,5 +1,5 @@
-from globalProperties import *
-from common.HttpClient import HttpClient
+from resources.globalProperties import *
+from resources.common.HttpClient import HttpClient
 
 
 class SpirentClient(HttpClient):
