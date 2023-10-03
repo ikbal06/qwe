@@ -30,6 +30,9 @@ class AnsibleManager:
 
         test_date = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
         self.pcap_name = f"{self.allinone_ip}_{test_date}.pcap"
+        dict_pcap_name = {"pcap_name": self.pcap_name}
+        self.__dict__.update(dict_pcap_name)
+        self.extra_vars.update(dict_pcap_name)
 
     # def __init__(self, playbook_path, **kwargs):
 
@@ -98,89 +101,16 @@ class AnsibleManager:
 
     def start_packet_capture(self):
         self.playbook_path = START_TCPDUMP_PLAYBOOK_PATH
-        dict_pcap_name = {"pcap_name": self.pcap_name}
-        self.__dict__.update(dict_pcap_name)
-        self.extra_vars.update(dict_pcap_name)
         log.debug("[OK] Pcap capture start!!!")
         return self.run_playbook()
 
     def fetch_pcap_files(self, _test_id):
         self.playbook_path = FETCH_PCAP_FILES_PATH
-        print("[OK] Pcap fetch start!!!")
         dict_extra = {
             "nf_pcap_files_path": os.path.join(env_data_obj.output_path, _test_id, "nf_pcap_files"),
-            "pcap_name": f"{self.pcap_name}.pcap",
             "remote_tmp": "/tmp/ornek"
         }
         self.__dict__.update(dict_extra)
         self.extra_vars.update(dict_extra)
+        log.debug("[OK] Pcap fetch start!!!")
         self.run_playbook()
-
-# --------------------------------------------------------
-
-
-def get_installed_packages_and_versions():
-    version_file_path = os.path.join(env_data_obj.output_path, "version.txt")
-    os.environ["DEFAULT_VERSION_PATH"] = version_file_path
-    ansible = AnsibleManager(env_data_obj.ansible_verbose,
-                             env_data_obj.allinone_ip,
-                             env_data_obj.mongodb_deployment_type,
-                             env_data_obj.postgre_deployment_type,
-                             env_data_obj.cn_deployment_type,
-                             env_data_obj.k8s_namespace,
-                             GET_VERSION_PLAYBOOK_PATH,
-                             version_file_path=version_file_path,
-                             ansible_user=env_data_obj.username
-                             )
-    ansible.run_playbook()
-
-# def copy_ssh_id_to_servers():
-#     log.debug(f"env_var: {env_data_obj}")
-#     ansible = AnsibleManager(env_data_obj.ansible_verbose,
-#                     env_data_obj.allinone_ip,
-#                     env_data_obj.mongodb_deployment_type,
-#                     env_data_obj.postgre_deployment_type,
-#                     env_data_obj.cn_deployment_type,
-#                     env_data_obj.k8s_namespace,
-#                     SSH_COPY_ID_PLAYBOOK_PATH,
-#                     ansible_user=env_data_obj.username
-#                     )
-#     ansible.run_playbook()
-
-
-def start_packet_capture():
-    test_date = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
-    allinone_ip = env_data_obj.allinone_ip
-    pcap_name = f"{allinone_ip}_{test_date}.pcap"
-    log.debug("[OK] Pcap capture start!!!")
-    ansible = AnsibleManager(env_data_obj.ansible_verbose,
-                             env_data_obj.allinone_ip,
-                             env_data_obj.mongodb_deployment_type,
-                             env_data_obj.postgre_deployment_type,
-                             env_data_obj.cn_deployment_type,
-                             env_data_obj.k8s_namespace,
-                             START_TCPDUMP_PLAYBOOK_PATH,
-                             ansible_user=env_data_obj.username,
-                             pcap_name=pcap_name
-                             )
-    ansible.run_playbook()
-
-
-def fetch_pcap_files(_test_id):
-    print("[OK] Pcap fetch start!!!")
-    test_date = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
-    allinone_ip = env_data_obj.allinone_ip
-    pcap_name = f"{allinone_ip}_{test_date}.pcap"
-    tr_nf_pcap_path = os.path.join(env_data_obj.output_path, _test_id, "nf_pcap_files")
-    ansible = AnsibleManager(env_data_obj.ansible_verbose,
-                             env_data_obj.allinone_ip,
-                             env_data_obj.mongodb_deployment_type,
-                             env_data_obj.postgre_deployment_type,
-                             env_data_obj.cn_deployment_type,
-                             env_data_obj.k8s_namespace,
-                             FETCH_PCAP_FILES_PATH,
-                             ansible_user=env_data_obj.username,
-                             nf_pcap_files_path=tr_nf_pcap_path,
-                             pcap_name=pcap_name
-                             )
-    ansible.run_playbook()

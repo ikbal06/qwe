@@ -8,12 +8,12 @@
 # ${KIWI_TEST_ID}    168
 # Bu testin SPIRENT üstünde koşturulacağı Spirent Test ID bilgisi 
 ${SPIRENT_TEST_ID}    KT_CN_001
-${MONGODB_DEPLOYMENT_TYPE}    cnf
-${K8S_NAMESPACE}    default
-${POSTGRE_DEPLOYMENT_TYPE}    cnf
-${CN_DEPLOYMENT_TYPE}    vnf
-${H_MCC}    001
-${H_MNC}    001
+${MONGODB_DEPLOYMENT_TYPE}    %{mongodb_deployment_type}
+${K8S_NAMESPACE}    %{k8s_namespace}
+${POSTGRE_DEPLOYMENT_TYPE}    %{postgre_deployment_type}
+${CN_DEPLOYMENT_TYPE}    %{cn_deployment_type}
+${H_MCC}    %{h_mcc}
+${H_MNC}    %{h_mnc}
 
 *** Settings ***
 # Library    listeners/MyListener.py

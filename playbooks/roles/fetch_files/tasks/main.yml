@@ -1,26 +1,32 @@
+# Kaynak adresi stat ile kontrol et ve çıktısını src_status değişkenine yaz
 - name: Check "{{source}}" exist or not
   stat:
     path: "{{source}}"
   register: src_status
 
+# Hedef adresi stat ile kontrol et ve çıktısını dest_status değişkenine yaz
 - name: Check "{{destination}}" exist or not
   stat:
     path: "{{destination}}"
   register: dest_status
 
-- name: Create directory= "{{destination}}"
+# Eğer hedef dizin yoksa yarat
+- name: Create directory "{{destination}}" with 755 permissions
   file:
     path: "{{destination}}"
     state: directory
+    mode: "0755" # 0755 izinleri, rwxr-xr-x olarak ayarlanır
   when: not dest_status.stat.exists
   delegate_to: localhost
 
-- name: Compress "{{source}}.gz"
+# Kaynak dosyaları sıkıştırmak için community.general.archive kullan
+- name: Compress '{{source}}' if with_zip ({{with_zip}}) true and produce "{{source}}.gz" file
   community.general.archive:
     path: "{{source}}"
     dest: "{{source}}.gz"
     format: gz
   when: with_zip == true
+  become: true
 
 - name: Set fact for zipped file
   set_fact:
@@ -31,12 +37,13 @@
 #   ansible.builtin.debug:
 #     var: destination
 
-- name: Fetch files
+- name: Fetch '{{zipped_source if with_zip == true else source}}' files if exist
   synchronize:
     src: "{{zipped_source if with_zip == true else source}}"
     dest: "{{destination}}"
     mode: pull
   when: src_status.stat.exists
+  become: true
 
 - name: Remove "{{zipped_source}}"  from remote server
   ansible.builtin.shell:

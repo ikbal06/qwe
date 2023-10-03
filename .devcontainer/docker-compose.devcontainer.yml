@@ -3,7 +3,7 @@ services:
   robot-dev:
     image: robot-py3
     privileged: true
-    user: vscode
+    user: root
     build:
       context: .
       dockerfile: Dockerfile
