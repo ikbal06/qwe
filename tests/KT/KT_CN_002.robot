@@ -8,9 +8,9 @@ Library    String
 
 *** Variables ***
 # SPIRENT
-${SPIRENT_TEST_ID}    KT_CN_002
-${SPIRENT_SERVER_NAME}    vts-VTO2
-${ALLINONE_IP}    192.168.13.71
+# ${SPIRENT_TEST_ID}    KT_CN_002
+# ${SPIRENT_SERVER_NAME}    vts-VTO2
+# ${ALLINONE_IP}    192.168.13.71
 ${MONGODB_DEPLOYMENT_TYPE}    cnf
 ${K8S_NAMESPACE}    default
 ${POSTGRE_DEPLOYMENT_TYPE}    cnf
@@ -46,6 +46,6 @@ Periyodik Kayıtlanma Testi [KT_CN_002]
 Prepare Setup
     [Documentation]    Ansible ile test ortamını hazırlayacağız
     Global Setup
-    Set Global Variable    ${SPIRENT_TEST_ID}    KT_CN_002
+    # Set Global Variable    ${SPIRENT_TEST_ID}    KT_CN_002
     # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_002.yml
     

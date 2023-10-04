@@ -37,7 +37,8 @@ Kayıtlanma Testi [KT_CN_001]
     ...    Test Oturum Bilgisi Spirent üzerinde güncellenir
     ...    Spirent kullanıcı adı ve koşulacak testin ID bilgisi Spirent üstünde güncellenir
     [Tags]    ansible    BT CN 001
-    # [Setup]    Prepare Setup
+    [Setup]    Prepare Setup
+    Before Test
     ${isSpirentReady}=    Is Spirent Ready    ${SPIRENT_SERVER_NAME}
     Should Be True    ${isSpirentReady} 
     ${result}=    Update Test Session    _spirent_server_name=${SPIRENT_SERVER_NAME}    _test_name=${SPIRENT_TEST_ID}    _h_mnc=${H_MNC}    _h_mcc=${H_MCC}    _amf_ip=${AMF_IP}    _upf_ip=${UPF_IP}
@@ -45,12 +46,13 @@ Kayıtlanma Testi [KT_CN_001]
     ${spirent_running_test_id}=    Run Test    ${SPIRENT_TEST_ID}
     ${test_status}=    Check Status Until Test Is Completed    ${spirent_running_test_id}
     Should Be Equal As Strings    "${test_status['testStateOrStep']}"    "COMPLETE"
+    After Test 
     Copy Test Result Files From Spirent    ${spirent_running_test_id}
 
-hede 
-    Start Packet Capture
-    Fetch Pcap Files    ${SPIRENT_TEST_ID}
-    Log    hede
+# hede 
+#     Start Packet Capture
+#     Fetch Pcap Files    ${SPIRENT_TEST_ID}
+#     Log    hede
 
 *** Keywords ***
 Prepare Setup

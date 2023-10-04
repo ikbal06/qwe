@@ -6,7 +6,7 @@ from robot.libraries.BuiltIn import BuiltIn
 from resources.common.Logger import log
 from resources.spirent.SpirentManager import SpirentManager
 from resources.globalProperties import *
-from resources.analizci import AnalizciClient
+from resources.analizci.AnalizciClient import AnalizciClient
 
 _sp = SpirentManager()
 
@@ -82,25 +82,30 @@ class AnalizciListener():
             self.top_suite_name = name
 
     def end_suite(self, name, attributes):
-        if name == self.top_suite_name:  # içine girince hatayı buradan verdi
-            # TODO: Analizci çalışsın
-            # robot dosyasının içinde varsa bu şekilde
-            files = save_test_result_files()
-            # pcap_path = os.environ.get('output_path')
-            pcap_path = BuiltIn().get_variable_value("${output_path}")
-            selectected_test_id = BuiltIn().get_variable_value("${TEST_ID}")
-            for pcapFile in os.listdir(pcap_path):
-                if pcapFile.endswith(".pcap"):
-                    analizci_config_obj = AnalizciClient("172.19.0.114",
-                                                         "30333",
-                                                         pcap_name=pcap_path+pcapFile,
-                                                         test_id=selectected_test_id
-                                                         )
-                    merged_pcapname = analizci_config_obj.upload_pcap()
-                    if merged_pcapname:
-                        analizci_config_obj.run_analyze(merged_pcapname)
-                    else:
-                        print("[NOK] Analizci run test fail!!!!")
+        # if name == self.top_suite_name:  # içine girince hatayı buradan verdi
+        # TODO: Analizci çalışsın
+        # robot dosyasının içinde varsa bu şekilde
+        # files = save_test_result_files()
+        output_path = "/tmp/test_outputs"
+        selectected_test_id = "KT_CN_001"
+        # output_path = os.environ.get('output_path')
+        # selectected_test_id = os.environ.get('TEST_ID')
+        # output_path = BuiltIn().get_variable_value("${output_path}")
+        # selectected_test_id = BuiltIn().get_variable_value("${TEST_ID}")
+        fullPath = output_path+"/"+selectected_test_id+"/nf_pcap_files/"
+        for gzFile in os.listdir(fullPath):
+            if gzFile.endswith(".gz"):
+                subprocess.check_output("gunzip "+fullPath+gzFile, shell=True, text=True)
+        for pcapFile in os.listdir(fullPath):
+            if pcapFile.endswith(".pcap"):
+                analizci_config_obj = AnalizciClient(
+                    "172.19.0.179", "3333", pcap_name=output_path + "/" + selectected_test_id + "/nf_pcap_files/" +
+                    pcapFile, test_id=selectected_test_id)
+                merged_pcapname = analizci_config_obj.upload_pcap()
+                if merged_pcapname:
+                    analizci_config_obj.run_analyze(merged_pcapname)
+                else:
+                    print("[NOK] Analizci run test fail!!!!")
 
     def close(self):
         pass

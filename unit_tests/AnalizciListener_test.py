@@ -1,5 +1,6 @@
 import os
 import unittest   # The test framework
+from resources.ansible.AnsibleManager import AnsibleManager
 from resources.analizci.AnalizciListener import AnalizciListener
 
 
@@ -17,9 +18,9 @@ class TestAnalizciListener(unittest.TestCase):
         suite_name = "Workspace.Tests.KT_CN_001"
         attributes = {}
         # *.pcap dosyası oluşturmak için
-        ansible = AnsibleManager()
-        ansible.start_packet_capture()
-        ansible.fetch_pcap_files(test_name)
+        # ansible = AnsibleManager()
+        # ansible.start_packet_capture()
+        # ansible.fetch_pcap_files(test_name)
         # When
         self.test_1_start_suite()
         analizci = AnalizciListener()
