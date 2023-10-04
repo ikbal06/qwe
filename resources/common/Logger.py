@@ -62,7 +62,7 @@ log.setLevel(logging.DEBUG)
 # Add the Handler to the Logger
 log.addHandler(logger_handler)
 
-log.debug('debug > Completed configuring logger()!')
-log.info('info > Completed configuring logger()!')
-log.warning('warning > Completed configuring logger()!')
-log.error('error > Completed configuring logger()!')
+# log.debug('debug > Completed configuring logger()!')
+# log.info('info > Completed configuring logger()!')
+# log.warning('warning > Completed configuring logger()!')
+# log.error('error > Completed configuring logger()!')

@@ -86,6 +86,31 @@
         "."
       ]
     },
+    // ornekler/listener/listener.robot
+    {
+      "name": "listener_ornek > Robot Debug",
+      "type": "python",
+      "request": "launch",
+      "program": "/usr/local/bin/robot",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceRoot}",
+      "env": {
+        "KIWI_LOG_LEVEL": "DEBUG"
+      },
+      "args": [
+        "-d",
+        "/workspace/output",
+        "-P",
+        "/workspace",
+        "--suite",
+        "Tests",
+        "--listener",
+        "/workspace/tests/ornekler/listener/MyListener.py",
+        "-i",
+        "ListenerOrnek",
+        "."
+      ]
+    },
     //-----------------------------------------------
     //------------ ROBOT Çalıştırma Ayarları --------
     //-----------------------------------------------
@@ -101,7 +126,7 @@
       "env": {
         // "test_ids": "KT_CN_001,KT_CN_002",
         "KIWI_PLAN_ID": "7",
-        "TEST_ID": "KT_CN_001",
+        "TEST_ID": "KT_CN_002",
         "DEFAULT_VERSION_PATH": "version.txt",
         "spirent_ts_name": "vts-VTO2",
         "username": "ubuntu",

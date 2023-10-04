@@ -1,6 +1,8 @@
 import os
+import json
 from pathlib import Path
 import subprocess
+from datetime import datetime
 from urllib.parse import urlparse
 from robot.libraries.BuiltIn import BuiltIn
 from resources.common.Logger import log
@@ -73,11 +75,13 @@ class AnalizciListener():
     def __init__(self):
         self.ROBOT_LIBRARY_LISTENER = self
         self.top_suite_name = None
+        self.testId = None
 
     def start_suite(self, name, attributes):
         # Bir koşuda birden fazla test suit'in koşması istenirse her suite_start
         # Kiwi üzerinde yeni bir "Test Run" yaratmasın diye ilk "top_suite_name"
         # değişkeni kullanılacak.
+        self.testId = name
         if self.top_suite_name is None:
             self.top_suite_name = name
 
@@ -86,26 +90,39 @@ class AnalizciListener():
         # TODO: Analizci çalışsın
         # robot dosyasının içinde varsa bu şekilde
         # files = save_test_result_files()
-        output_path = "/tmp/test_outputs"
-        selectected_test_id = "KT_CN_001"
-        # output_path = os.environ.get('output_path')
-        # selectected_test_id = os.environ.get('TEST_ID')
-        # output_path = BuiltIn().get_variable_value("${output_path}")
-        # selectected_test_id = BuiltIn().get_variable_value("${TEST_ID}")
-        fullPath = output_path+"/"+selectected_test_id+"/nf_pcap_files/"
-        for gzFile in os.listdir(fullPath):
-            if gzFile.endswith(".gz"):
-                subprocess.check_output("gunzip "+fullPath+gzFile, shell=True, text=True)
-        for pcapFile in os.listdir(fullPath):
-            if pcapFile.endswith(".pcap"):
-                analizci_config_obj = AnalizciClient(
-                    "172.19.0.179", "3333", pcap_name=output_path + "/" + selectected_test_id + "/nf_pcap_files/" +
-                    pcapFile, test_id=selectected_test_id)
-                merged_pcapname = analizci_config_obj.upload_pcap()
-                if merged_pcapname:
-                    analizci_config_obj.run_analyze(merged_pcapname)
-                else:
-                    print("[NOK] Analizci run test fail!!!!")
+
+        if name == self.testId:  # içine girince hatayı buradan verdi
+            selectected_test_id = str(self.testId).replace(" ", "_")
+
+            fullPath = "/tmp/test_outputs/"+selectected_test_id+"/nf_pcap_files/"
+            print("/tmp/test_outputs/"+selectected_test_id+"/nf_pcap_files/")
+            for gzFile in os.listdir(fullPath):
+                if gzFile.endswith(".gz"):
+                    subprocess.check_output("gunzip "+fullPath+gzFile, shell=True, text=True)
+            pcapList = []
+            for pcapFile in os.listdir(fullPath):
+                if pcapFile.endswith(".pcap"):
+                    pcapList.append(pcapFile.split("_")[1].split(".")[0])
+
+            # Convert strings to datetime objects
+            date_objects = [datetime.strptime(date, '%d-%m-%Y-%H-%M-%S') for date in pcapList]
+            # Find the latest date
+            latest_pcap = max(date_objects)
+            # Convert it back to a string
+            latest_date_pcap = latest_pcap.strftime('%d-%m-%Y-%H-%M-%S')
+
+            for pcapFile in os.listdir(fullPath):
+                if pcapFile.endswith(".pcap"):
+                    if latest_date_pcap in pcapFile:
+                        print(fullPath+pcapFile)
+                        analizci_config_obj = AnalizciClient(
+                            "172.19.0.179", "3333", pcap_name=fullPath+pcapFile, test_id=selectected_test_id)
+                        merged_pcapname = analizci_config_obj.upload_pcap()
+                        if merged_pcapname:
+                            analizci_config_obj.run_analyze(merged_pcapname)
+                        else:
+                            print("[NOK] Analizci run test fail!!!!")
+                        break
 
     def close(self):
         pass

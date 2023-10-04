@@ -4,36 +4,36 @@
 - hosts: allinone
   gather_facts: false
   tasks:
-    - name: stopped service
-      ansible.builtin.service:
-        name: "{{ item }}"
-        state: stopped
-      become: true
-      with_items:
-        - cnramf-coremngr
-        - cnramf-sbimngr
-        - cnramf-ranmngr
-        - cnramf-guimngr
-        - cnramf-limngr
-        - cnramf-gtpmngr
-        - cnrpcfcs
-        - cnrpcfsms
-        - cnrpcfams
-        - cnrpcfnfrs
-        - cnrpcfpes
+    # - name: stopped service
+    #   ansible.builtin.service:
+    #     name: "{{ item }}"
+    #     state: stopped
+    #   become: true
+    #   with_items:
+    #     - cnramf-coremngr
+    #     - cnramf-sbimngr
+    #     - cnramf-ranmngr
+    #     - cnramf-guimngr
+    #     - cnramf-limngr
+    #     - cnramf-gtpmngr
+    #     - cnrpcfcs
+    #     - cnrpcfsms
+    #     - cnrpcfams
+    #     - cnrpcfnfrs
+    #     - cnrpcfpes
 
-    - name: started service
-      ansible.builtin.service:
-        name: "{{ item }}"
-        state: started
-      become: true
-      with_items:
-        - cnramf
-        - cnrpcfcs
-        - cnrpcfsms
-        - cnrpcfams
-        - cnrpcfnfrs
-        - cnrpcfpes
+    # - name: started service
+    #   ansible.builtin.service:
+    #     name: "{{ item }}"
+    #     state: started
+    #   become: true
+    #   with_items:
+    #     - cnramf
+    #     - cnrpcfcs
+    #     - cnrpcfsms
+    #     - cnrpcfams
+    #     - cnrpcfnfrs
+    #     - cnrpcfpes
 
     - name: restarted service
       ansible.builtin.service:

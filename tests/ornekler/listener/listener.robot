@@ -1,8 +1,8 @@
-*** Settings ***
-Library    listeners/MyListener.py
+# *** Settings ***
+# Library    tests/ornekler/listener/MyListener.py
 
 *** Test Cases ***
-Sample Test
+KTTESTT
     [Documentation]    This is a sample test case
+    [Tags]    ListenerOrnek
     Log    This is a log message
-

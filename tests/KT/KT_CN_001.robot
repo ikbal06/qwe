@@ -5,30 +5,20 @@
 *** Variables ***
 # KIWI 
 # Bu testin KIWI üstünde karşılığı olan Test Case ID bilgisi
-# ${KIWI_TEST_ID}    168
-# Bu testin SPIRENT üstünde koşturulacağı Spirent Test ID bilgisi 
-${SPIRENT_TEST_ID}    KT_CN_001
-${MONGODB_DEPLOYMENT_TYPE}    cnf
-${K8S_NAMESPACE}    default
-${POSTGRE_DEPLOYMENT_TYPE}    cnf
-${CN_DEPLOYMENT_TYPE}    vnf
-${H_MCC}    001
-${H_MNC}    001
 
 *** Settings ***
 # Library    listeners/MyListener.py
 Resource    keywords/spirent.robot  
 # Library    capturer/pcapCapturer.py
-Library    ansible.AnsibleManager
 Library    String 
-# Test Setup    Before Test
-Test Teardown    After Test
+Test Setup    Before Test    #testş hazırlama
+Test Teardown    After Test    #testi sonlandırma
 
 
 *** Test Cases ***
 
-BOŞ Kayıtlanma Testi [KT_CN_001]
-    Log    Boş boş koş
+# BOŞ Kayıtlanma Testi [KT_CN_001]
+#    Log    Boş boş koş
 
 Kayıtlanma Testi [KT_CN_001]
     [Documentation]    Çalıştırılacak testin adı ve ID değeri "KT_CN_001" olacak.
@@ -38,36 +28,33 @@ Kayıtlanma Testi [KT_CN_001]
     ...    Spirent kullanıcı adı ve koşulacak testin ID bilgisi Spirent üstünde güncellenir
     [Tags]    ansible    BT CN 001
     [Setup]    Prepare Setup
-    Before Test
-    ${isSpirentReady}=    Is Spirent Ready    ${SPIRENT_SERVER_NAME}
-    Should Be True    ${isSpirentReady} 
-    ${result}=    Update Test Session    _spirent_server_name=${SPIRENT_SERVER_NAME}    _test_name=${SPIRENT_TEST_ID}    _h_mnc=${H_MNC}    _h_mcc=${H_MCC}    _amf_ip=${AMF_IP}    _upf_ip=${UPF_IP}
+    ${result}=    Prepare Spirent    ${SPIRENT_TEST_ID}
     Should Be True    ${result}
     ${spirent_running_test_id}=    Run Test    ${SPIRENT_TEST_ID}
     ${test_status}=    Check Status Until Test Is Completed    ${spirent_running_test_id}
+    Log To Console    ${test_status}
     Should Be Equal As Strings    "${test_status['testStateOrStep']}"    "COMPLETE"
-    After Test 
     Copy Test Result Files From Spirent    ${spirent_running_test_id}
 
 # hede 
-#     Start Packet Capture
-#     Fetch Pcap Files    ${SPIRENT_TEST_ID}
-#     Log    hede
+#    Start Packet Capture
+#    Fetch Pcap Files    ${SPIRENT_TEST_ID}
+#    Log    hede
 
 *** Keywords ***
 Prepare Setup
     [Documentation]    Ansible ile test ortamını hazırlayacağız
     Log To Console    \n<<<-------------- Prepare Setup ---------------->>>
 
-
 Before Test
     [Documentation]    Start TCP Dump
     ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
-    Copy Ssh Id To Servers
-    Get Installed Packages And Versions
-    Start Packet Capture
+    ansibleManager.Copy Ssh Id To Servers
+    ansibleManager.Get Installed Packages And Versions
+    ansibleManager.Run Test Playbook    ${SPIRENT_TEST_ID}
+    ansibleManager.Start Packet Capture
     Log    hede
 After Test 
-    Fetch Pcap Files    ${SPIRENT_TEST_ID}
-    Log    hede
+    ansibleManager.Fetch Pcap Files    ${SPIRENT_TEST_ID}
+    Log    hede fin
     

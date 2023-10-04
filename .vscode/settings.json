@@ -17,9 +17,9 @@
   "git.autofetch": true,
   //---------- SETTINGS ---------------------------------
   "editor.formatOnSave": true,
-  // "[json]": {
-  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
-  // },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -67,7 +67,12 @@
   "robot.language-server.python": "${workspaceFolder}/.venv/bin/python",
   // "robot.python.executable": "${workspaceFolder}/.venv/bin/python",
   "robot.python.executable": "/usr/local/bin/python",
-  "robot.pythonpath": ["./", "./lib", "./resources", "./keywords"],
+  "robot.pythonpath": [
+    "./",
+    "./lib",
+    "./resources",
+    "./keywords"
+  ],
   // ------------ RoboCorp Extension ---------------
   "robocorp.language-server.python": "${workspaceFolder}/.venv/bin/python",
   "robocorp.autoSetPythonExtensionInterpreter": false,
@@ -81,7 +86,10 @@
   "robotcode.debug.groupOutput": true,
   "robotcode.debug.outputMessages": true,
   "robotcode.python": "/usr/local/bin/python", //"${workspaceFolder}/.venv/bin/python",
-  "robotcode.robot.pythonPath": ["./", "./resources"],
+  "robotcode.robot.pythonPath": [
+    "./",
+    "./resources"
+  ],
   "robotcode.robot.variables": {
     "TEST_ID": "KT_CN_001",
     "DEFAULT_TEST_LOGS_PATH": ""
@@ -100,19 +108,27 @@
     "output_path": "/home/jenkins/test1"
   },
   "robotcode.robot.outputDir": "./output",
-  "robotcode.extraArgs": ["--log", "--log-level=INFO", "--log-calls"],
+  "robotcode.extraArgs": [
+    "--log",
+    "--log-level=INFO",
+    "--log-calls"
+  ],
+  "robotcode.languageServer.extraArgs": [
+    "--log",
+    "--log-level",
+    "INFO"
+  ],
   /*
-   Aşağıda kırparak verdiğim komutun "--listener kiwi.KiwiListener" argumanını oluşturur 
-   ancak bunu launch.json içinde "args": [] içinde de verebiliriz.
-   ... /usr/local/bin/python /home/vscode/.vscode-server/extensions/d-biehl.robotcode-0.58.0/bundled/tool/robotcode 
-   --default-path . ... -- -d ./output -P ./ ... 
-   --listener kiwi.KiwiListener ...
-   */
+  Aşağıda kırparak verdiğim komutun "--listener kiwi.KiwiListener" argumanını oluşturur 
+  ancak bunu launch.json içinde "args": [] içinde de verebiliriz.
+  ... /usr/local/bin/python /home/vscode/.vscode-server/extensions/d-biehl.robotcode-0.58.0/bundled/tool/robotcode 
+  --default-path . ... -- -d ./output -P ./ ... 
+  --listener kiwi.KiwiListener ...
+  */
   "robotcode.robot.args": [
     // "--listener",
     // "kiwi.KiwiListener"
   ],
-  "robotcode.languageServer.extraArgs": ["--log", "--log-level", "INFO"],
   // ------------ Ansible Extension ---------------
   "ansible.python.interpreterPath": "/usr/local/bin/python"
 }

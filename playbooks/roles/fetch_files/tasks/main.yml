@@ -45,7 +45,7 @@
   when: src_status.stat.exists
   become: true
 
-- name: Remove "{{zipped_source}}"  from remote server
-  ansible.builtin.shell:
-    cmd: rm -rf "{{zipped_source}}"
-  when: with_zip == true
+# - name: Remove "{{zipped_source}}"  from remote server
+#   ansible.builtin.shell:
+#     cmd: rm -rf "{{zipped_source}}"
+#   when: with_zip == true

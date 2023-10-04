@@ -10,11 +10,22 @@ ${AMF_IP}    %{public_ip}
 # Bu değişken UPF'in N6 bacağı internete çıktığı için N6_IP olarak da geçer
 ${UPF_IP}    %{n6_ip}
 
+# ${KIWI_TEST_ID}    168
+# Bu testin SPIRENT üstünde koşturulacağı Spirent Test ID bilgisi 
+${MONGODB_DEPLOYMENT_TYPE}    cnf
+${K8S_NAMESPACE}    default
+${POSTGRE_DEPLOYMENT_TYPE}    cnf
+${CN_DEPLOYMENT_TYPE}    vnf
+${H_MCC}    001
+${H_MNC}    001
+
+
 *** Settings ***
 Library    Process
 Library    OperatingSystem
 Library    common/CommonOperations.py
 Library    spirent.SpirentManager    WITH NAME    spirentManager
+Library    ansible.AnsibleManager    WITH NAME    ansibleManager
 Library    TestConfigOperations    test_name=${SPIRENT_TEST_ID}    ts_name=${SPIRENT_SERVER_NAME}    WITH NAME    testConfig
 
 *** Keywords ***
@@ -88,7 +99,7 @@ Check Status Until Test Is Completed
         IF    "${test_status['testStateOrStep']}" == "COMPLETE"    BREAK
         IF    "${test_status['testStateOrStep']}" == "COMPLETE_ERROR"    BREAK
         Log    ${test_status['testStateOrStep']}
-        Sleep    5s
+        Sleep    1s
     END
     Return From Keyword    ${test_status}
 
@@ -96,7 +107,7 @@ Copy Test Result Files From Spirent
     [Documentation]    Spirent tarafında üretilmiş dosyaları hedef sunucuya yükler
     [Arguments]    ${_spirent_running_test_id}
     # ${copy_result}=    spirentManager.Copy Test Outpus From Spirent    ${_spirent_running_test_id}
-    Log    Çalıştım
+    Log To Console    Çalıştım console=yes
 
 #    [Arguments]    ${description}
     # ${description}=    Set Variable    [ PASS if (Ng Setup Requests 1) ] pass if yerine testin adımlarını tek tek alıp değerlendirmesi lazım
@@ -108,3 +119,13 @@ Copy Test Result Files From Spirent
     # Return From Keyword    ${extracted_text}
 
     # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
+
+Prepare Spirent
+    [Documentation]    Spirent üzerinde testin koşulmasını başlat
+    [Arguments]    ${_test_id}    
+    ${isSpirentReady}=    Is Spirent Ready    ${SPIRENT_SERVER_NAME}
+    Should Be True    ${isSpirentReady} 
+    ${packet_capture_status}=    ansibleManager.Start Packet Capture
+    Log To Console    "Packet Capture Started: "${packet_capture_status}    console=yes
+    ${result}=    Update Test Session    _spirent_server_name=${SPIRENT_SERVER_NAME}    _test_name=${_test_id}    _h_mnc=${H_MNC}    _h_mcc=${H_MCC}    _amf_ip=${AMF_IP}    _upf_ip=${UPF_IP}
+    Return From Keyword    ${result}
