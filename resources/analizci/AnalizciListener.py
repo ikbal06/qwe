@@ -116,7 +116,8 @@ class AnalizciListener():
                     if latest_date_pcap in pcapFile:
                         print(fullPath+pcapFile)
                         analizci_config_obj = AnalizciClient(
-                            "172.19.0.179", "3333", pcap_name=fullPath+pcapFile, test_id=selectected_test_id)
+                            "http://analizci-test-back.ulakhaberlesme.com.tr/automated/", pcap_name=fullPath + pcapFile,
+                            test_id=selectected_test_id)
                         merged_pcapname = analizci_config_obj.upload_pcap()
                         if merged_pcapname:
                             analizci_config_obj.run_analyze(merged_pcapname)

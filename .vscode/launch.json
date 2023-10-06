@@ -21,10 +21,9 @@
         "username": "ubuntu",
         "password": "ulakroot2020",
         "allinone_ip": "192.168.13.71",
-        // "public_ip": "10.10.20.22",
-        "public_ip": "192.168.13.71",
+        "public_ip": "10.10.20.22",
         "n6_ip": "10.10.22.33",
-        "output_path": "/home/jenkins/test1"
+        "output_path": "/home/jenkins/test"
       },
       "args": [
         "-d",
@@ -38,7 +37,7 @@
         "--listener",
         "KiwiListener",
         "-i",
-        "BT_CN_001ORBT_CN_002",
+        "BT_CN_001ORBT_CN_002ORBT_CN_003",
         "."
       ]
     },
@@ -126,7 +125,7 @@
       "env": {
         // "test_ids": "KT_CN_001,KT_CN_002",
         "KIWI_PLAN_ID": "7",
-        "TEST_ID": "KT_CN_002",
+        // "TEST_ID": "KT_CN_007",
         "DEFAULT_VERSION_PATH": "version.txt",
         "spirent_ts_name": "vts-VTO2",
         "username": "ubuntu",
@@ -140,9 +139,11 @@
         "--listener",
         "analizci.AnalizciListener",
         "--listener",
-        "/workspace/resources/kiwi/KiwiListener.py"
+        "/workspace/resources/kiwi/KiwiListener.py",
+        "-i",
+        "BT_CN_001ORBT_CN_002ORBT_CN_003"
         // "--variable",
-        // "DEFAULT_TEST_LOGS_PATH="
+        // "DEFAULT_TEST_LOGS_PATH=",
       ],
       "attachPython": true,
       "pythonConfiguration": "RobotCode: Python"
