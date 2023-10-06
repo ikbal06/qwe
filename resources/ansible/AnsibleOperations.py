@@ -2,6 +2,7 @@ import json
 import jinja2
 import sys
 import ansible_runner
+from EnvDataOperations import EnvDataOperations
 from common.Logger import log
 from globalProperties import *
 from common.CommonOperations import *

@@ -1,7 +1,7 @@
 import http.client
 import ssl
 import json
-from common.Logger import log
+from resources.common.Logger import log
 import datetime
 
 now = datetime.datetime.now()

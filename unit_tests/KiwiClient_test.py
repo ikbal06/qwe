@@ -1,5 +1,5 @@
 import unittest   # The test framework
-from kiwi.KiwiClient import KiwiClient
+from resources.kiwi.KiwiClient import KiwiClient
 
 
 class TestKiwiClient(unittest.TestCase):

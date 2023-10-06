@@ -1,6 +1,5 @@
 import os
 import shutil
-from common.CommonOperations import *
 
 # Spirent properties
 SPIRENT_IP = '192.168.13.99'
@@ -166,7 +165,6 @@ NFList = [
     "UDR",
     "SMF"  # add more NFs here
 ]
-
 
 # List of NRF services
 nfServices = """[

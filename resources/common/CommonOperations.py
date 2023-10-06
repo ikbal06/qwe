@@ -3,8 +3,7 @@ import socket
 import json
 import sys
 import gzip
-from globalProperties import *
-from common.Logger import log
+from resources.common.Logger import log
 
 
 def read_json_file(file_in):

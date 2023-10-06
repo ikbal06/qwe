@@ -1,7 +1,7 @@
 import os
 import sys
-from globalProperties import *
-from common.Logger import log
+from resources.globalProperties import *
+from resources.common.Logger import log
 
 
 class EnvDataOperations:

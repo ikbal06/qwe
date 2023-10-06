@@ -1,6 +1,6 @@
 import json
-from globalProperties import *
-from common.CommonOperations import *
+from resources.globalProperties import *
+from resources.common.CommonOperations import *
 
 
 class TestConfigOperations:

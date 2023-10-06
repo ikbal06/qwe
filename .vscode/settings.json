@@ -1,6 +1,6 @@
 {
   "disableGlobalExtensions": true,
-  "files.autoSave": "onFocusChange",
+  "files.autoSave": "off",
   "extensions.supportVirtualWorkspaces": {
     "pub.name": true
   },
@@ -12,12 +12,14 @@
   "liveshare.languages.allowGuestCommandControl": true,
   "liveshare.openSharedServers": false,
   "liveshare.publishWorkspaceInfo": true,
-
   //---------- GIT --------------------------------------
   "git.ignoreLimitWarning": true,
   "git.autofetch": true,
   //---------- SETTINGS ---------------------------------
   "editor.formatOnSave": true,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -40,9 +42,6 @@
     "editor.semanticHighlighting.enabled": true,
     "editor.inlayHints.enabled": "offUnlessPressed"
   },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   // "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python", //"/usr/local/bin/python", //"C:\\Python311\\python.exe",
   "python.defaultInterpreterPath": "/usr/local/bin/python",
   "python.analysis.extraPaths": [
@@ -58,10 +57,9 @@
   "python.testing.pytestEnabled": false,
   "python.testing.unittestEnabled": true,
   "python.testing.unittestArgs": [
-    "--pythonpath=/workspace/:/workspace/resources:/workspace/resources/kiwi",
     "-v",
     "-s",
-    "./pytest",
+    "./unit_tests",
     "-p",
     "*_test.py"
   ],
@@ -69,21 +67,32 @@
   "robot.language-server.python": "${workspaceFolder}/.venv/bin/python",
   // "robot.python.executable": "${workspaceFolder}/.venv/bin/python",
   "robot.python.executable": "/usr/local/bin/python",
-  "robot.pythonpath": ["./", "./lib", "./resources", "./keywords"],
+  "robot.pythonpath": [
+    "./",
+    "./lib",
+    "./resources",
+    "./keywords"
+  ],
   // ------------ RoboCorp Extension ---------------
   "robocorp.language-server.python": "${workspaceFolder}/.venv/bin/python",
   "robocorp.autoSetPythonExtensionInterpreter": false,
   // ------------ RobotCode Extension ---------------
   "robotcode.editor.4SpacesTab": true,
+  // Eğer robot çalıştırırken python kodlarına bağlanması isteniyorsa true olmalı
   "robotcode.debug.attachPython": true,
   "robotcode.debug.outputLog": true,
-  "robotcode.robotidy.config": ".robotidy", // kök dizindeki bu dosya içeriğine göre *.robot kodlarını formatlar
+  // kök dizindeki bu dosya içeriğine göre *.robot kodlarını formatlar
+  "robotcode.robotidy.config": ".robotidy",
   "robotcode.debug.groupOutput": true,
   "robotcode.debug.outputMessages": true,
   "robotcode.python": "/usr/local/bin/python", //"${workspaceFolder}/.venv/bin/python",
-  "robotcode.robot.pythonPath": ["./", "./libraries", "./resources"],
+  "robotcode.robot.pythonPath": [
+    "./",
+    "./resources"
+  ],
   "robotcode.robot.variables": {
-    "TEST_ID": "KT_CN_001"
+    "TEST_ID": "KT_CN_001",
+    "DEFAULT_TEST_LOGS_PATH": ""
   },
   "robotcode.robot.env": {
     "test_ids": "KT_CN_001,KT_CN_002",
@@ -99,10 +108,27 @@
     "output_path": "/home/jenkins/test1"
   },
   "robotcode.robot.outputDir": "./output",
-  "robotcode.extraArgs": ["--log-level=TRACE"],
-  "robotcode.robot.args": [
-    //   "--listener=kiwi.KiwiListener"
+  "robotcode.extraArgs": [
+    "--log",
+    "--log-level=INFO",
+    "--log-calls"
   ],
-  "robotcode.languageServer.extraArgs": ["--log-level=TRACE"],
+  "robotcode.languageServer.extraArgs": [
+    "--log",
+    "--log-level",
+    "INFO"
+  ],
+  /*
+  Aşağıda kırparak verdiğim komutun "--listener kiwi.KiwiListener" argumanını oluşturur 
+  ancak bunu launch.json içinde "args": [] içinde de verebiliriz.
+  ... /usr/local/bin/python /home/vscode/.vscode-server/extensions/d-biehl.robotcode-0.58.0/bundled/tool/robotcode 
+  --default-path . ... -- -d ./output -P ./ ... 
+  --listener kiwi.KiwiListener ...
+  */
+  "robotcode.robot.args": [
+    // "--listener",
+    // "kiwi.KiwiListener"
+  ],
+  // ------------ Ansible Extension ---------------
   "ansible.python.interpreterPath": "/usr/local/bin/python"
 }
