@@ -17,9 +17,6 @@ Test Teardown    After Test    #testi sonlandırma
 
 *** Test Cases ***
 
-# BOŞ Kayıtlanma Testi [KT_CN_001]
-#    Log    Boş boş koş
-
 Kayıtlanma Testi [KT_CN_001]
     [Documentation]    Çalıştırılacak testin adı ve ID değeri "KT_CN_001" olacak.
     ...    Çalışacağı Spirent test sunucusu parametre olarak gelebilir 

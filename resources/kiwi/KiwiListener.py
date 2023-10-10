@@ -86,6 +86,10 @@ def add_test_case_into_run(kiwi_plan_id, kiwi_run_id, spirent_test_id, spirent_t
 
     cases = _kc.get_TestCase_by_plan_id(kiwi_plan_id).get('result', [])
     found_cases = [tc for tc in cases if tc['summary'] == spirent_test_id]
+    if found_cases:
+        log.debug('test case bulundu')
+    else:
+        log.debug('case bulunamadı')
     if len(found_cases) == 0:
         log.warning(f"{spirent_test_id} ID'li Spirent Test, {kiwi_plan_id}'li Kiwi Test Planıyla ilişkili senaryolarda yok!")
         return None
@@ -93,6 +97,7 @@ def add_test_case_into_run(kiwi_plan_id, kiwi_run_id, spirent_test_id, spirent_t
     if len(found_cases) > 0:
         tc = found_cases[0]
         tc_id = tc['id']
+        log.debug('şimdi test execution ekleyeceğim')
         te = _kc.TestRun_add_case(kiwi_run_id, tc_id).get('result', [])
 
         if len(te) == 0:
@@ -189,7 +194,7 @@ def send_test_result_to_kiwi(kiwi_plan_id, kiwi_run_id,  spirent_test_id, spiren
         sys.exit(110)
 
     processed_test_result = get_test_results(spirent_running_test_id)
-    log.debug(f'Test result will be send to the Kiwi: {processed_test_result}')
+    log.debug(f'Test result will be sent to the Kiwi: {processed_test_result}')
     push_test_results_to_kiwi(kiwi_plan_id, kiwi_run_id, spirent_test_id, processed_test_result)
     log.info('Test result has been sent to the Kiwi')
 # ------------------------------
@@ -232,7 +237,7 @@ class KiwiListener():
         send_test_result_to_kiwi(kiwi_plan_id, self.kiwi_run_id, spirent_test_id, spirent_running_test_id)
 
     def end_suite(self, name, attributes):
-        if name == self.top_suite_name:  # içine girince hatayı buradan verdi
+        if name == self.top_suite_name:
             log.debug(f"{self.kiwi_run_id} ID'li tek bir Test Run BİTTİ")
 
     def close(self):

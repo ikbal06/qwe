@@ -124,7 +124,7 @@
       },
       "env": {
         // "test_ids": "KT_CN_001,KT_CN_002",
-        "KIWI_PLAN_ID": "7",
+        "KIWI_PLAN_ID": "9",
         // "TEST_ID": "KT_CN_007",
         "DEFAULT_VERSION_PATH": "version.txt",
         "spirent_ts_name": "vts-VTO2",
@@ -141,7 +141,7 @@
         "--listener",
         "/workspace/resources/kiwi/KiwiListener.py",
         "-i",
-        "BT_CN_001ORBT_CN_002ORBT_CN_003"
+        "BT_CN_001ORBT_CN_002ORBT_CN_003ORBT_CN_004ORBT_CN_006ORBT_CN_008ORBT_CN_010"
         // "--variable",
         // "DEFAULT_TEST_LOGS_PATH=",
       ],
