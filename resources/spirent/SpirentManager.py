@@ -128,13 +128,13 @@ class SpirentManager(SpirentClient):
 
         if not response:
             log.error("Response from the server couldn't retrieved")
-            sys.exit(444)
+            sys.exit(118)
 
         response_data = response.json()
         if response.status_code != 201:
             log.debug("Test Initialization Failed", {"girdi": data, "sonuc": response_data})
             log.error("Test failed to start!")
-            sys.exit(333)
+            sys.exit(119)
 
         log.debug(f"Test Run has started [{response.status_code}]", response_data)
         test_id = response_data['id']

@@ -11,3 +11,11 @@
 - _109_: Kiwide test run a test case ler eklenirken bir hata çıktıysa bu kod ile karşılaşırız.
 - _110_: Kiwiye testleri gönderirken listenerdan spirent_test_id ye ulaşılamadıysa bu hatayı alırız.
 - _111_: Spirenttan sonuçları alırken bir sorun çıktıysa bu hata kodunu alırız.
+- _112_: config.json dosyası bulunmazsa biz bu hatayı alırız.
+- _113_: config.json daki json verisi geçersizse(dosya okunamadıysa) bu hatayı alırız.
+- _114_: config.json da beklenmeyen bir hata olduğunda bu kod ile karşılaşırız.
+- _115_: Spirenttaki sunucunun bilgileri config.json da yok
+- _116_: Yazılan spirent sunucu ismi config.json da yok
+- _117_: Test Execution oluşturuken bir hata olduysa bu kod ile karşılaşırız.
+- _118_: Spirentta çalışan testin cevabı yoksa bu hata ile karşılaşırız.
+- _119_: Spirenttan gelen cevabın kodu 201 değilse bu hata ile karşılaşırız

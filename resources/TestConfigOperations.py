@@ -42,13 +42,13 @@ class TestConfigOperations:
                 self.parsed_config_file = json.load(json_file)
         except FileNotFoundError:  # dosya bulunamazsa
             log.error(f"JSON dosyası bulunamadı: {CONFIG_FILE_PATH}")
-            sys.exit(222)
+            sys.exit(112)
         except json.JSONDecodeError as e:  # JSON verisi geçersizse
             log.error(f"JSON dosyası okunamadı: {e}")
-            sys.exit(222)
+            sys.exit(113)
         except Exception as e:  # Diğer istisnalar
             log.error(f"Beklenmeyen bir hata oluştu: {e}")
-            sys.exit(222)
+            sys.exit(114)
 
     def get_test_params_by_test_name(self, _test_name):
         """Get test params that is in the cfg.json file.
@@ -125,7 +125,7 @@ class TestConfigOperations:
         ts_params = self.parsed_config_file.get('tsParameters', [])
         if len(ts_params) == 0:
             log.error(f'Spirent sunucu bilgileri {CONFIG_FILE_PATH} dosyasında mevcut değil!')
-            sys.exit(222)
+            sys.exit(115)
 
         return ts_params
 
@@ -151,4 +151,4 @@ class TestConfigOperations:
                 return ts
 
         log.error(f'<{_test_name}> isimli TS sunucu {CONFIG_FILE_PATH} dosyasında tanımlı Spirent sunucu bilgileri arasında yok!')
-        sys.exit(222)
+        sys.exit(116)

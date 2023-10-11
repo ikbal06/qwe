@@ -166,7 +166,7 @@ def push_test_results_to_kiwi_master(spirent_test_result):
 
         if len(te) == 0:
             log.error(f"Test Execution could not created")
-            sys.exit(999)
+            sys.exit(117)
 
         te = te[0]
         log.debug(f"> Brand new Test Execution created for {tc_id}: ", te)
