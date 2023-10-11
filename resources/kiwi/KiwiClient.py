@@ -1,8 +1,10 @@
 import http.client
 import ssl
 import json
+import time
 from resources.common.Logger import log
 import datetime
+import json
 
 now = datetime.datetime.now()
 
@@ -36,11 +38,16 @@ class KiwiClient:
 
     def __init__(self):
         self.url = "https://kiwi-test.ulakhaberlesme.com.tr/json_rpc/"
-        self.conn = http.client.HTTPSConnection("kiwi-test.ulakhaberlesme.com.tr",
-                                                context=ssl._create_unverified_context())
+        self.conn = None
         self.SessionID = None
 
+    def _connect(self):
+        self.conn = http.client.HTTPSConnection("kiwi-test.ulakhaberlesme.com.tr",
+                                                context=ssl._create_unverified_context())
+
     def _login(self):
+        if not self.conn:
+            self._connect()
 
         request_body = {
             "jsonrpc": "2.0",
@@ -56,20 +63,26 @@ class KiwiClient:
             'Content-Type': 'application/json'
         }
         request_json = json.dumps(request_body)
-        self.conn.request("POST", "/json-rpc/", request_json, headers)
-        login_response = self.conn.getresponse()
-        login_data_binary = login_response.read()
-        login_data_string = login_data_binary.decode("utf-8")
-        login_response = json.loads(login_data_string)
+        try:
+            self.conn.request("POST", "/json-rpc/", request_json, headers)
+            login_response = self.conn.getresponse()
+            login_data_binary = login_response.read()
+            login_data_string = login_data_binary.decode("utf-8")
+            login_response = json.loads(login_data_string)
 
-        if login_response:
-            self.SessionID = login_response["result"]
-            log.debug("Logged in: SessionID -", self.SessionID)
-        else:
-            log.debug("kullanıcı bilgilerini kontrol et")
-            return None
+            if login_response:
+                self.SessionID = login_response["result"]
+                log.debug("Logged in: SessionID -", self.SessionID)
+            else:
+                log.debug("kullanıcı bilgilerini kontrol et")
+                return None
+        except Exception as e:
+            log.error('http isteğinde hata oldu', e)
 
     def _send_request(self, method, params):
+        if not self.conn:
+            self._connect()
+
         if self.SessionID is None:
             self._login()
 
@@ -84,12 +97,21 @@ class KiwiClient:
             'Content-Type': 'application/json',
             'Cookie': "sessionid=" + self.SessionID
         }
-
-        request_json = json.dumps(request_body)
-        self.conn.request("POST", "/json-rpc/", request_json, headers)
-        response = self.conn.getresponse()
-        data_json = json.loads(response.read().decode("utf-8"))
-        return data_json
+        try:
+            b = self.conn.connect()
+            request_json = json.dumps(request_body)
+            a = self.conn.request("POST", "/json-rpc/", request_json, headers)
+            time.sleep(1)
+            response = self.conn.getresponse()
+            if response.status == 200:
+                response_content = response.read().decode("utf-8")
+                data_json = json.loads(response_content)
+                return data_json
+            if response is None:
+                log.error('http istek hatası kodu da: ', response.status)
+        except Exception as e:
+            print("HTTP Request Error:", e)
+            return None
 
     def error(response):
         if "error" in response:
@@ -189,8 +211,11 @@ class KiwiClient:
         return response
 
     def get_TestCase_by_plan_id(self, plan_id):
-        response = self._send_request("TestCase.filter", [{"plan__id": plan_id}])
-        return response
+        try:
+            response = self._send_request("TestCase.filter", [{"plan__id": plan_id}])
+            return response
+        except Exception as e:
+            log.debug('test case leri filtrelerken hata çıkmış olmalı')
         '''
          if response:
              if "result" in response:
@@ -250,8 +275,8 @@ class KiwiClient:
         log.debug(f"Found Test Plan: {tp}")
         plan_name = tp["name"]
         values = [{
-            # TODO: otomatik test koşusu için bir build yaratılacak. unspecified(name)	unspecified(version)	5G CN - Çınar(ürün)
-            "build": 1,
+            # TODO: otomatik test koşusu için bir build yaratılacak. unspecified(name)	unspecified(version) product-1:	5G CN - Çınar(ürün)
+            "build": 2,
             "manager": 3,  # TODO: otomatik koşular için bir kullanıcı tanımlanacak. test yöneticisi test ortamı için user 3 - b.ikbalkirklar@gmail.com
             "plan": plan_id,
             "summary": f"{now} Tarihinde '{plan_name}' Planı için koşu"
@@ -266,7 +291,14 @@ class KiwiClient:
         bir test koşusuna test senaryosunu ekler. ekleme sonucunda test execution nesnesini içeren http cevabını döner.
         '''
         payload = [run_id, case_id]
-        response = self._send_request("TestRun.add_case", payload)
+
+        log.debug(f"payload: {payload}")
+        try:
+            response = self._send_request("TestRun.add_case", payload)
+        except Exception as e:
+            log.error(f'Error={e}')
+            raise e
+
         log.debug(f"TestRun_add_case: {response}")
 
         if not response:

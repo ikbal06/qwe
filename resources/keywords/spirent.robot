@@ -1,5 +1,8 @@
 *** Variables ***
-${SPIRENT_TEST_ID}    %{TEST_ID}
+# Bu robot kodunu Resource anahtarıyla içeri alan KT_CN_XXX testinden ${SPIRENT_TEST_ID} değişkeni ve değeri gelecek
+# Sadece kod içinde "tanımlanmamış ${SPIRENT_TEST_ID} değişkeni" hatası almamak için burada da tanımlıyoruz.
+${SPIRENT_TEST_ID}
+# Testi koşturacak SPIRENT sunucusunun adı ortam değişkenlerinden gelecek
 ${SPIRENT_SERVER_NAME}    %{spirent_ts_name}
 # Spirent ilgili testi koşturduğunda bir ID değeri üretir. Bu değer ile test sonuçlarını Spirent üstünde çekeriz.
 ${SPIRENT_RUNNING_TEST_ID}
@@ -23,12 +26,37 @@ ${H_MNC}    001
 *** Settings ***
 Library    Process
 Library    OperatingSystem
-Library    common/CommonOperations.py
-Library    spirent.SpirentManager    WITH NAME    spirentManager
-Library    ansible.AnsibleManager    WITH NAME    ansibleManager
-Library    TestConfigOperations    test_name=${SPIRENT_TEST_ID}    ts_name=${SPIRENT_SERVER_NAME}    WITH NAME    testConfig
+Library    resources/common/CommonOperations.py
+Library    resources/spirent/SpirentManager.py    WITH NAME    spirentManager
+Library    resources/ansible/AnsibleManager.py    WITH NAME    ansibleManager
+Library    resources/TestConfigOperations.py    test_name=${SPIRENT_TEST_ID}    ts_name=${SPIRENT_SERVER_NAME}    WITH NAME    testConfig
 
 *** Keywords ***
+Prepare Spirent
+    [Documentation]    Spirent üzerinde testin koşulmasını başlat
+    [Arguments]    ${_test_id}    
+    ${isSpirentReady}=    Is Spirent Ready    ${SPIRENT_SERVER_NAME}
+    Should Be True    ${isSpirentReady} 
+    ${packet_capture_status}=    ansibleManager.Start Packet Capture
+    Log To Console    "Packet Capture Started: "${packet_capture_status}    console=yes
+    ${result}=    Update Test Session    _spirent_server_name=${SPIRENT_SERVER_NAME}    _test_name=${_test_id}    _h_mnc=${H_MNC}    _h_mcc=${H_MCC}    _amf_ip=${AMF_IP}    _upf_ip=${UPF_IP}
+    Return From Keyword    ${result}
+
+Before Test
+    [Documentation]    Start TCP Dump
+    # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
+    ansibleManager.Copy Ssh Id To Servers
+    # ansibleManager.Get Installed Packages And Versions
+
+Prepare The Server Where Test Will Run
+    [Documentation]    Testin koşulacağı sunucuda gerekli servislere restart yapılır
+    ansibleManager.Run Test Playbook    ${SPIRENT_TEST_ID}
+    ansibleManager.Start Packet Capture
+
+After Test 
+    ansibleManager.Fetch Pcap Files    ${SPIRENT_TEST_ID}
+    Log    hede fin
+
 Is Spirent Ready
     [Documentation]    Spirent lisanslarından boşta olanı var mı?
     [Arguments]    ${_spirent_server_name}
@@ -73,12 +101,12 @@ Update Test Session
     # Should Be Equal As Strings    "${data['result']}"    == "Test Modified"
     # spirent.SpirentManager.Run Test Or Exit    spirent_lib_id=${lib_id}    test_name=${_test_name} 
 
-Run Test
+Run Spirent Test Server
     [Documentation]    Spirent üzerinde testin koşulmasını başlat
     [Arguments]    ${_test_id}    
     ${lib_id}=    spirentManager.Get Library Id By Spirent User Or Exit
     ${spirent_running_test_id}=    spirentManager.Run Test On Spirent    ${lib_id}    ${_test_id}
-    Log To Console    Koşan Test ID:    ${spirent_running_test_id}    console=yes
+    Log To Console    Koşan Test ID:    ${spirent_running_test_id}    
     Return From Keyword    ${spirent_running_test_id}
 
 Check Status Until Test Is Completed
@@ -120,12 +148,3 @@ Copy Test Result Files From Spirent
 
     # ${result}=    Run Process    ansible-playbook    playbooks/KT_CN_001.yml
 
-Prepare Spirent
-    [Documentation]    Spirent üzerinde testin koşulmasını başlat
-    [Arguments]    ${_test_id}    
-    ${isSpirentReady}=    Is Spirent Ready    ${SPIRENT_SERVER_NAME}
-    Should Be True    ${isSpirentReady} 
-    ${packet_capture_status}=    ansibleManager.Start Packet Capture
-    Log To Console    "Packet Capture Started: "${packet_capture_status}    console=yes
-    ${result}=    Update Test Session    _spirent_server_name=${SPIRENT_SERVER_NAME}    _test_name=${_test_id}    _h_mnc=${H_MNC}    _h_mcc=${H_MCC}    _amf_ip=${AMF_IP}    _upf_ip=${UPF_IP}
-    Return From Keyword    ${result}

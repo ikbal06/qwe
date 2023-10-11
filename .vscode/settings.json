@@ -95,9 +95,9 @@
     "DEFAULT_TEST_LOGS_PATH": ""
   },
   "robotcode.robot.env": {
-    "test_ids": "KT_CN_001,KT_CN_002",
+    "test_ids": "KT_CN_001,KT_CN_002,KT_CN_003",
     "KIWI_PLAN_ID": "7",
-    "TEST_ID": "KT_CN_001",
+    "TEST_ID": "KT_CN_005",
     "DEFAULT_VERSION_PATH": "version.txt",
     "spirent_ts_name": "vts-VTO2",
     "username": "ubuntu",

@@ -15,7 +15,7 @@ class TestAnalizciListener(unittest.TestCase):
     def test_1_end_suite(self):
         # Given
         test_name = os.getenv("TEST_ID")
-        suite_name = "Workspace.Tests.KT_CN_001"
+        suite_name = "KT_CN_001"
         attributes = {}
         # *.pcap dosyası oluşturmak için
         # ansible = AnsibleManager()
@@ -24,6 +24,7 @@ class TestAnalizciListener(unittest.TestCase):
         # When
         self.test_1_start_suite()
         analizci = AnalizciListener()
+        analizci.start_suite(suite_name, attributes)
         analizci.end_suite(suite_name, attributes)
         # Then
         print("Sonuç >>> ")
