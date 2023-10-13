@@ -86,54 +86,20 @@ class AnalizciListener():
             self.top_suite_name = name
 
     def end_suite(self, name, attributes):
-        # testi tekrar çağırmak için. test_status diye yeni değer oluşturduğum için yenileme gerekl,
-        from robot.libraries.BuiltIn import BuiltIn
         # if name == self.top_suite_name:
         # TODO: Analizci çalışsın
         # robot dosyasının içinde varsa bu şekilde
         # files = save_test_result_files()
-        log.debug('analizcinin end_suite ine girildi')
         test_status_return = BuiltIn().get_variable_value('${test_status}')
         test_status = test_status_return['criteriaStatus']
         if test_status == 'PASSED':
             log.debug(f'{self.testId}: test başarılı bu nedenle analizciye gönderilmedi')
         if test_status == 'FAILED':
             log.debug(f'{self.testId}: testin bazı adımlarında veya tüm adımlarında hata var.')
-
             if name == self.testId:
-                selectected_test_id = str(self.testId).replace(" ", "_")
-
-                fullPath = "/tmp/test_outputs/"+selectected_test_id+"/nf_pcap_files/"
-                print("/tmp/test_outputs/"+selectected_test_id+"/nf_pcap_files/")
-                for gzFile in os.listdir(fullPath):
-                    if gzFile.endswith(".gz"):
-                        subprocess.check_output("gunzip "+fullPath+gzFile, shell=True, text=True)
-                pcapList = []
-                for pcapFile in os.listdir(fullPath):
-                    if pcapFile.endswith(".pcap"):
-                        pcapList.append(pcapFile.split("_")[1].split(".")[0])
-
-                # Convert strings to datetime objects
-                date_objects = [datetime.strptime(date, '%d-%m-%Y-%H-%M-%S') for date in pcapList]
-                # Find the latest date
-                latest_pcap = max(date_objects)
-                # Convert it back to a string
-                latest_date_pcap = latest_pcap.strftime('%d-%m-%Y-%H-%M-%S')
-
-                for pcapFile in os.listdir(fullPath):
-                    if pcapFile.endswith(".pcap"):
-                        if latest_date_pcap in pcapFile:
-                            print(fullPath+pcapFile)
-                            analizci_config_obj = AnalizciClient(
-                                "http://analizci-test-back.ulakhaberlesme.com.tr/automated/", pcap_name=fullPath +
-                                pcapFile, test_id=selectected_test_id)
-                            merged_pcapname = analizci_config_obj.upload_pcap()
-                            if merged_pcapname:
-                                analizci_config_obj.run_analyze(merged_pcapname)
-                                log.debug('başarısız olan test sonucu analizciye gönderildi')
-                            else:
-                                print("[NOK] Analizci run test fail!!!!")
-                            break
+                AnalizciClient.analizciye_gonder(self)
+            else:
+                log.debug('name, self.testId ye eşit değil')
 
     def close(self):
         pass
