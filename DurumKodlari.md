@@ -14,8 +14,9 @@
 - _112_: config.json dosyası bulunmazsa biz bu hatayı alırız.
 - _113_: config.json daki json verisi geçersizse(dosya okunamadıysa) bu hatayı alırız.
 - _114_: config.json da beklenmeyen bir hata olduğunda bu kod ile karşılaşırız.
-- _115_: Spirenttaki sunucunun bilgileri config.json da yok
-- _116_: Yazılan spirent sunucu ismi config.json da yok
+- _115_: Spirenttaki sunucunun bilgileri config.json da yok.
+- _116_: Yazılan spirent sunucu ismi config.json da yok.
 - _117_: Test Execution oluşturuken bir hata olduysa bu kod ile karşılaşırız.
 - _118_: Spirentta çalışan testin cevabı yoksa bu hata ile karşılaşırız.
 - _119_: Spirenttan gelen cevabın kodu 201 değilse bu hata ile karşılaşırız
+- _120_: Eğer file_path ile belirlenen dosya yoksa bu hatayı alırız.

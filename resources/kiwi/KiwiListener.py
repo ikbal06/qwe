@@ -132,7 +132,6 @@ def push_test_results_to_kiwi_master(spirent_test_result):
     bu test senaryosu için Test Execution yaratılarak (3) testin sonucu Test Execution içinde güncellenecek (4).
     """
     # Test planı için bir test koşusu yaratıyoruz
-    # plan_id = 1  # kiwi-testten bak bi ona göre düznele. bir de sışarıdan alacak şekilde olmlaı ya da en azından robot dosyasından
     kc = KiwiClient()
     # 1
     kiwi_plan_id = spirent_test_result['kiwi_plan_id']
@@ -146,9 +145,13 @@ def push_test_results_to_kiwi_master(spirent_test_result):
     # Test koşusuna ortamdaki NF'leri sürümleriyle birlikte etiket olarak giriyoruz
     file_path = 'version.txt'
     # TODO: Eğer dosya yoksa hata fırlat
-    tags = _kc.get_tags(file_path) or []
-    for t in tags:
-        _kc.testrun_add_tag(tr_id, t)
+
+    try:
+        tags = _kc.get_tags(file_path) or []
+        for t in tags:
+            _kc.testrun_add_tag(tr_id, t)
+    except:
+        sys.exit(120)
 
     # run için illa oradaki testleri mi koşmalıyız. eğer verilen test id yoksa oluşturulmalı(test case)
     # test planına eklenmeli ona göre yeni koşu oluşturmalıyız

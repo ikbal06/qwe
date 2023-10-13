@@ -264,14 +264,21 @@ class KiwiClient:
 
     def TestRun_create(self, plan_id):
         # test_plans = self.testplan_filter(plan_id)["result"]
-        log.warning(f"Test plan will be found for : {plan_id}")
-        test_plans = self.TestPlan_filter(plan_id).get('result', [])
+        log.debug(f"Test plan will be found for : {plan_id}")
+        # test_plans = self.TestPlan_filter(plan_id).get('result', [])
         # TODO : result boş gelebilir kontrol yapılacak
-        if len(test_plans) != 1:
+
+        test_plans = self.TestPlan_filter(plan_id)
+        result = test_plans.get('result', [])
+
+        if not result:
+            log.debug('test planı ile ilgili result boş geldi')
+
+        if len(result) != 1:
             log.warning("Test plan could not be found")
             return None
 
-        tp = test_plans[0]
+        tp = result[0]
         log.debug(f"Found Test Plan: {tp}")
         plan_name = tp["name"]
         values = [{

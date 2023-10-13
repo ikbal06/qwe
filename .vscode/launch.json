@@ -2,6 +2,7 @@
   // Use IntelliSense to learn about possible attributes.
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  //robot dosyası üzerinden debug yapınca burası çalışıyor
   "version": "0.2.0",
   "configurations": [
     {
@@ -124,7 +125,7 @@
       },
       "env": {
         // "test_ids": "KT_CN_001,KT_CN_002",
-        "KIWI_PLAN_ID": "12",
+        "KIWI_PLAN_ID": "9",
         // "TEST_ID": "KT_CN_007",
         "DEFAULT_VERSION_PATH": "version.txt",
         "spirent_ts_name": "vts-VTO2",
@@ -139,9 +140,11 @@
         "--listener",
         "analizci.AnalizciListener",
         "--listener",
-        "/workspace/resources/kiwi/KiwiListener.py",
+        // "/workspace/resources/kiwi/KiwiListener.py",
+        "kiwi.KiwiListener",
         "-i",
-        "019OR020OR022OR023OR024OR027OR028OR029OR030"
+        "BT_CN_001ORBT_CN_006"
+        // "019OR020OR022OR023OR024OR027OR028OR029OR030"
         // "BT_CN_001ORBT_CN_002ORBT_CN_003ORBT_CN_004ORBT_CN_006ORBT_CN_008ORBT_CN_010"
         // "--variable",
         // "DEFAULT_TEST_LOGS_PATH=",
