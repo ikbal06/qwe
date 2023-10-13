@@ -8,6 +8,8 @@ import requests
 from datetime import datetime as dt
 import subprocess
 from datetime import datetime
+from robot.libraries.BuiltIn import BuiltIn
+from resources.common.Logger import log
 
 
 class AnalizciClient():
@@ -140,3 +142,38 @@ class AnalizciClient():
                     else:
                         print("[NOK] Analizci run test fail!!!!")
                     break
+
+    def analizciye_gonderme_secenegi(self, name):
+
+        analizciye_gonderme_durumu = "3"
+
+        test_status_return = BuiltIn().get_variable_value('${test_status}')
+        test_status = test_status_return['criteriaStatus']
+
+        if analizciye_gonderme_durumu == "1":
+            log.debug("Case 1 seçildi. Böylece sadece başarısız olan testler analizciye gönderilecek.")
+            if test_status == 'FAILED':
+                log.debug(f'{self.testId}: testin bazı adımlarında veya tüm adımlarında hata var.')
+                if name == self.testId:
+                    AnalizciClient.analizciye_gonder(self)
+            else:
+                log.debug("Test başarılı olduğundan analizciye gönderilmedi")
+
+        elif analizciye_gonderme_durumu == "2":
+            log.debug("Case 2 seçildi. Böylece sadece başarılı olan testler analizciye gönderilecek.")
+            if test_status == 'PASSED':
+                log.debug(f'{self.testId}: test başarılı.')
+                if name == self.testId:
+                    AnalizciClient.analizciye_gonder(self)
+            else:
+                log.debug("Test başarısız olduğundan analizciye gönderilmedi.")
+
+        elif analizciye_gonderme_durumu == "3":
+            log.debug("Case 3 seçildi. Böylece tüm testler analizciye gönderilecek.")
+            if name == self.testId:
+                AnalizciClient.analizciye_gonder(self)
+                log.debug(f"{self.testId} testi analizciye gönderildi.")
+        else:
+            log.warning("Geçersiz seçim. Lütfen 1, 2 veya 3 ten birini seçmiş olun.")
+
+        return analizciye_gonderme_durumu

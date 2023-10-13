@@ -90,16 +90,15 @@ class AnalizciListener():
         # TODO: Analizci çalışsın
         # robot dosyasının içinde varsa bu şekilde
         # files = save_test_result_files()
-        test_status_return = BuiltIn().get_variable_value('${test_status}')
-        test_status = test_status_return['criteriaStatus']
-        if test_status == 'PASSED':
-            log.debug(f'{self.testId}: test başarılı bu nedenle analizciye gönderilmedi')
-        if test_status == 'FAILED':
-            log.debug(f'{self.testId}: testin bazı adımlarında veya tüm adımlarında hata var.')
-            if name == self.testId:
-                AnalizciClient.analizciye_gonder(self)
-            else:
-                log.debug('name, self.testId ye eşit değil')
+        # test_status_return = BuiltIn().get_variable_value('${test_status}')
+        # test_status = test_status_return['criteriaStatus']
+        # if test_status == 'PASSED':
+        #     log.debug(f'{self.testId}: test başarılı bu nedenle analizciye gönderilmedi')
+        # if test_status == 'FAILED':
+        #     log.debug(f'{self.testId}: testin bazı adımlarında veya tüm adımlarında hata var.')
+        #     if name == self.testId:
+        #         AnalizciClient.analizciye_gonder(self)
+        AnalizciClient.analizciye_gonderme_secenegi(self, name)
 
     def close(self):
         pass

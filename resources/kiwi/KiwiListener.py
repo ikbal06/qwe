@@ -224,10 +224,10 @@ class KiwiListener():
             # Test koşusuna ortamdaki NF'leri sürümleriyle birlikte etiket olarak giriyoruz
             log.debug(f"{self.kiwi_run_id} ID'li tek bir Test Run oluşturuldu")
 
-            if "DEFAULT_VERSION_PATH" in os.environ:
-                version_file = os.environ['DEFAULT_VERSION_PATH']
-                tag_responses = add_versions_as_tags(version_file, self.kiwi_run_id)
-                log.debug(f"{self.kiwi_run_id} ID'li Test Run için versiyonlar etiket olarak eklendi {tag_responses}")
+            # if "DEFAULT_VERSION_PATH" in os.environ:
+            #     version_file = os.environ['DEFAULT_VERSION_PATH']
+            #     tag_responses = add_versions_as_tags(version_file, self.kiwi_run_id)
+            #     log.debug(f"{self.kiwi_run_id} ID'li Test Run için versiyonlar etiket olarak eklendi {tag_responses}")
 
     def end_test(self, name, attributes):
         """"Her test başladığında SPIRENT_TEST_ID değeri ilgili *.robot testinde atanır.

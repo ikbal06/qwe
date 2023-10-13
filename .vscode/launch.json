@@ -134,7 +134,8 @@
         "allinone_ip": "192.168.13.71",
         "public_ip": "10.10.20.22",
         "n6_ip": "10.10.22.33",
-        "output_path": "/tmp/test_outputs"
+        "output_path": "/tmp/test_outputs",
+        "analizciye_gonderme_durumu": "1"
       },
       "args": [
         "--listener",
@@ -143,7 +144,7 @@
         // "/workspace/resources/kiwi/KiwiListener.py",
         "kiwi.KiwiListener",
         "-i",
-        "BT_CN_006"
+        "BT_CN_001ORBT_CN_006"
         // "019OR020OR022OR023OR024OR027OR028OR029OR030"
         // "BT_CN_001ORBT_CN_002ORBT_CN_003ORBT_CN_004ORBT_CN_006ORBT_CN_008ORBT_CN_010"
         // "--variable",
