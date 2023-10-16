@@ -145,7 +145,20 @@ class AnalizciClient():
 
     def analizciye_gonderme_secenegi(self, name):
 
-        analizciye_gonderme_durumu = "3"
+        import json
+
+        # JSON dosyasının yolunu belirtin
+        json_dosya_yolu = '/workspace/.vscode/launch.json'
+
+        # JSON dosyasını açın ve içeriği yükleyin
+        with open(json_dosya_yolu, 'r') as dosya:
+            veri = json.load(dosya)
+
+        # "analizciye_gonderme_durumu" değerini alın
+        analizciye_gonderme_durumu = veri["configurations"][4]["env"]["analizciye_gonderme_durumu"]
+
+        # Elde edilen değeri yazdırın
+        log.debug(analizciye_gonderme_durumu)
 
         test_status_return = BuiltIn().get_variable_value('${test_status}')
         test_status = test_status_return['criteriaStatus']

@@ -2,6 +2,7 @@ import os
 import unittest   # The test framework
 from resources.ansible.AnsibleManager import AnsibleManager
 from resources.analizci.AnalizciListener import AnalizciListener
+import json
 
 
 class TestAnalizciListener(unittest.TestCase):
@@ -28,6 +29,21 @@ class TestAnalizciListener(unittest.TestCase):
         analizci.end_suite(suite_name, attributes)
         # Then
         print("Sonuç >>> ")
+
+    def test_1_analizciye_gonderme_secenegi(self):
+
+        # JSON dosyasının yolunu belirtin
+        json_dosya_yolu = "/workspace/.vscode/launch.json"
+
+        # JSON dosyasını açın ve içeriği yükleyin
+        with open(json_dosya_yolu, 'r') as dosya:
+            veri = json.load(dosya)
+
+        # "analizciye_gonderme_durumu" değerini alın
+        analizciye_gonderme_durumu = veri["configurations"][4]["env"]["analizciye_gonderme_durumu"]
+
+        # Elde edilen değeri yazdırın
+        print("Sonuç analizciye gönderme durumu: >>> ", analizciye_gonderme_durumu)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,180 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  //robot dosyası üzerinden debug yapınca burası çalışıyor
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "KiwiListener Debug",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/vscode/.local/bin/robot",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceRoot}",
+      "env": {
+        "KIWI_LOG_LEVEL": "DEBUG",
+        "KIWI_PLAN_ID": "7",
+        // "test_ids": "KT_CN_001,KT_CN_002",
+        // "TEST_ID": "KT_CN_001",
+        "DEFAULT_VERSION_PATH": "version.txt",
+        "spirent_ts_name": "vts-VTO2",
+        "username": "ubuntu",
+        "password": "ulakroot2020",
+        "allinone_ip": "192.168.13.71",
+        "public_ip": "10.10.20.22",
+        "n6_ip": "10.10.22.33",
+        "output_path": "/home/jenkins/test"
+      },
+      "args": [
+        "-d",
+        "/workspace/output",
+        "-P",
+        "./resources",
+        "-P",
+        "./resources/kiwi",
+        "-P",
+        "./resources/spirent",
+        "--listener",
+        "KiwiListener",
+        "-i",
+        "BT_CN_001ORBT_CN_002ORBT_CN_003",
+        "."
+      ]
+    },
+    //--------------------------------------------
+    // PYTHON koşturma/hata ayıklama ayarları
+    //--------------------------------------------
+    {
+      "type": "python",
+      "request": "launch",
+      "name": "Python: Current File",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "env": {
+        "h_mcc": "1234",
+        "spirent_ts_name": "vts-VTO2"
+      }
+    },
+    //--------------------------------------------
+    // Örnekler için koşturma/hata ayıklama ayarları
+    //--------------------------------------------
+    //bununla python debug oluyor, robot değil
+    {
+      "name": "birden_fazla_listener > Robot Debug",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/vscode/.local/bin/robot",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceRoot}",
+      "env": {
+        "KIWI_LOG_LEVEL": "DEBUG"
+      },
+      "args": [
+        "-d",
+        "/workspace/output",
+        "-P",
+        "/workspace/tests/ornekler/birden_fazla_listener",
+        "--suite",
+        "Tests",
+        "--listener",
+        "ListenerKiwi",
+        // "--listener",
+        // "ListenerAnalizci",
+        "-i",
+        "listener",
+        "."
+      ]
+    },
+    // ornekler/listener/listener.robot
+    {
+      "name": "listener_ornek > Robot Debug",
+      "type": "python",
+      "request": "launch",
+      "program": "/usr/local/bin/robot",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceRoot}",
+      "env": {
+        "KIWI_LOG_LEVEL": "DEBUG"
+      },
+      "args": [
+        "-d",
+        "/workspace/output",
+        "-P",
+        "/workspace",
+        "--suite",
+        "Tests",
+        "--listener",
+        "/workspace/tests/ornekler/listener/MyListener.py",
+        "-i",
+        "ListenerOrnek",
+        "."
+      ]
+    },
+    //-----------------------------------------------
+    //------------ ROBOT Çalıştırma Ayarları --------
+    //-----------------------------------------------
+    {
+      "name": "RobotCode: Default",
+      "type": "robotcode",
+      "request": "launch",
+      "purpose": "default",
+      "preLaunchTask": "clearShell",
+      "presentation": {
+        "hidden": true
+      },
+      "env": {
+        // "test_ids": "KT_CN_001,KT_CN_002",
+        "KIWI_PLAN_ID": "9",
+        // "TEST_ID": "KT_CN_007",
+        "DEFAULT_VERSION_PATH": "version.txt",
+        "spirent_ts_name": "vts-VTO2",
+        "username": "ubuntu",
+        "password": "ulakroot2020",
+        "allinone_ip": "192.168.13.71",
+        "public_ip": "10.10.20.22",
+        "n6_ip": "10.10.22.33",
+        "output_path": "/tmp/test_outputs",
+        "analizciye_gonderme_durumu": "1"
+      },
+      "args": [
+        "--listener",
+        "analizci.AnalizciListener",
+        "--listener",
+        // "/workspace/resources/kiwi/KiwiListener.py",
+        "kiwi.KiwiListener",
+        "-i",
+        "BT_CN_001ORBT_CN_006"
+        // "019OR020OR022OR023OR024OR027OR028OR029OR030"
+        // "BT_CN_001ORBT_CN_002ORBT_CN_003ORBT_CN_004ORBT_CN_006ORBT_CN_008ORBT_CN_010"
+        // "--variable",
+        // "DEFAULT_TEST_LOGS_PATH=",
+      ],
+      "attachPython": true,
+      "pythonConfiguration": "RobotCode: Python"
+    },
+    {
+      "name": "RobotCode: Run Current",
+      "type": "robotcode",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "target": "${file}"
+    },
+    {
+      "name": "RobotCode: Run All",
+      "type": "robotcode",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "target": "."
+    },
+    {
+      "name": "RobotCode: Python",
+      "type": "python",
+      "request": "attach",
+      "presentation": {
+        "hidden": true
+      },
+      "justMyCode": false
+    }
+  ]
+}
