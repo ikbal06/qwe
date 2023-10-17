@@ -285,9 +285,8 @@ class KiwiClient:
         plan_name = tp["name"]
 
         values = [{
-            # TODO: otomatik test koşusu için bir build yaratılacak. unspecified(name)	unspecified(version) product-1:	5G CN - Çınar(ürün)
             "build": 2,
-            "manager": 3,  # TODO: otomatik koşular için bir kullanıcı tanımlanacak. test yöneticisi test ortamı için user 3 - b.ikbalkirklar@gmail.com
+            "manager": 3,
             "plan": plan_id,
             "summary": f"{datetime.datetime.now()} Tarihinde '{plan_name}' Planı için koşu",
         }]

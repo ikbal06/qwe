@@ -1,18 +1,10 @@
-# Variables içindeki değişkenler: BÜYÜK HARF
-# Keywords metotlarının Arguments: _degisken_adi
-# Keywords metotlarının yerel değişkenleri: degisken_adi
-
 *** Variables ***
-# KIWI 
-# Bu testin KIWI üstünde karşılığı olan Test Case ID bilgisi
 ${SPIRENT_TEST_ID}    KT_CN_006
 
 *** Settings ***
-# Library    listeners/MyListener.py
 Resource    keywords/spirent.robot  
-# Library    capturer/pcapCapturer.py
 Library    String 
-Test Teardown    After Test    #testi sonlandırma
+Test Teardown    After Test   
 
 
 *** Test Cases ***

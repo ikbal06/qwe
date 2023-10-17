@@ -1,22 +1,13 @@
-# Variables içindeki değişkenler: BÜYÜK HARF
-# Keywords metotlarının Arguments: _degisken_adi
-# Keywords metotlarının yerel değişkenleri: degisken_adi
-
 *** Variables ***
-# KIWI 
-# Bu testin KIWI üstünde karşılığı olan Test Case ID bilgisi
 ${SPIRENT_TEST_ID}    KT_CN_003
 
 *** Settings ***
-# Library    listeners/MyListener.py
 Resource    keywords/spirent.robot  
-# Library    capturer/pcapCapturer.py
 Library    String 
-Test Teardown    After Test    #testi sonlandırma
+Test Teardown    After Test   
 
 
 *** Test Cases ***
-
 Hareketlilik Kayıtlanması [KT_CN_003]
     [Documentation]    Çalıştırılacak testin adı ve ID değeri "KT_CN_003" olacak.
     ...    Çalışacağı Spirent test sunucusu parametre olarak gelebilir 
@@ -29,10 +20,9 @@ Hareketlilik Kayıtlanması [KT_CN_003]
     ${result}=    Prepare Spirent    ${SPIRENT_TEST_ID}
     Should Be True    ${result}
     Before Test
-    # Prepare The Server Where Test Will Run
-    # ${spirent_running_test_id}=    Run Test    ${SPIRENT_TEST_ID}
     ${spirent_running_test_id}=    Run Spirent Test Server    ${SPIRENT_TEST_ID}
     ${test_status}=    Check Status Until Test Is Completed    ${spirent_running_test_id}
+    Set Global Variable    ${test_status}
     Log To Console    ${test_status}
     Should Be Equal As Strings    "${test_status['testStateOrStep']}"    "COMPLETE"
     Copy Test Result Files From Spirent    ${spirent_running_test_id}
