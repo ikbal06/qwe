@@ -3,6 +3,8 @@
     Spirent Test Sonuçlarında Test Planının içindeki Test Senaryoları (Test Case) varsa,
     bu test senaryosu için Test Execution yaratılarak (3) testin sonucu Test Execution içinde güncellenecek (4).
 """
+
+import datetime
 from os.path import exists
 import sys
 from robot.libraries.BuiltIn import BuiltIn
@@ -11,6 +13,7 @@ import os
 from common.Logger import log
 from spirent.SpirentManager import SpirentManager
 import re
+from dateutil import parser
 
 # ------------------------------
 
@@ -78,7 +81,7 @@ def add_versions_as_tags(version_file, tr_id):
     return tag_responses
 
 
-def add_test_case_into_run(kiwi_plan_id, kiwi_run_id, spirent_test_id, spirent_test_result):
+def add_test_case_into_run(kiwi_plan_id, kiwi_run_id, spirent_test_id):
     """"Spirent test sonucunun TEST_ID değeriyle Test Plan içindeki Test Senaryolarının SUMMARY değeri aynı ise
     Test Plan için yaratılan Test Koşusuna eklenen Test Case'in ilişkili olduğu Test Execution güncellenir.
     Test Senaryosunun durumu (GEÇTİ/KALDI) ve Spirent içinde bu senaryoyla ilişkili Test Steps bilgileri Comment olarak eklenir.
@@ -104,28 +107,33 @@ def add_test_case_into_run(kiwi_plan_id, kiwi_run_id, spirent_test_id, spirent_t
             log.error(f"Test Execution could not created")
             sys.exit(109)
 
-        te = te[0]
         log.debug(f"> Brand new Test Execution created for {tc_id} ")
-
-        te_id = te["id"]
-        # Test koşusuna eklediğimiz Test Senaryolarının durumlarını giriyoruz
-
-        status_id = 4 if spirent_test_result["spirent_test_status"] == 'PASSED' else 5
-
-        a = _kc.TestExecution_update(te_id, kiwi_run_id, tc_id, status_id)
-        log.debug(f"Test Execution updated {a}")
-        comment = spirent_test_result["spirent_test_summary"]
-        add_comment = _kc.TestExecution_add_comment(te_id, comment)
-        return add_comment
+        return te[0]
 
 
-def push_test_results_to_kiwi(kiwi_plan_id, kiwi_run_id, spirent_test_id, spirent_test_result):
-    """Test sonuçlarını Kiwi'ye basar."""
-    # Test planındaki Test Senaryolarını -> Test koşusuna ekliyoruz
-    add_test_case_into_run(kiwi_plan_id, kiwi_run_id, spirent_test_id, spirent_test_result)
+def case_id(kiwi_plan_id, spirent_test_id):
+    cases = _kc.get_TestCase_by_plan_id(kiwi_plan_id).get('result', [])
+    found_cases = [tc for tc in cases if tc['summary'] == spirent_test_id]
+    tc = found_cases[0]
+    tc_id = tc['id']
+    return tc_id
 
 
-def push_test_results_to_kiwi_master(spirent_test_result):
+def update_test_execution(te_id, run_id, case_id, spirent_test_result, test_start_date, test_stop_date):
+    # Test koşusuna eklediğimiz Test Senaryolarının durumlarını giriyoruz
+
+    status_id = 4 if spirent_test_result["spirent_test_status"] == 'PASSED' else 5
+
+    # a = _kc.TestExecution_update(te_id, kiwi_run_id, tc_id, status_id, test_start_date, test_stop_date)
+    a = _kc.TestExecution_update(te_id, run_id, case_id, status_id, test_start_date, test_stop_date)
+    log.debug(f"Test Execution updated {a}")
+
+    comment = spirent_test_result["spirent_test_summary"]
+    add_comment = _kc.TestExecution_add_comment(te_id, comment)
+    return add_comment
+
+
+def push_test_results_to_kiwi_master(spirent_test_result, start_date, stop_date):
     """"Kiwi üstünde Test Planına ait bir Test Koşusu (Test Run) yaratılacak (1).
     Test Koşusunda kullanılan NF'lerin adları ve sürümleri etiket (Tag) olarak koşuya eklenecek (2).
     Spirent Test Sonuçlarında Test Planının içindeki Test Senaryoları (Test Case) varsa,
@@ -179,7 +187,7 @@ def push_test_results_to_kiwi_master(spirent_test_result):
 
         status_id = 4 if spirent_test_result["spirent_test_status"] == 'PASSED' else 5
 
-        a = _kc.TestExecution_update(te_id, tr_id, tc_id, status_id)
+        a = _kc.TestExecution_update(te_id, tr_id, tc_id, status_id, start_date, stop_date)
         log.debug("Test Execution updated", a)
         comment = spirent_test_result["spirent_test_summary"]
         os.environ['COMMENT'] = comment
@@ -187,7 +195,8 @@ def push_test_results_to_kiwi_master(spirent_test_result):
         return add_comment
 
 
-def send_test_result_to_kiwi(kiwi_plan_id, kiwi_run_id,  spirent_test_id, spirent_running_test_id):
+def send_test_result_to_kiwi(
+        kiwi_plan_id, kiwi_run_id, case_id, spirent_test_id, spirent_running_test_id, test_start_date, test_stop_date):
     """"KIWI_PLAN_ID Test Planı için Test Koşusu yaratıldı.
     Test Planındaki Test Case'ler (KT_CN_01, KT_CN_21 .. gibi) için Test Execution'lar oluşturuldu.
     Spirent testlerinden SPIRENT_TEST_ID için (KT_CN_01 gibi) koşuldu ve SPIRENT_RUNNING_TEST_ID ile sonuçlar çekilebildi."""
@@ -198,7 +207,13 @@ def send_test_result_to_kiwi(kiwi_plan_id, kiwi_run_id,  spirent_test_id, spiren
 
     processed_test_result = get_test_results(spirent_running_test_id)
     log.debug(f'Test result will be sent to the Kiwi: {processed_test_result}')
-    push_test_results_to_kiwi(kiwi_plan_id, kiwi_run_id, spirent_test_id, processed_test_result)
+
+    # Test Plan ve Test Koşusu için belirli bir senaryonun Test Execution'ı yaratılsın
+    te = add_test_case_into_run(kiwi_plan_id, kiwi_run_id, spirent_test_id)
+
+    # Test Execution bilgisini testin sonuç bilgisiyle güncellensin
+    update_test_execution(te["id"], kiwi_run_id, case_id, processed_test_result, test_start_date, test_stop_date)
+
     log.info('Test result has been sent to the Kiwi')
 # ------------------------------
 
@@ -223,11 +238,10 @@ class KiwiListener():
             self.kiwi_run_id = create_test_run_on_kiwi()
             # Test koşusuna ortamdaki NF'leri sürümleriyle birlikte etiket olarak giriyoruz
             log.debug(f"{self.kiwi_run_id} ID'li tek bir Test Run oluşturuldu")
-
-            # if "DEFAULT_VERSION_PATH" in os.environ:
-            #     version_file = os.environ['DEFAULT_VERSION_PATH']
-            #     tag_responses = add_versions_as_tags(version_file, self.kiwi_run_id)
-            #     log.debug(f"{self.kiwi_run_id} ID'li Test Run için versiyonlar etiket olarak eklendi {tag_responses}")
+            if "DEFAULT_VERSION_PATH" in os.environ:
+                version_file = os.environ['DEFAULT_VERSION_PATH']
+                tag_responses = add_versions_as_tags(version_file, self.kiwi_run_id)
+                log.debug(f"{self.kiwi_run_id} ID'li Test Run için versiyonlar etiket olarak eklendi {tag_responses}")
 
     def end_test(self, name, attributes):
         """"Her test başladığında SPIRENT_TEST_ID değeri ilgili *.robot testinde atanır.
@@ -237,7 +251,19 @@ class KiwiListener():
         kiwi_plan_id = os.getenv('KIWI_PLAN_ID')
         # kiwi_plan_id = BuiltIn().get_variable_value('${KIWI_PLAN_ID}')
         spirent_running_test_id = BuiltIn().get_variable_value('${SPIRENT_RUNNING_TEST_ID}')
-        send_test_result_to_kiwi(kiwi_plan_id, self.kiwi_run_id, spirent_test_id, spirent_running_test_id)
+        test_start_date = parser.parse(attributes.starttime)
+        start_date = test_start_date.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        test_stop_date = parser.parse(attributes.endtime)
+        stop_date = test_stop_date.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        tr_id = case_id(kiwi_plan_id, spirent_test_id)
+
+        send_test_result_to_kiwi(kiwi_plan_id,
+                                 self.kiwi_run_id,
+                                 tr_id,
+                                 spirent_test_id,
+                                 spirent_running_test_id,
+                                 start_date,
+                                 stop_date)
 
     def end_suite(self, name, attributes):
         if name == self.top_suite_name:

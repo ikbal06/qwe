@@ -108,7 +108,7 @@
         "hidden": true
       },
       "env": {
-        "KIWI_PLAN_ID": "9",
+        "KIWI_PLAN_ID": "13",
         "DEFAULT_VERSION_PATH": "version.txt",
         "spirent_ts_name": "vts-VTO2",
         "username": "ubuntu",
@@ -125,7 +125,7 @@
         "--listener",
         "kiwi.KiwiListener",
         "-i",
-        "BT_CN_001ORBT_CN_006"
+        "BT_CN_001ORBT_CN_002ORBT_CN_0030RBT_CN_004ORBT_CN_006ORBT_CN_008ORBT_CN_010OR019OR020OR022OR023OR024OR027OR028OR029OR0030"
       ],
       "attachPython": true,
       "pythonConfiguration": "RobotCode: Python"

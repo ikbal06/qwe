@@ -1,4 +1,5 @@
 cnramf=1.0.0.44
+cnrnrf-vnf=1.2.1-5949-f0aff47a
 cnrausf=1.0.0.330
 cnrnef=1.0.0.468
 cnrnrf-vnf=1.0.0.693

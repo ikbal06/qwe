@@ -1,12 +1,11 @@
+import datetime
 import http.client
 import ssl
 import json
 import time
 from resources.common.Logger import log
-import datetime
 import json
 
-now = datetime.datetime.now()
 
 # TODO: Log çıktısını verebilmeli
 # https://realpython.com/python-logging/
@@ -77,7 +76,7 @@ class KiwiClient:
                 log.debug("kullanıcı bilgilerini kontrol et")
                 return None
         except Exception as e:
-            log.error('http isteğinde hata oldu', e)
+            log.error('http isteğinde hata oldu. vpn e bağlı mısın?', e)
 
     def _send_request(self, method, params):
         if not self.conn:
@@ -97,6 +96,7 @@ class KiwiClient:
             'Content-Type': 'application/json',
             'Cookie': "sessionid=" + self.SessionID
         }
+
         try:
             b = self.conn.connect()
             request_json = json.dumps(request_body)
@@ -112,6 +112,8 @@ class KiwiClient:
         except Exception as e:
             print("HTTP Request Error:", e)
             return None
+
+        return request_body
 
     def error(response):
         if "error" in response:
@@ -281,12 +283,13 @@ class KiwiClient:
         tp = result[0]
         log.debug(f"Found Test Plan: {tp}")
         plan_name = tp["name"]
+
         values = [{
             # TODO: otomatik test koşusu için bir build yaratılacak. unspecified(name)	unspecified(version) product-1:	5G CN - Çınar(ürün)
             "build": 2,
             "manager": 3,  # TODO: otomatik koşular için bir kullanıcı tanımlanacak. test yöneticisi test ortamı için user 3 - b.ikbalkirklar@gmail.com
             "plan": plan_id,
-            "summary": f"{now} Tarihinde '{plan_name}' Planı için koşu"
+            "summary": f"{datetime.datetime.now()} Tarihinde '{plan_name}' Planı için koşu",
         }]
 
         response = self._send_request("TestRun.create", values)
@@ -319,10 +322,12 @@ class KiwiClient:
         log.info(f"TestRun_add_case: {response}")
         return response
 
-    def TestExecution_update(self, case_execution_id, run_id, case_id, status_id):
+    def TestExecution_update(self, case_execution_id, run_id, case_id, status_id, start_date, stop_date):
         case_result = [case_execution_id, {
             "run": run_id,
             "case": case_id,
+            "start_date": start_date,
+            "stop_date": stop_date,
             "status": status_id
         }]
         response = self._send_request("TestExecution.update", case_result)
